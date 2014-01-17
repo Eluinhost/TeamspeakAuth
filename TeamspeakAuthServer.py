@@ -6,7 +6,7 @@ from authserver import AuthServer
 
 HOST = "localhost"
 PORT = 35879
-MOTD = u"§eAuth Server"
+MOTD = u"§epublicuhc Auth Server"
 FAVICON = None  # or a path to a 64x64 .png
 
 
@@ -15,7 +15,7 @@ class TeamspeakAuthServer(AuthServer):
         print "%s/%s logged in" % (username, client_addr)
         if authed:
             print " --> OK!"
-            with open('data.json') as data_file:
+            with open('config.json') as data_file:
                 data = json.load(data_file)
             db = MySQLdb.connect(host=data['db']['host']+':'+data['db']['port'], user=data['db']['username'], passwd=data['db']['password'], db=data['db']['database'])
             cur = db.cursor()
