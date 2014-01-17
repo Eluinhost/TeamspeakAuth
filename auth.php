@@ -9,6 +9,7 @@ const INVALID_TS_NICK = 4;
 const DATABASE_ISSUE = 5;
 const CONFIG_PROBLEM = 6;
 const UNKNOWN_PROBLEM = 7;
+const TEAMSPEAK_ISSUE = 8;
 
 const HTTP_OK = 200;
 const HTTP_BAD_REQUEST = 400;
@@ -39,6 +40,12 @@ function uncaughtException($e) {
             CONFIG_PROBLEM,
             'Config file missing or invalid'
         );
+    if($e instanceof TeamSpeak3_Exception)
+        returnJSON(
+            HTTP_BAD_REQUEST,
+            TEAMSPEAK_ISSUE,
+            'There was an error contacting teamspeak'
+        );
     returnJSON(
         HTTP_BAD_REQUEST,
         UNKNOWN_PROBLEM,
@@ -66,7 +73,7 @@ function returnJSON($code,$responseCode,$message,$data=null){
  * @return PDO
  */
 function getDatabaseConnection(){
-    $config = getConfiguration();
+    global $config;
     $conn_string = 'mysql:host='.$config->db->host.':'.$config->db->port.';dbname='.$config->db->database;
 
     $dbh = new PDO($conn_string, $config->db->username, $config->db->password);
@@ -91,6 +98,35 @@ function getConfiguration(){
 }
 
 /**
+ * Generates a valid crc32 even on 32bit PHP
+ * @param $data
+ * @return int crc32 of the data supplied
+ */
+function crcKw($data){
+    $crc = crc32($data);
+    if($crc < 0){
+        $crc += 0x100000000;
+    }
+    return $crc;
+}
+
+/**
+ * Uploads the icon to the server
+ * @param $data
+ * @param $server
+ * @return int the crc32 of the data
+ */
+function uploadIcon($data,TeamSpeak3_Node_Server $server){
+    $crc = crcKw($data);
+    $size = strlen($data);
+    $upload   = $server->transferInitUpload(rand(0x0000, 0xFFFF), 0, "/icon_" . $crc, $size);
+    /** @var $transfer Teamspeak3_Adapter_FileTransfer */
+    $transfer = TeamSpeak3::factory("filetransfer://" . $upload["host"] . ":" . $upload["port"]);
+    $transfer->upload($upload["ftkey"], $upload["seekpos"], $data);
+    return $crc;
+}
+
+/**
  * Check the code is correct and teamspeak nick is valid, then does the verification of user in TS
  * Note: filter inputs as being valid format before passing to this method
  * @param $auth string auth code to check
@@ -98,14 +134,19 @@ function getConfiguration(){
  * @param $ts string TS nick to use
  */
 function doAuth($auth,$mc,$ts){
+    global $config;
     if(!checkAuthForMCName($auth,$mc)){
         returnJSON(HTTP_BAD_REQUEST,INVALID_AUTH,'Auth code incorrect');
     }
-    if(!checkTSName($ts)){
+    $server = getServerInstance();
+    $client = getTSClient($ts,$server);
+    if($client === false){
         returnJSON(HTTP_BAD_REQUEST,INVALID_TS_NICK,'Invalid TS nickname');
     }
+    $client->addServerGroup($config->ts->group_id);
+    //TODO BLOCKER change description
+
     //TODO MINOR connect to minotar and get icon and upload as user icon
-    //TODO BLOCKER log in to ts and change user group + description
     returnJSON(HTTP_OK,OK,'Authed successfully');
 }
 
@@ -133,14 +174,25 @@ function checkAuthForMCName($auth,$mc){
 }
 
 /**
- * Checks if the name is a valid nickname inside teamspeak
- * Note: filter input as being valid format before passing to this
+ * Gets the client if found or false if not found
  * @param $name string the name to check for
- * @return bool true if a valid user exists, false otherwise
+ * @param TeamSpeak3_Node_Server $server the server to search
+ * @return Teamspeak3_Node_Client|bool false if a valid user exists, false otherwise
  */
-function checkTSName($name){
-    //TODO BLOCKER check TS for valid nickname
+function getTSClient($name,TeamSpeak3_Node_Server $server){
+    try{
+        return $server->clientGetByName($name);
+    }catch (TeamSpeak3_Adapter_ServerQuery_Exception $ignored){}
     return false;
+}
+
+/**
+ * Gets the TS server instance
+ * @return TeamSpeak3_Node_Server
+ */
+function getServerInstance(){
+    global $config;
+    return TeamSpeak3::factory("serverquery://{$config->ts->username}:{$config->ts->password}@{$config->ts->host}:{$config->ts->query_port}/?server_port={$config->ts->port}");
 }
 
 /**
@@ -190,6 +242,8 @@ function returnBadParam($paramNames){
 if(!isset($_POST)){
     returnJSON(HTTP_BAD_REQUEST,INVALID_REQUEST,'Must send POST data');
 }
+
+$config = getConfiguration();
 
 //find missing parameters from request
 $missingParams = [];

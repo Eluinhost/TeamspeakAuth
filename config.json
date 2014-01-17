@@ -2,7 +2,10 @@
     "ts" : {
         "host" : "localhost",
         "port" : "",
-        "group_name" : ""
+        "username" : "",
+        "password" : "",
+        "query_port" : "",
+        "group_id" : ""
     },
     "db" : {
         "host" : "localhost",
