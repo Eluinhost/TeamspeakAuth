@@ -1,0 +1,4 @@
+<FilesMatch "\.(?:json|py)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>

@@ -4,10 +4,10 @@ import MySQLdb
 import json
 from authserver import AuthServer
 
-HOST = "localhost"
+HOST = "publicuhc.com"
 PORT = 35879
 MOTD = u"§epublicuhc Auth Server"
-FAVICON = None  # or a path to a 64x64 .png
+FAVICON = 'publicuhc.png'  # or a path to a 64x64 .png
 
 
 class TeamspeakAuthServer(AuthServer):
@@ -17,7 +17,7 @@ class TeamspeakAuthServer(AuthServer):
             print " --> OK!"
             with open('config.json') as data_file:
                 data = json.load(data_file)
-            db = MySQLdb.connect(host=data['db']['host']+':'+data['db']['port'], user=data['db']['username'], passwd=data['db']['password'], db=data['db']['database'])
+            db = MySQLdb.connect(host=data['db']['host'],port=data['db']['port'], user=data['db']['username'], passwd=data['db']['password'], db=data['db']['database'])
             cur = db.cursor()
             code = ''.join(random.choice('ABCDEF0123456789') for i in range(10))
             print " --> CODE "+code
