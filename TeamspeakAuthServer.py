@@ -28,7 +28,7 @@ class ExampleAuthServer(AuthServer):
             cur.close()
             db.commit()
             db.close()
-            return "Your code is \""+code+"\". Insert it into the webpage to finish verification"
+            return "Your code is \""+code+"\", it will last for 15 minutes."
         else:
             print " --> Failed login"
             return u"§4Couldn't authenticate you, please try again later"

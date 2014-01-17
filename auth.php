@@ -118,7 +118,8 @@ function doAuth($auth,$mc,$ts){
  */
 function checkAuthForMCName($auth,$mc){
     $pdo = getDatabaseConnection();
-    $stmt = $pdo->prepare('SELECT ID FROM auth_codes WHERE mc_name = :mc_name AND auth_code = :auth_code LIMIT 1');
+    $stmt = $pdo->prepare('SELECT ID FROM auth_codes WHERE mc_name = :mc_name AND auth_code = :auth_code '
+                         .' AND TIMESTAMPDIFF(MINUTE,created_time,NOW()) < 15 LIMIT 1');
     $stmt->bindValue(':mc_name',$mc,PDO::PARAM_STR);
     $stmt->bindValue(':auth_name',$auth,PDO::PARAM_STR);
     $stmt->execute();
@@ -138,7 +139,7 @@ function checkAuthForMCName($auth,$mc){
  * @return bool true if a valid user exists, false otherwise
  */
 function checkTSName($name){
-    //TODO check TS for valid nickname
+    //TODO BLOCKER check TS for valid nickname
     return false;
 }
 
