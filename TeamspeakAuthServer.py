@@ -10,7 +10,7 @@ MOTD = u"§eAuth Server"
 FAVICON = None  # or a path to a 64x64 .png
 
 
-class ExampleAuthServer(AuthServer):
+class TeamspeakAuthServer(AuthServer):
     def handle_auth(self, client_addr, server_addr, username, authed):
         print "%s/%s logged in" % (username, client_addr)
         if authed:
@@ -35,6 +35,6 @@ class ExampleAuthServer(AuthServer):
 
 
 if __name__ == "__main__":
-    server = ExampleAuthServer(MOTD, FAVICON)
+    server = TeamspeakAuthServer(MOTD, FAVICON)
     server.listen(HOST, PORT)
     server.run()
