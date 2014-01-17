@@ -1,9 +1,14 @@
 <?php
+include 'AuthException.php';
+
 const OK = 0;
 const INVALID_REQUEST = 1;
 const INVALID_PARAM = 2;
 const INVALID_AUTH = 3;
 const INVALID_TS_NICK = 4;
+const DATABASE_ISSUE = 5;
+const CONFIG_PROBLEM = 6;
+const UNKNOWN_PROBLEM = 7;
 
 const HTTP_OK = 200;
 const HTTP_BAD_REQUEST = 400;
@@ -13,8 +18,34 @@ const PARAM_MC_NAME = 'mc_name';
 const PARAM_AUTH_CODE = 'code';
 
 const AUTH_CODE_LENGTH = 10;
-const MINECRAFT_NAME_REGEX = '/^[a-zA-z0-9_]{1,16}$/';
+const MC_NAME_REGEX = '/^[a-zA-z0-9_]{1,16}$/';
 const AUTH_CODE_REGEX = '/^[a-zA-z0-9]{10}$/';
+
+set_exception_handler('uncaughtException');
+/**
+ * Catches all uncaught errors
+ * @param $e
+ */
+function uncaughtException($e) {
+    if($e instanceof PDOException)
+        returnJSON(
+            HTTP_BAD_REQUEST,
+            DATABASE_ISSUE,
+            'Error accessing the database'
+        );
+    if($e instanceof ConfigFileNotFoundException || $e instanceof ConfigFileInvalidException)
+        returnJSON(
+            HTTP_BAD_REQUEST,
+            CONFIG_PROBLEM,
+            'Config file missing or invalid'
+        );
+    returnJSON(
+        HTTP_BAD_REQUEST,
+        UNKNOWN_PROBLEM,
+        'Unknown error has occured processing the request'
+    );
+}
+
 
 /**
  * Send json back and quit
@@ -28,6 +59,35 @@ function returnJSON($code,$responseCode,$message,$data=null){
     http_response_code($code);
     echo json_encode(['code'=>$responseCode,'message'=>$message,'data'=>$data]);
     exit;
+}
+
+/**
+ * Returns a database connection
+ * @return PDO
+ */
+function getDatabaseConnection(){
+    $config = getConfiguration();
+    $conn_string = 'mysql:host='.$config->db->host.':'.$config->db->port.';dbname='.$config->db->database;
+
+    $dbh = new PDO($conn_string, $config->db->username, $config->db->password);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    return $dbh;
+}
+
+/**
+ * Returns the configuration object
+ * @throws ConfigFileNotFoundException
+ * @throws ConfigFileInvalidException
+ * @return object parsed json
+ */
+function getConfiguration(){
+    $jsonContents = @file_get_contents('config.json');
+    if($jsonContents === FALSE)
+        throw new ConfigFileNotFoundException();
+    $jsonObject = json_decode($jsonContents);
+    if($jsonObject === FALSE)
+        throw new ConfigFileInvalidException();
+    return $jsonObject;
 }
 
 /**
@@ -45,7 +105,7 @@ function doAuth($auth,$mc,$ts){
         returnJSON(HTTP_BAD_REQUEST,INVALID_TS_NICK,'Invalid TS nickname');
     }
     //TODO MINOR connect to minotar and get icon and upload as user icon
-    //TODO BLOCKER log in to teamspeak and change user group + description
+    //TODO BLOCKER log in to ts and change user group + description
     returnJSON(HTTP_OK,OK,'Authed successfully');
 }
 
@@ -57,8 +117,17 @@ function doAuth($auth,$mc,$ts){
  * @return bool whether it was the correct code or not
  */
 function checkAuthForMCName($auth,$mc){
-    //TODO BLOCKER check database for mcname + auth code
-    //TODO BLOCKER remove from database if correct
+    $pdo = getDatabaseConnection();
+    $stmt = $pdo->prepare('SELECT ID FROM auth_codes WHERE mc_name = :mc_name AND auth_code = :auth_code LIMIT 1');
+    $stmt->bindValue(':mc_name',$mc,PDO::PARAM_STR);
+    $stmt->bindValue(':auth_name',$auth,PDO::PARAM_STR);
+    $stmt->execute();
+    foreach($stmt as $record){
+        $removeStmt = $pdo->prepare('DELETE FROM auth_codes WHERE ID = :ID');
+        $removeStmt->bindValue(':ID',$record['ID'],PDO::PARAM_INT);
+        $removeStmt->execute();
+        return true;
+    }
     return false;
 }
 
@@ -88,7 +157,7 @@ function isValidTSName($name){
  * @return bool true if valid format, false otherwise
  */
 function isValidMCName($name){
-    return preg_match(MINECRAFT_NAME_REGEX,$name);
+    return preg_match(MC_NAME_REGEX,$name);
 }
 
 /**

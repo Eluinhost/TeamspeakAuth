@@ -16,6 +16,8 @@ class ExampleAuthServer(AuthServer):
 
             #TODO BLOCKER generate a random code + insert into DB for the MC name
 
+            #INSERT INTO auth_codes(mc_name,auth_code) VALUES ('MCNAME','AUTHCODE') ON DUPLICATE KEY UPDATE auth_code='AUTHCODE';
+
             return u"§lThanks! §rPlease check your web browser."
 
         else:

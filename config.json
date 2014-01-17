@@ -1,0 +1,14 @@
+{
+    "ts" : {
+        "host" : "",
+        "port" : "",
+        "group_name" : ""
+    },
+    "db" : {
+        "host" : "",
+        "port" : "",
+        "database" : "",
+        "username" : "",
+        "password" : ""
+    }
+}
