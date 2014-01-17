@@ -1,12 +1,12 @@
 {
     "ts" : {
-        "host" : "",
+        "host" : "localhost",
         "port" : "",
         "group_name" : ""
     },
     "db" : {
-        "host" : "",
-        "port" : "",
+        "host" : "localhost",
+        "port" : "3306",
         "database" : "",
         "username" : "",
         "password" : ""
