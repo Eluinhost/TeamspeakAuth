@@ -1,16 +1,16 @@
 {
     "ts" : {
         "host" : "localhost",
-        "port" : "",
-        "username" : "",
+        "port" : 9988,
+        "username" : "serveradmin",
         "password" : "",
-        "query_port" : "",
-        "group_id" : ""
+        "query_port" : 10011,
+        "group_id" : 222
     },
     "db" : {
         "host" : "localhost",
-        "port" : "3306",
-        "database" : "",
+        "port" : 3306,
+        "database" : "sonmica_stats",
         "username" : "",
         "password" : ""
     }
