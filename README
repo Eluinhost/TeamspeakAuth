@@ -1,0 +1,8 @@
+REFACTORING/UPDATING - THIS REPOSITORY WILL NOT WORK IN IT'S CURRENT STATE
+
+# TS3 Authentication for Minecraft Accounts
+
+To use this authentication system copy /config/config.json.dist to /config/config.json and complete the details.
+The database should be already set up with the following:
+
+//TODO
