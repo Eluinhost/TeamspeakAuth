@@ -1,6 +1,6 @@
 <?php
 
-include 'TeamSpeak3.php';
+require_once 'vendor/autoload.php';
 
 const OK = 0;
 const INVALID_REQUEST = 1;
