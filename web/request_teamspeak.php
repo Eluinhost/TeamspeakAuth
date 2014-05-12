@@ -1,5 +1,5 @@
 <?php
-include './../Common.php';
+include './../lib/Common.php';
 
 if(!isset($_GET) || !isset($_GET['ts_name'])){
     returnJSON(HTTP_BAD_REQUEST,INVALID_REQUEST,'Must send GET data');

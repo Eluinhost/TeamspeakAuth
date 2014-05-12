@@ -1,5 +1,5 @@
 <?php
-require_once './../Common.php';
+require_once './../lib/Common.php';
 
 //check get exists
 if(!isset($_GET)){
