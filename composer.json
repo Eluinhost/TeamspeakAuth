@@ -2,7 +2,7 @@
     "name": "Eluinhost/ts3auth",
     "description": "'Authenticate' Teamspeak 3 accounts",
     "minimum-stability": "stable",
-    "license": "proprietary",
+    "license": "GPLv3",
     "authors": [
         {
             "name": "Eluinhost",
