@@ -1,0 +1,11 @@
+body {
+    background-image: url('../img/pat.png');
+}
+.jumbotron {
+    text-align: center;
+    background-image: url('../img/connecto.png');
+}
+.form-control {
+    text-align: center;
+    margin: 2px;
+}
