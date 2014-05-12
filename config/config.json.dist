@@ -10,7 +10,7 @@
     "db" : {
         "host" : "localhost",
         "port" : 3306,
-        "database" : "sonmica_stats",
+        "database" : "auth_codes",
         "username" : "",
         "password" : ""
     }
