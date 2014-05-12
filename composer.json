@@ -1,0 +1,12 @@
+{
+    "name": "Eluinhost/ts3auth",
+    "description": "'Authenticate' Teamspeak 3 accounts",
+    "minimum-stability": "stable",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Eluinhost",
+            "email": "graham_howden1@yahoo.co.uk"
+        }
+    ]
+}
