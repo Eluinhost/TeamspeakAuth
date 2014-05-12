@@ -8,5 +8,8 @@
             "name": "Eluinhost",
             "email": "graham_howden1@yahoo.co.uk"
         }
-    ]
+    ],
+    "require": {
+        "planetteamspeak/ts3-php-framework": "1.1.23"
+    }
 }
