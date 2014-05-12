@@ -4,6 +4,7 @@
 dependency-reduced-pom.xml
 atlassian-ide-plugin.xml
 composer.phar
+/config/config.json
 
 # IDE files #
 #############
