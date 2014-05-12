@@ -13,5 +13,10 @@
         "database" : "auth_codes",
         "username" : "",
         "password" : ""
+    },
+    "mc" : {
+        "host" : "localhost"
+        "port" : 35879
+        "motd" : "§eAuth Server",
     }
 }
