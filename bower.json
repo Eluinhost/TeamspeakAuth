@@ -1,0 +1,13 @@
+{
+    "name": "ts3auth",
+    "version": "1.0.0",
+    "authors": [
+        "Graham <graham_howden1@yahoo.co.uk>"
+    ],
+    "description": "TS3 Authenticaion using Minecraft accounts",
+    "license": "GPLv3",
+    "private": true,
+    "dependencies": {
+        "bootstrap": "3.1.1"
+    }
+}
