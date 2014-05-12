@@ -1,6 +1,0 @@
-Order allow,deny
-Allow from all
-<FilesMatch "\.(?:json|py)$">
-    Order allow,deny
-    Deny from all
-</FilesMatch>
