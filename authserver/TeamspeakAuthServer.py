@@ -15,7 +15,7 @@ class TeamspeakAuthServer(AuthServer):
         print "%s/%s logged in" % (username, client_addr)
         if authed:
             print " --> OK!"
-            with open('config.json') as data_file:
+            with open('./../config.json') as data_file:
                 data = json.load(data_file)
             db = MySQLdb.connect(host=data['db']['host'],port=data['db']['port'], user=data['db']['username'], passwd=data['db']['password'], db=data['db']['database'])
             cur = db.cursor()
