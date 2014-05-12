@@ -93,7 +93,7 @@ function getDatabaseConnection(){
 * @return object parsed json
 */
 function getConfiguration(){
-    $jsonContents = @file_get_contents('config.json');
+    $jsonContents = @file_get_contents('config/config.json');
     if($jsonContents === FALSE)
         throw new ConfigFileNotFoundException();
     $jsonObject = json_decode($jsonContents);
