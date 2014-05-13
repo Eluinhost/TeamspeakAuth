@@ -14,8 +14,8 @@ FAVICON = 'servericon.png'  # path to a 64x64 .png
 
 
 class TeamspeakAuthServer(AuthServer):
-    def handle_auth(self, client_addr, server_addr, username, authed):
-        print "%s/%s logged in" % (username, client_addr)
+    def handle_auth(self, client_addr, server_addr, username, uuid, authed):
+        print "%s/%s/%s logged in" % (username, uuid, client_addr)
         if authed:
             print " --> OK!"
             db = MySQLdb.connect(host=data['db']['host'],port=data['db']['port'], user=data['db']['username'], passwd=data['db']['password'], db=data['db']['database'])
