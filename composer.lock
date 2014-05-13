@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "0b41186e00285d7126171bdca28e7a14",
+    "hash": "e1ec68b7b61c0408e81652e2c5bc16eb",
     "packages": [
         {
             "name": "planetteamspeak/ts3-php-framework",
@@ -166,6 +166,55 @@
                 "url"
             ],
             "time": "2014-04-23 14:04:21"
+        },
+        {
+            "name": "symfony/yaml",
+            "version": "2.4.x-dev",
+            "target-dir": "Symfony/Component/Yaml",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Yaml.git",
+                "reference": "65539ecde838f9c0d18b006b2101e3deb4b5c9ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/65539ecde838f9c0d18b006b2101e3deb4b5c9ff",
+                "reference": "65539ecde838f9c0d18b006b2101e3deb4b5c9ff",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Yaml\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Yaml Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-04-18 20:37:09"
         }
     ],
     "packages-dev": [
@@ -177,7 +226,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "symfony/http-foundation": 20,
-        "symfony/routing": 20
+        "symfony/routing": 20,
+        "symfony/yaml": 20
     },
     "platform": [
 
