@@ -7,6 +7,7 @@ from authserver import AuthServer
 with open('./../config/config.yml') as data_file:
     data = yaml.load(data_file)
 
+data = data['parameters']
 MC_HOST = data['minecraft']['host']
 MC_PORT = data['minecraft']['port']
 MC_MOTD = data['minecraft']['motd']
