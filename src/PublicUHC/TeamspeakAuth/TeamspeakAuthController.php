@@ -1,13 +1,13 @@
 <?php
 
-namespace com\publicuhc\ts3auth;
+namespace PublicUHC\TeamspeakAuth;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Ts3Auth extends ContainerAware {
+class TeamspeakAuthController extends ContainerAware {
 
     public function authAction() {
         //TODO

@@ -21,5 +21,5 @@ parameters:
 
 services:
   ts3interface:
-    class: com\publicuhc\ts3auth\TeamspeakHelper
+    class: PublicUHC\TeamspeakAuth\TeamspeakHelper
     arguments: ["%teamspeak.host%", "%teamspeak.query_port%", "%teamspeak.port%", "%teamspeak.username%", "%teamspeak.password%"]

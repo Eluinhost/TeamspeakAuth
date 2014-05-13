@@ -19,6 +19,6 @@
         "symfony/dependency-injection": "2.4.x-dev"
     },
     "autoload": {
-        "psr-4": {"com\\publicuhc\\ts3auth\\": "src/com/publicuhc/ts3auth/"}
+        "psr-4": {"PublicUHC\\TeamspeakAuth\\": "src/PublicUHC/TeamspeakAuth"}
     }
 }

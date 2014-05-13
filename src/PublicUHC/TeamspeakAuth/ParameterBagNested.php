@@ -1,5 +1,5 @@
 <?php
-namespace com\publicuhc\ts3auth;
+namespace PublicUHC\TeamspeakAuth;
 
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 

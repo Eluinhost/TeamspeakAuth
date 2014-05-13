@@ -1,7 +1,7 @@
 <?php
 
-use com\publicuhc\ts3auth\ControllerResolver;
-use com\publicuhc\ts3auth\ParameterBagNested;
+use PublicUHC\TeamspeakAuth\ControllerResolver;
+use PublicUHC\TeamspeakAuth\ParameterBagNested;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcher;

@@ -1,6 +1,6 @@
 <?php
 
-namespace com\publicuhc\ts3auth;
+namespace PublicUHC\TeamspeakAuth;
 
 use TeamSpeak3;
 use TeamSpeak3_Adapter_ServerQuery_Exception;
