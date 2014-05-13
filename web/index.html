@@ -23,16 +23,16 @@
                 <a class="close alert-close" href="#">&times;</a>
                 <span id="request_code_error">Unknown Error</span>
             </div>
-            <h2>Step 2: Request Codes and check your messages in Teamspeak</h2>
+            <h2>Step 2: Click 'Request Codes' and check your messages in Teamspeak</h2>
             <a id="request_codes" class="btn btn-primary btn-md" role="button">Request Codes</a>
-            <h2>Step 3: Input Codes</h2>
+            <h2>Step 3: Input the codes supplied to you here:</h2>
             <input type="text" class="form-control" id="ts_uuid" placeholder="Teamspeak UUID">
             <input type="text" class="form-control" id="ts_code" placeholder="Teamspeak Auth code">
-            <h2>Step 4: Connect to 'auth.publicuhc.com' in Minecraft 1.7</h2>
-            <h2>Step 5: Complete the following fields:</h2>
+            <h2>Step 4: Connect to 'auth.publicuhc.com' in Minecraft 1.7</h2> <!-- TODO show host/port from config file here -->
+            <h2>Step 5: Put your minecraft username + the code supplied by the server here:</h2>
             <input type="text" class="form-control" id="mc_name" placeholder="Minecraft nickname">
             <input type="text" class="form-control" id="code" placeholder="Minecraft Auth code">
-            <h2>Step 6: Verify Codes</h2>
+            <h2>Step 6: Click 'Verify Account!' to check all your codes are correct</h2>
             <div id="check_auth_alert" class="alert alert-danger fade in">
                 <a class="close alert-close" href="#">&times;</a>
                 <span id="check_auth_error">Unknown Error</span>
@@ -53,25 +53,17 @@
 <script type="text/javascript">
     $(document).ready(function(){
 
-        const OK = 0;
-        const INVALID_REQUEST = 1;
-        const INVALID_PARAM = 2;
-        const TEAMSPEAK_ISSUE = 3;
-        const INVALID_TS_UUID = 4;
-        const DATABASE_ISSUE = 5;
-        const CONFIG_PROBLEM = 6;
-        const UNKNOWN_PROBLEM = 7;
-        const INVALID_MC_AUTH = 8;
-        const INVALID_TS_AUTH = 9;
-        const INVALID_TS_NAME = 10;
-        const MISSING_PARAM = 11;
-
         $('#request_codes').click(function(e){
             $('#request_code_alert').hide();
             e.preventDefault();
-            $.get("request_teamspeak.php",{'ts_name':$('#ts_name').val()})
+            $.get(
+                    "ts3code",
+                    {
+                        'ts_name': $('#ts_name').val()
+                    }
+            )
             .done(function(data) {
-                $('#ts_uuid').val(data['data']);
+                $('#ts_uuid').val(data['UUID']);
             })
             .fail(function(xhr) {
                 if(typeof xhr.responseJSON === 'undefined'){
