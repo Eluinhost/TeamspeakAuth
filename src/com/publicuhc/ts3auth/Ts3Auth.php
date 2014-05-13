@@ -2,11 +2,12 @@
 
 namespace com\publicuhc\ts3auth;
 
+use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Ts3Auth extends ContainerAwareInterface {
+class Ts3Auth extends ContainerAware {
 
     public function authAction() {
         //TODO
@@ -28,27 +29,37 @@ class Ts3Auth extends ContainerAwareInterface {
         /**
          * @var $ts3 TeamspeakHelper
          */
-        $ts3 = $this->get('ts3interface');
+        $ts3 = $this->container->get('ts3interface');
 
-        $client = $ts3->getClientForName($tsName);
+        try {
 
-        if( null == $client ) {
-            $response->setStatusCode(400);
+            $client = $ts3->getClientForName($tsName);
+
+            if (null == $client) {
+                $response->setStatusCode(400);
+                $response->setData([
+                    'error' => 'Teamspeak user not found'
+                ]);
+                return $response;
+            }
+
+            $uuid = $ts3->getUUIDForClient($client);
+            $randomCode = substr(md5(rand()), 0, 10);
+
+            //TODO insert UUID and code into database
+
+            $response->setData(array(
+                'UUID' => $uuid
+            ));
+            return $response;
+
+        } catch ( \TeamSpeak3_Exception $ignored ) {
+            $response->setStatusCode(500);
             $response->setData([
-                'error' => 'Teamspeak user not found'
+                'error' => 'Error contacting the teamspeak server'
             ]);
             return $response;
         }
-
-        $uuid = $ts3->getUUIDForClient($client);
-        $randomCode = substr(md5(rand()), 0, 10);
-
-        //TODO insert UUID and code into database
-
-        $response->setData(array(
-            'UUID' => $uuid
-        ));
-        return $response;
     }
 
     public function indexAction() {

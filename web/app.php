@@ -1,10 +1,10 @@
 <?php
 
+use com\publicuhc\ts3auth\ControllerResolver;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 use Symfony\Component\HttpKernel\EventListener\RouterListener;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
@@ -14,21 +14,20 @@ use Symfony\Component\Routing\RequestContext;
 $loader = require __DIR__ . '/../vendor/autoload.php';
 
 // look inside the src directory
-$locator = new FileLocator(array(__DIR__ . '/../src/'));
+$locator = new FileLocator(array(__DIR__ . '/../config/'));
 $loader = new YamlFileLoader($locator);
 $collection = $loader->load('routes.yml');
-
-$container = new ContainerBuilder();
-$diLoader = new FileLocator(__DIR__ . '/../src/');
-$diLoader = new Symfony\Component\DependencyInjection\Loader\YamlFileLoader($container, $diLoader);
-$diLoader->load('services.yml');
 
 $matcher = new UrlMatcher($collection, new RequestContext());
 
 $dispatcher = new EventDispatcher();
 $dispatcher->addSubscriber(new RouterListener($matcher));
 
-$resolver = new ControllerResolver();
+$container = new ContainerBuilder();
+$diLoader = new Symfony\Component\DependencyInjection\Loader\YamlFileLoader($container, $locator);
+$diLoader->load('services.yml');
+
+$resolver = new ControllerResolver($container);
 $kernel = new HttpKernel($dispatcher, $resolver);
 
 $request = Request::createFromGlobals();
