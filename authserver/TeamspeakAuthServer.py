@@ -15,6 +15,7 @@ DB_PORT = data['database']['port']
 DB_USERNAME = data['database']['username']
 DB_PASSWORD = data['database']['password']
 DB_DATABASE = data['database']['database']
+DB_TABLE = data['database']['minecraft_table']
 FAVICON = 'servericon.png'  # path to a 64x64 .png
 
 
@@ -32,10 +33,11 @@ class TeamspeakAuthServer(AuthServer):
             cur = db.cursor()
             code = ''.join(random.choice('ABCDEF0123456789') for i in range(10))
             print " --> CODE "+code
-            cur.execute("INSERT INTO auth_codes(mc_name,auth_code) "
-                        "VALUES (%s,%s) "
+            cur.execute("INSERT INTO %s(username, code, created_time) "
+                        "VALUES (%s, %s, NOW()) "
                         "ON DUPLICATE KEY UPDATE "
-                        "auth_code=%s,created_time=NOW()", (username, code, code))
+                        "code=%s,created_time=NOW()",
+                        (DB_TABLE, username, code, code))
             cur.close()
             db.commit()
             db.close()
