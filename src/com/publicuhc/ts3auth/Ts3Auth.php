@@ -2,6 +2,8 @@
 
 namespace com\publicuhc\ts3auth;
 
+use Symfony\Component\HttpFoundation\Response;
+
 class Ts3Auth {
 
     public function authAction() {
@@ -10,5 +12,9 @@ class Ts3Auth {
 
     public function requestTeamspeakAction() {
         //TODO
+    }
+
+    public function indexAction() {
+        return new Response('index');
     }
 } 
