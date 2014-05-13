@@ -7,7 +7,7 @@ use TeamSpeak3_Adapter_ServerQuery_Exception;
 use TeamSpeak3_Node_Client;
 use TeamSpeak3_Node_Server;
 
-class Ts3Interface {
+class TeamspeakHelper {
 
     private $host;
     private $queryPort;
