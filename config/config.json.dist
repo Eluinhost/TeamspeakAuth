@@ -15,8 +15,8 @@
         "password" : ""
     },
     "mc" : {
-        "host" : "localhost"
-        "port" : 35879
-        "motd" : "§eAuth Server",
+        "host" : "localhost",
+        "port" : 35879,
+        "motd" : "§eAuth Server"
     }
 }
