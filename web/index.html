@@ -79,13 +79,14 @@
         $('#check_auth').click(function(e){
             $('#check_auth_alert').hide();
             e.preventDefault();
-            $.get("mc_auth.php",
-                {
-                    'ts_uuid':$('#ts_uuid').val(),
-                    'ts_code':$('#ts_code').val(),
-                    'mc_name':$('#mc_name').val(),
-                    'code':$('#code').val()
-                }
+            $.get(
+                    "auth",
+                    {
+                        'ts_uuid':$('#ts_uuid').val(),
+                        'ts_code':$('#ts_code').val(),
+                        'mc_name':$('#mc_name').val(),
+                        'code':$('#code').val()
+                    }
             )
             .done(function(data) {
                 $('#auth_success').show();
