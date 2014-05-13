@@ -1,6 +1,7 @@
 <?php
 
 use com\publicuhc\ts3auth\ControllerResolver;
+use com\publicuhc\ts3auth\ParameterBagNested;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -23,7 +24,7 @@ $matcher = new UrlMatcher($collection, new RequestContext());
 $dispatcher = new EventDispatcher();
 $dispatcher->addSubscriber(new RouterListener($matcher));
 
-$container = new ContainerBuilder();
+$container = new ContainerBuilder(new ParameterBagNested());
 $diLoader = new Symfony\Component\DependencyInjection\Loader\YamlFileLoader($container, $locator);
 $diLoader->load('services.yml');
 
