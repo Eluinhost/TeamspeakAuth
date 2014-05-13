@@ -1,22 +1,17 @@
-{
-    "ts" : {
-        "host" : "localhost",
-        "port" : 9988,
-        "username" : "serveradmin",
-        "password" : "",
-        "query_port" : 10011,
-        "group_id" : 222
-    },
-    "db" : {
-        "host" : "localhost",
-        "port" : 3306,
-        "database" : "auth_codes",
-        "username" : "",
-        "password" : ""
-    },
-    "mc" : {
-        "host" : "localhost",
-        "port" : 35879,
-        "motd" : "§eAuth Server"
-    }
-}
+ts3:
+    host: localhost
+    port: 9988
+    username: serveradmin
+    password: ""
+    query_port: 10011
+    group_id: 222
+database:
+    host: localhost
+    port: 3306
+    database: auth_codes
+    username: ""
+    password: ""
+minecraft:
+    host: localhost
+    port: 35879
+    motd: "§eAuth Server"
