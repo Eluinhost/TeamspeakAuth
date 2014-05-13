@@ -15,7 +15,8 @@
         "symfony/routing": "2.4.x-dev",
         "symfony/config": "2.4.x-dev",
         "symfony/yaml": "2.4.x-dev",
-        "symfony/http-kernel": "2.4.x-dev"
+        "symfony/http-kernel": "2.4.x-dev",
+        "symfony/dependency-injection": "2.4.x-dev"
     },
     "autoload": {
         "psr-4": {"com\\publicuhc\\ts3auth\\": "src/com/publicuhc/ts3auth/"}
