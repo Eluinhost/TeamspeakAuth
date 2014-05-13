@@ -1,5 +1,5 @@
 {
-    "name": "Eluinhost/ts3auth",
+    "name": "PublicUHC/TeamspeakAuth",
     "description": "'Authenticate' Teamspeak 3 accounts",
     "minimum-stability": "stable",
     "license": "GPLv3",
