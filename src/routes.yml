@@ -1,8 +1,8 @@
 # routes.yml
 authcheck:
     path:     /auth
-    defaults: { _controller: 'Ts3Auth::authAction' }
+    defaults: { _controller: 'com\publicuhc\ts3auth\Ts3Auth::authAction' }
 
 ts3code:
     path:     /ts3code
-    defaults: { _controller: 'Ts3Auth::requestTeamspeakAction' }
+    defaults: { _controller: 'com\publicuhc\ts3auth\Ts3Auth::requestTeamspeakAction' }
