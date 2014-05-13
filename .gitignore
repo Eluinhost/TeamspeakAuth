@@ -6,6 +6,7 @@ atlassian-ide-plugin.xml
 composer.phar
 /config/config.json
 /web/assets
+/vendor
 
 # IDE files #
 #############
