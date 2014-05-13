@@ -4,6 +4,7 @@ body {
 .jumbotron {
     text-align: center;
     background-image: url('../img/connecto.png');
+    margin-top: 50px;
 }
 .form-control {
     text-align: center;
