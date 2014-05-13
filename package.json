@@ -1,0 +1,12 @@
+{
+    "name": "MinecraftAuthentication",
+    "version": "0.1.0",
+    "description": "Teamspeak 'Authentication' based on Minecraft accounts",
+    "license": "GPLv3",
+    "author": "Graham Howden <graham_howden1@yahoo.co.uk",
+    "files": "authserver",
+    "dependencies": {
+        "minecraft-protocol": "0.12.1"
+    },
+    "private": true
+}

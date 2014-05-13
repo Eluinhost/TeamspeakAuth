@@ -8,6 +8,8 @@ composer.phar
 /vendor
 /config/config.yml
 *.pyc
+npm-debug.log
+/node_modules
 
 # IDE files #
 #############
