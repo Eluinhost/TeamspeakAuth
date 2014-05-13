@@ -25,7 +25,7 @@ class Ts3Auth {
             return $response;
         }
 
-        $ts3 = new Ts3Interface();
+        $ts3 = new Ts3Interface("", "", "", "", ""); //TODO read from config file (or actually load as a service via DI container)
 
         $client = $ts3->getClientForName($tsName);
 
