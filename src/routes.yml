@@ -6,3 +6,7 @@ authcheck:
 ts3code:
     path:     /ts3code
     defaults: { _controller: 'com\publicuhc\ts3auth\Ts3Auth::requestTeamspeakAction' }
+
+homepage:
+    path:     /
+    defaults: { _controller: 'com\publicuhc\ts3auth\Ts3Auth::indexAction' }
