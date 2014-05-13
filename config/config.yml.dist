@@ -1,11 +1,12 @@
-ts3:
+parameters:
+  teamspeak:
     host: localhost
     port: 9988
     username: serveradmin
     password: ""
     query_port: 10011
     group_id: 222
-database:
+  database:
     host: localhost
     port: 3306
     database: authentication
@@ -13,7 +14,12 @@ database:
     teamspeak_table: teamspeak_codes
     username: ""
     password: ""
-minecraft:
+  minecraft:
     host: localhost
     port: 35879
     motd: "§eAuth Server"
+
+services:
+  ts3interface:
+    class: com\publicuhc\ts3auth\TeamspeakHelper
+    arguments: ["%teamspeak.host%", "%teamspeak.query_port%", "%teamspeak.port%", "%teamspeak.username%", "%teamspeak.password%"]
