@@ -39,7 +39,7 @@ class TeamspeakHelper {
     }
 
     public function getUUIDForClient(TeamSpeak3_Node_Client $client) {
-        return $client->infoDb()['client_unique_identifier'];
+        return ''.$client->infoDb()['client_unique_identifier'];
     }
 
     /**
