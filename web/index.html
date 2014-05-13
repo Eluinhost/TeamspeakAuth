@@ -69,23 +69,13 @@
                 if(typeof xhr.responseJSON === 'undefined'){
                     $('#request_code_error').html('Unexpected response from server');
                 }else{
-                    var error = 'Unknown error occured';
-                    switch(xhr.responseJSON.code){
-                        case INVALID_PARAM:
-                        case MISSING_PARAM:
-                            error = 'Invalid Username';break;
-                        case TEAMSPEAK_ISSUE:
-                            error = 'Couldn\'t connect to teamspeak, try again later';break;
-                        case INVALID_TS_NAME:
-                            error = 'Cannot find that username online, check the name given (caps sensitive)';break;
-                        case DATABASE_ISSUE:
-                            error = 'The was an error accessing the database, please try again later';break;
-                    }
+                    var error = xhr.responseJSON.error;
                     $('#request_code_error').html(error);
                 }
                 $('#request_code_alert').show();
             });
         });
+
         $('#check_auth').click(function(e){
             $('#check_auth_alert').hide();
             e.preventDefault();
@@ -104,22 +94,7 @@
                 if(typeof xhr.responseJSON === 'undefined'){
                     $('#check_auth_error').html('Unexpected response from server');
                 }else{
-                    var error = 'Unknown error occured';
-                    switch(xhr.responseJSON.code){
-                        case INVALID_PARAM:
-                        case MISSING_PARAM:
-                            error = 'Missing or invalid fields';break;
-                        case TEAMSPEAK_ISSUE:
-                            error = 'Couldn\'t connect to teamspeak, please try again later';break;
-                        case INVALID_TS_UUID:
-                            error = 'The Teamspeak UUID is no longer valid, please try again';break;
-                        case DATABASE_ISSUE:
-                            error = 'The was an error accessing the database, please try again later';break;
-                        case INVALID_MC_AUTH:
-                            error = 'The given Minecraft auth code was not correct. Please check capitals on both the code and Minecraft username';break;
-                        case INVALID_TS_AUTH:
-                            error = 'The given Teamspeak auth code was not correct, please check capitals';break;
-                    }
+                    var error = xhr.responseJSON.error;
                     $('#check_auth_error').html(error);
                 }
                 $('#check_auth_alert').show();
