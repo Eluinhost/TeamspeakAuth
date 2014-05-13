@@ -7,5 +7,5 @@ parameters:
 
 services:
   ts3interface:
-    class: TeamspeakHelper
+    class: com\publicuhc\ts3auth\TeamspeakHelper
     arguments: ["%ts3.host%", "%ts3.query_port%", "%ts3.port%", "%ts3.username%", "%ts3.password%"]
