@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class Ts3Auth {
+class Ts3Auth extends ContainerAwareInterface {
 
     public function authAction() {
         //TODO
@@ -25,7 +25,10 @@ class Ts3Auth {
             return $response;
         }
 
-        $ts3 = new Ts3Interface("", "", "", "", ""); //TODO read from config file (or actually load as a service via DI container)
+        /**
+         * @var $ts3 TeamspeakHelper
+         */
+        $ts3 = $this->get('ts3interface');
 
         $client = $ts3->getClientForName($tsName);
 
