@@ -10,6 +10,8 @@
         }
     ],
     "require": {
-        "planetteamspeak/ts3-php-framework": "1.1.23"
+        "planetteamspeak/ts3-php-framework": "1.1.23",
+        "symfony/http-foundation": "2.4.x-dev",
+        "symfony/routing": "2.4.x-dev"
     }
 }
