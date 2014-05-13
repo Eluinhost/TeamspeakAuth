@@ -7,6 +7,7 @@ composer.phar
 /config/config.json
 /web/assets
 /vendor
+/config/config.yml
 
 # IDE files #
 #############
