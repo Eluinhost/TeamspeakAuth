@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "4740bec2ce024cf6b91d2546bb0951d9",
+    "hash": "0103a8f7311e782f37e47d72ff1ceaad",
     "packages": [
         {
             "name": "planetteamspeak/ts3-php-framework",
@@ -43,58 +43,6 @@
                 "teamspeak"
             ],
             "time": "2013-10-17 10:10:03"
-        },
-        {
-            "name": "symfony/class-loader",
-            "version": "2.4.x-dev",
-            "target-dir": "Symfony/Component/ClassLoader",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/ClassLoader.git",
-                "reference": "5101f3094903a95db3552a834a9c6585afc10d3b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/ClassLoader/zipball/5101f3094903a95db3552a834a9c6585afc10d3b",
-                "reference": "5101f3094903a95db3552a834a9c6585afc10d3b",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "require-dev": {
-                "symfony/finder": "~2.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.4-dev"
-                }
-            },
-            "autoload": {
-                "psr-0": {
-                    "Symfony\\Component\\ClassLoader\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com",
-                    "homepage": "http://fabien.potencier.org",
-                    "role": "Lead Developer"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony ClassLoader Component",
-            "homepage": "http://symfony.com",
-            "time": "2014-04-16 10:34:31"
         },
         {
             "name": "symfony/config",
@@ -329,8 +277,7 @@
     "stability-flags": {
         "symfony/http-foundation": 20,
         "symfony/routing": 20,
-        "symfony/config": 20,
-        "symfony/class-loader": 20
+        "symfony/config": 20
     },
     "platform": [
 
