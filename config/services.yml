@@ -1,0 +1,11 @@
+parameters:
+  ts3.host: localhost
+  ts3.port: 9988
+  ts3.username: serveradmin
+  ts3.password: ""
+  ts3.query_port: 10011
+
+services:
+  ts3interface:
+    class: Ts3Interface
+    arguments: ["%ts3.host%", "%ts3.query_port%", "%ts3.port%", "%ts3.username%", "%ts3.password%"]
