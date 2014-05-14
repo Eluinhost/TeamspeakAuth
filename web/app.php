@@ -1,5 +1,7 @@
 <?php
 
+use Assetic\Extension\Twig\AsseticExtension;
+use Assetic\Factory\AssetFactory;
 use PublicUHC\TeamspeakAuth\ControllerResolver;
 use PublicUHC\TeamspeakAuth\ParameterBagNested;
 use Symfony\Bridge\Twig\Extension\RoutingExtension;
@@ -51,6 +53,11 @@ $twigEnvironment = new Twig_Environment(new Twig_Loader_Filesystem(__DIR__ . './
 $twigEnvironment->addExtension(new RoutingExtension(new UrlGenerator($collection, $requestContext)));
 $templating = new TwigEngine($twigEnvironment, new TemplateNameParser());
 $container->set('templating', $templating);
+
+/**
+ * Set up assetic and add the extension to twig
+ */
+$twigEnvironment->addExtension(new AsseticExtension(new AssetFactory('/web')));
 
 /**
  * Set up the kernel
