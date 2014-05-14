@@ -28,6 +28,15 @@ var server = mc.createServer({
 
 server.on('login', function(client) {
     //TODO generate code, insert into database send player the code
+
+    /*
+     "INSERT INTO %s(username, code, created_time) "
+     "VALUES (%s, %s, NOW()) "
+     "ON DUPLICATE KEY UPDATE "
+     "code=%s,created_time=NOW()",
+     (DB_TABLE, username, code, code))
+     */
+
     var code = chance.hash({length: 10, casing: 'upper'});
     client.write('kick_disconnect', {
         reason: 'Your code is ' + code + ', it will last for the next 15 minutes.'
