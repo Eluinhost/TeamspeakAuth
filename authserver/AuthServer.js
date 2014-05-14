@@ -1,6 +1,7 @@
 var mc = require('minecraft-protocol');
 var yaml = require('yaml');
-fs   = require('fs');
+var fs   = require('fs');
+var chance = require('chance').Chance();
 
 var host = '0.0.0.0';
 var post = 25565;
@@ -27,7 +28,8 @@ var server = mc.createServer({
 
 server.on('login', function(client) {
     //TODO generate code, insert into database send player the code
+    var code = chance.hash({length: 10, casing: 'upper'});
     client.write('kick_disconnect', {
-        reason: 'Kick message'
+        reason: 'Your code is ' + code + ', it will last for the next 15 minutes.'
     });
 });
