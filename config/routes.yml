@@ -4,7 +4,7 @@ authcheck:
     defaults: { _controller: 'PublicUHC\TeamspeakAuth\TeamspeakAuthController::authAction' }
 
 ts3code:
-    path:     /ts3code
+    path:     /teamspeakcode
     defaults: { _controller: 'PublicUHC\TeamspeakAuth\TeamspeakAuthController::requestTeamspeakAction' }
 
 homepage:
