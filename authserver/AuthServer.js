@@ -55,8 +55,8 @@ function kickClientWithCode(client, code) {
  * @param message the message to send them
  */
 function kickClientWithMessage(client, message) {
-    client.write('kick_disconnect', {
-        reason: message
+    client.write(0x40, {
+        reason: JSON.stringify(message)
     });
 }
 
