@@ -15,7 +15,6 @@ use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\Router;
 use Symfony\Component\Templating\TemplateNameParser;
 
 $loader = require __DIR__ . '/../vendor/autoload.php';
