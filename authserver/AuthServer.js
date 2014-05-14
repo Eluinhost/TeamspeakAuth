@@ -1,5 +1,5 @@
 var mc = require('minecraft-protocol');
-var yaml = require('yaml');
+var yaml = require('js-yaml');
 var fs   = require('fs');
 var chance = require('chance').Chance();
 
