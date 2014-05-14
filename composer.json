@@ -16,7 +16,9 @@
         "symfony/config": "2.4.x-dev",
         "symfony/yaml": "2.4.x-dev",
         "symfony/http-kernel": "2.4.x-dev",
-        "symfony/dependency-injection": "2.4.x-dev"
+        "symfony/dependency-injection": "2.4.x-dev",
+        "symfony/templating": "2.4.x-dev",
+        "symfony/twig-bridge": "2.4.x-dev"
     },
     "autoload": {
         "psr-4": {"PublicUHC\\TeamspeakAuth\\": "src/PublicUHC/TeamspeakAuth"}
