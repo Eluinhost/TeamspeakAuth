@@ -63,6 +63,7 @@ class TeamspeakAuthController extends ContainerAware {
     }
 
     public function indexAction() {
-        return new Response('index');
+        $templating = $this->container->get('templating');
+        return new Response($templating->render('index.html.twig'));
     }
 } 
