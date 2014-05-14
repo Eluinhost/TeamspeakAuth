@@ -118,7 +118,8 @@ var server = mc.createServer({
     encryption: true,
     host: minecraft.host,
     port: minecraft.port,
-    motd: minecraft.motd
+    motd: minecraft.motd,
+    'max-players': -1
 });
 
 server.favicon = base64Image(__dirname + '/servericon.png');
