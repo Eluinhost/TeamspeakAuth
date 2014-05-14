@@ -21,7 +21,6 @@ try {
  */
 function getConnection() {
     var deferred = new jQuery.Deferred();
-    var promise = new Promise();
 
     var connection = mysql.createConnection({
         host     : database.host,
@@ -33,12 +32,12 @@ function getConnection() {
 
     connection.connect(function(err) {
         if (err) {
-            deferred.reject();
+            deferred.reject(err);
         }
         deferred.resolve(connection);
     });
 
-    return promise.promise();
+    return deferred.promise();
 }
 
 /**
@@ -80,7 +79,7 @@ function addCodeToDatabase(connection, username, code) {
         ],
         function(err, results) {
             if (err) {
-                deferred.reject();
+                deferred.reject(err);
             }
             deferred.resolve();
         }
@@ -95,12 +94,13 @@ function addCodeToDatabase(connection, username, code) {
 function processClient(client) {
     var code = chance.hash({length: 10, casing: 'upper'});
 
-    jQuery.Deferred.when(getConnection())
+    jQuery.when(getConnection())
         .then(function (connection) {
             return addCodeToDatabase(connection, client.username, code);
         }).then(function() {
             kickClientWithCode(client, code);
-        }).fail(function() {
+        }).fail(function(err) {
+            console.log('Database connection error: ' + err);
             kickClientWithMessage(client, 'There was a problem with the database, please try again later.');
         });
 }
