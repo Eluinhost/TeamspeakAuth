@@ -23,17 +23,13 @@ Installation
 This project has the following requirements:
 
 - PHP
-- Python 2.7
 - MySQL
-- Web server with PHP support
-- [MySQL-python module](https://pypi.python.org/pypi/MySQL-python)
-- [twisted module](https://twistedmatrix.com/trac/)
-- [pycrypto module](https://pypi.python.org/pypi/pycrypto/2.6.1)
-- [PyYaml module](http://pyyaml.org/)
+- Web Server with PHP support
+- NodeJS
 
 If not using a pre-built package with dependencies included you will also need the following
 
-- NodeJS and Bower (for installing bootstrap)
+- Bower (for installing bootstrap)
 - Composer (for installing all PHP dependencies and autoloading)
 
 ### Set up dependencies
@@ -101,6 +97,6 @@ You can use the following snippet to create the default structure.
 How to run the fake Minecraft server
 ------------------------------------
 
-To run the authentication server all you need to do is change into the authserver folder and run the following:
+To run the authentication server all you need to do is run authserver/AuthServer.js with node:
 
-`python TeamspeakAuthServer.py`
+`node AuthServer.js`
