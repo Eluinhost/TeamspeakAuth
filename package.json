@@ -6,7 +6,8 @@
     "author": "Graham Howden <graham_howden1@yahoo.co.uk",
     "files": "authserver",
     "dependencies": {
-        "minecraft-protocol": "0.12.1"
+        "minecraft-protocol": "0.12.1",
+        "js-yaml": "3.0.2"
     },
     "private": true
 }
