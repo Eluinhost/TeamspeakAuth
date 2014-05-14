@@ -18,39 +18,50 @@ use Symfony\Component\Templating\TemplateNameParser;
 
 $loader = require __DIR__ . '/../vendor/autoload.php';
 
-// look inside the src directory
-$locator = new FileLocator(array(__DIR__ . '/../config/'));
-$loader = new Symfony\Component\Routing\Loader\YamlFileLoader($locator);
-$collection = $loader->load('routes.yml');
-
-$matcher = new UrlMatcher($collection, new RequestContext());
-
-$dispatcher = new EventDispatcher();
-$routerListener = new RouterListener($matcher);
-$dispatcher->addSubscriber($routerListener);
-
-$container = new ContainerBuilder(new ParameterBagNested());
-$diLoader = new Symfony\Component\DependencyInjection\Loader\YamlFileLoader($container, $locator);
-$diLoader->load('config.yml');
-
+/**
+ * Create the request and it's context
+ */
 $request = Request::createFromGlobals();
 
 $requestContext = new RequestContext();
 $requestContext->fromRequest($request);
 
-$urlGenerator = new UrlGenerator($collection, $requestContext);
+/**
+ * Set up the file locator to get our config files from
+ */
+$configLocator = new FileLocator(array(__DIR__ . '/../config/'));
 
-$twigLoader = new Twig_Loader_Filesystem(__DIR__ . './../templates/');
-$twigEnvironment = new Twig_Environment($twigLoader);
-$twigEnvironment->addExtension(new RoutingExtension($urlGenerator));
+/*
+ * Load the routing from the file /config/routes.yml
+ */
+$loader = new Symfony\Component\Routing\Loader\YamlFileLoader($configLocator);
+$collection = $loader->load('routes.yml');
 
+/*
+ * Load the DI container from the file /config/config.yml
+ */
+$container = new ContainerBuilder(new ParameterBagNested());
+$diLoader = new Symfony\Component\DependencyInjection\Loader\YamlFileLoader($container, $configLocator);
+$diLoader->load('config.yml');
+
+/**
+ * Set up twig and add it to the container
+ */
+$twigEnvironment = new Twig_Environment(new Twig_Loader_Filesystem(__DIR__ . './../templates/'));
+$twigEnvironment->addExtension(new RoutingExtension(new UrlGenerator($collection, $requestContext)));
 $templating = new TwigEngine($twigEnvironment, new TemplateNameParser());
 $container->set('templating', $templating);
 
-$resolver = new ControllerResolver($container);
-$kernel = new HttpKernel($dispatcher, $resolver);
+/**
+ * Set up the kernel
+ */
+$dispatcher = new EventDispatcher();
+$dispatcher->addSubscriber(new RouterListener(new UrlMatcher($collection, $requestContext)));
+$kernel = new HttpKernel($dispatcher, new ControllerResolver($container));
 
+/**
+ * Handle the request
+ */
 $response = $kernel->handle($request);
 $response->send();
-
 $kernel->terminate($request, $response);
