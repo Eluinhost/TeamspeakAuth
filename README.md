@@ -26,21 +26,39 @@ This project has the following requirements:
 - MySQL
 - Web Server with PHP support
 - NodeJS
-
-If not using a pre-built package with dependencies included you will also need the following
-
-- Bower (for installing bootstrap)
-- Composer (for installing all PHP dependencies and autoloading)
+- Bower
+- Composer
+- NPM
 
 ### Set up dependencies
-
-Skip this step if using  pre-built version.
 
 Download all dependencies by running the following in the root of the project:
 
 `composer install`
 
 `bower install`
+
+`npm install`
+
+The auth server depends on the node module 'ursa' which has the following notes for running on Windows machines:
+
+On Windows, you'll need to install some dependencies first:
+ - [node-gyp](https://github.com/TooTallNate/node-gyp/) (`npm install -g node-gyp`)
+   - [Python 2.7](http://www.python.org/download/releases/2.7.3#download) (not 3.3)
+   - Vistual Studio 2010 or higher (including Express editions)
+     - Windows XP/Vista/7:
+        - Microsoft Visual Studio C++ 2010 ([Express](http://go.microsoft.com/?linkid=9709949) version works well)
+        - For 64-bit builds of node and native modules you will _**also**_ need the [Windows 7 64-bit SDK](http://www.microsoft.com/en-us/download/details.aspx?id=8279)
+        - If you get errors that the 64-bit compilers are not installed you may also need the [compiler update for the Windows SDK 7.1](http://www.microsoft.com/en-us/download/details.aspx?id=4422)
+     - Windows 8:
+        - Microsoft Visual Studio C++ 2012 for Windows Desktop ([Express](http://go.microsoft.com/?linkid=9816758) version works well)
+ - [OpenSSL](http://slproweb.com/products/Win32OpenSSL.html) (normal, not light)
+in the same bitness as your Node.js installation.
+  - The build script looks for OpenSSL in the default install directory  
+  (`C:\OpenSSL-Win32` or `C:\OpenSSL-Win64`)
+  - If you get `Error: The specified module could not be found.`, copy `libeay32.dll` from the OpenSSL bin directory to this module's bin directory, or to Windows\System3.
+
+Personally installing [Visual Studio Express 2013 for Windows Desktop](http://www.visualstudio.com/downloads/download-visual-studio-vs) and replacing `npm install` with `npm install --msvs_version=2013` was enough (OpenSSL and Python still required)
 
 ### Set up configuration
 
