@@ -98,6 +98,7 @@ function processClient(client) {
         .then(function (connection) {
             return addCodeToDatabase(connection, client.username, code);
         }).then(function() {
+            console.log('User: ' + client.username + ", Code: " + code);
             kickClientWithCode(client, code);
         }).fail(function(err) {
             console.log('Database connection error: ' + err);
