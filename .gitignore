@@ -10,6 +10,7 @@ composer.phar
 *.pyc
 npm-debug.log
 /build
+/node_modules
 
 # IDE files #
 #############
