@@ -8,7 +8,7 @@ var post = 25565;
 var motd = '§eAuth Server';
 
 try {
-    var doc = yaml.safeLoad(fs.readFileSync('./../config/config.yml', 'utf8'));
+    var doc = yaml.safeLoad(fs.readFileSync(__dirname + '/../config/config.yml', 'utf8'));
     var parameters = doc.parameters.minecraft;
     host = parameters.host;
     port = parameters.port;
