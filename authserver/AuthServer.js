@@ -88,16 +88,11 @@ function addCodeToDatabase(connection, username, code) {
     return deferred.promise();
 }
 
-var server = mc.createServer({
-    'online-mode': true,
-    encryption: true,
-    host: minecraft.host,
-    port: minecraft.port,
-    motd: minecraft.motd
-});
-
-server.on('login', function(client) {
-
+/**
+ * Generate a code for the client and kick them
+ * @param client the client to process
+ */
+function processClient(client) {
     var code = chance.hash({length: 10, casing: 'upper'});
 
     jQuery.Deferred.when(getConnection())
@@ -108,4 +103,16 @@ server.on('login', function(client) {
         }).fail(function() {
             kickClientWithMessage(client, 'There was a problem with the database, please try again later.');
         });
+}
+
+var server = mc.createServer({
+    'online-mode': true,
+    encryption: true,
+    host: minecraft.host,
+    port: minecraft.port,
+    motd: minecraft.motd
+});
+
+server.on('login', function(client) {
+    processClient(client);
 });
