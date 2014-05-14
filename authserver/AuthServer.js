@@ -4,6 +4,8 @@ var fs   = require('fs');
 var chance = require('chance').Chance();
 var mysql = require('mysql');
 var jQuery = require('jquery-deferred');
+var mime = require('mime');
+var util = require('util');
 
 var minecraft, database;
 
@@ -14,6 +16,11 @@ try {
 } catch (e) {
     console.log(e);
     return;
+}
+
+function base64Image(src) {
+    var data = fs.readFileSync(src).toString("base64");
+    return util.format("data:%s;base64,%s", mime.lookup(src), data);
 }
 
 /**
@@ -113,6 +120,8 @@ var server = mc.createServer({
     port: minecraft.port,
     motd: minecraft.motd
 });
+
+server.favicon = base64Image(__dirname + '/servericon.png');
 
 server.on('login', function(client) {
     processClient(client);
