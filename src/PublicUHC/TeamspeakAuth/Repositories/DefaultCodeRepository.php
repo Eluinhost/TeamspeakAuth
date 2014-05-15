@@ -34,7 +34,7 @@ class DefaultCodeRepository implements CodeRepository {
     public function doesCodeMatchForUserID($code, $userID)
     {
         $stmt = $this->connection->prepare(
-            'SELECT * FROM ' . $this->table_name . ' WHERE uuid = :uuid AND code = :code AND TIMESTAMPDIFF(MINUTE,created_time,NOW()) < :minutes LIMIT 1'
+            'SELECT * FROM ' . $this->table_name . ' WHERE BINARY uuid = :uuid AND BINARY code = :code AND TIMESTAMPDIFF(MINUTE,created_time,NOW()) < :minutes LIMIT 1'
         );
         $stmt->bindParam('uuid', $userID, PDO::PARAM_STR);
         $stmt->bindParam('code', $code, PDO::PARAM_STR);
