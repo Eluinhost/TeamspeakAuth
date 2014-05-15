@@ -1,12 +1,12 @@
 # routes.yml
 authcheck:
     path:     /auth
-    defaults: { _controller: 'PublicUHC\TeamspeakAuth\TeamspeakAuthController::authAction' }
+    defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakAuthController::authAction' }
 
 teamspeakcode:
     path:     /teamspeakcode
-    defaults: { _controller: 'PublicUHC\TeamspeakAuth\TeamspeakAuthController::requestTeamspeakAction' }
+    defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakAuthController::requestTeamspeakAction' }
 
 homepage:
     path:     /
-    defaults: { _controller: 'PublicUHC\TeamspeakAuth\TeamspeakAuthController::indexAction' }
+    defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakAuthController::indexAction' }

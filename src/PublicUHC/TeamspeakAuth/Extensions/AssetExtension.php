@@ -1,5 +1,5 @@
 <?php
-namespace PublicUHC\TeamspeakAuth;
+namespace PublicUHC\TeamspeakAuth\Extensions;
 
 use Symfony\Component\Templating\Helper\AssetsHelper;
 

@@ -1,6 +1,6 @@
 <?php
 
-use PublicUHC\TeamspeakAuth\AssetExtension;
+use PublicUHC\TeamspeakAuth\Extensions\AssetExtension;
 use PublicUHC\TeamspeakAuth\ControllerResolver;
 use PublicUHC\TeamspeakAuth\ParameterBagNested;
 use Symfony\Bridge\Twig\Extension\RoutingExtension;

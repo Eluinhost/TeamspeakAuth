@@ -1,6 +1,6 @@
 <?php
 
-namespace PublicUHC\TeamspeakAuth;
+namespace PublicUHC\TeamspeakAuth\Controllers;
 
 use PublicUHC\TeamspeakAuth\Helpers\TeamspeakHelper;
 use Symfony\Component\DependencyInjection\ContainerAware;
