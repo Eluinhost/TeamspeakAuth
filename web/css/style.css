@@ -1,9 +1,9 @@
 body {
-    background-image: url('../img/pat.png');
+    background-image: url('../images/pat.png');
 }
 .jumbotron {
     text-align: center;
-    background-image: url('../img/connecto.png');
+    background-image: url('../images/connecto.png');
     margin-top: 50px;
 }
 .form-control {
