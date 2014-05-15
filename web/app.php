@@ -9,8 +9,11 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\EventListener\RouterListener;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\HttpKernel;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
@@ -75,6 +78,13 @@ $kernel = new HttpKernel($dispatcher, new ControllerResolver($container));
 /**
  * Handle the request
  */
-$response = $kernel->handle($request);
+try {
+    $response = $kernel->handle($request);
+} catch (NotFoundHttpException $ex) {
+    $response = new Response('<h1>404 File Not Found</h1>', 404);
+} catch(Exception $ex) {
+    error_log('Internal Error: ' . $ex->getMessage());
+    $response = new Response('<h1>500 Internal Server Error</h1>', 500);
+}
 $response->send();
 $kernel->terminate($request, $response);
