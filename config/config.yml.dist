@@ -1,5 +1,6 @@
 parameters:
   minutesToLast: 15
+  iconURL: "https://minotar.net/helm/%username%/16.png"
   teamspeak:
     host: localhost
     port: 9988
@@ -21,6 +22,9 @@ parameters:
     motd: "§eAuth Server"
 
 services:
+  minecrafthelper:
+    class: PublicUHC\TeamspeakAuth\Helpers\DefaultMinecraftHelper
+    arguments: ["%iconURL%"]
   teamspeakhelper:
     class: PublicUHC\TeamspeakAuth\Helpers\DefaultTeamspeakHelper
     arguments: ["@teamspeakserver"]
