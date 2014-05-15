@@ -74,11 +74,17 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
      * @param $data
      * @return int crc32 of the data supplied
      */
-    private function customCRC32($data){
+    private function customCRC32($data)
+    {
         $crc = crc32($data);
         if($crc < 0){
             $crc += 0x100000000;
         }
         return $crc;
+    }
+
+    public function setClientDescription(TeamSpeak3_Node_Client $client, $description)
+    {
+        $client->modifyDb(['client_description' => $description]);
     }
 }
