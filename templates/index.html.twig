@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css', 'bootstrap') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-theme.min.css', 'bootstrap') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
-</head>
-<body>
+{% extends 'layout.html.twig' %}
+
+{% block title %}Teamspeak Authentication - Home{% endblock %}
+
+{% block content %}
 <div class="container">
     <div class="jumbotron">
         <h1>Teamspeak Verification</h1>
@@ -49,8 +45,9 @@
         <em>Minecraft faces are added based on Minotar and to change inside teamspeak requires reverification</em>
     </div>
 </div>
-<script src="{{ asset('jquery.min.js', 'jquery') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js', 'bootstrap') }}"></script>
-<script src="{{ asset('js/index.js') }}"></script>
-</body>
-</html>
+{% endblock %}
+
+{% block javascripts %}
+    {{  parent() }}
+    <script src="{{ asset('js/index.js') }}"></script>
+{% endblock %}
