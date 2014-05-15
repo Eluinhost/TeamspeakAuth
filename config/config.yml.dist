@@ -12,10 +12,6 @@ parameters:
     database: authentication
     username: ""
     password: ""
-    driver: pdo_mysql
-    debug: false
-    entityPaths:
-    - "/src"
   minecraft:
     host: localhost
     port: 35879
@@ -25,13 +21,3 @@ services:
   ts3interface:
     class: PublicUHC\TeamspeakAuth\TeamspeakHelper
     arguments: ["%teamspeak.host%", "%teamspeak.query_port%", "%teamspeak.port%", "%teamspeak.username%", "%teamspeak.password%"]
-  entitymanager:
-    class: Doctrine\ORM\EntityManager
-    factory_class: Doctrine\ORM\EntityManager
-    factory_method: create
-    arguments: ["%database%", "@databaseconfiguration"]
-  databaseconfiguration:
-    class: Doctrine\ORM\Configuration
-    factory_class: Doctrine\ORM\Tools\Setup
-    factory_method: createAnnotationMetadataConfiguration
-    arguments: ["%database.entityPaths%", "%database.debug%"]

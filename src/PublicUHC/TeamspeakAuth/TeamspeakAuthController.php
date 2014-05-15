@@ -46,8 +46,6 @@ class TeamspeakAuthController extends ContainerAware {
             $uuid = $ts3->getUUIDForClient($client);
             $randomCode = substr(md5(rand()), 0, 10);
 
-            $entityManager = $this->container->get('entitymanager');
-
             //TODO insert UUID and code into database
 
             $response->setData(array(
