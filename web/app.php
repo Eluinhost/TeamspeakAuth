@@ -63,6 +63,7 @@ $assetsHelper = new AssetsHelper($request->getBasePath());
 
 $assetsHelper->addPackage('bootstrap', new PathPackage('assets/bootstrap/dist'));
 $assetsHelper->addPackage('jquery', new PathPackage('assets/jquery/dist'));
+$assetsHelper->addPackage('fontawesome', new PathPackage('assets/fontawesome'));
 
 $assetsExtension = new AssetExtension($assetsHelper);
 $twigEnvironment->addExtension($assetsExtension);
