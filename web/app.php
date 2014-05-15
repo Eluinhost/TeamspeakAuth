@@ -81,10 +81,10 @@ $kernel = new HttpKernel($dispatcher, new ControllerResolver($container));
 try {
     $response = $kernel->handle($request);
 } catch (NotFoundHttpException $ex) {
-    $response = new Response('<h1>404 File Not Found</h1>', 404);
+    $response = new Response($templating->render('404.html.twig'), 404);
 } catch(Exception $ex) {
     error_log('Internal Error: ' . $ex->getMessage());
-    $response = new Response('<h1>500 Internal Server Error</h1>', 500);
+    $response = new Response($templating->render('500.html.twig'), 500);
 }
 $response->send();
 $kernel->terminate($request, $response);
