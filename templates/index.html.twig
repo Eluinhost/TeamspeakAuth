@@ -2,8 +2,9 @@
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" type="text/css" href="../web/assets/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../web/css/style.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css', 'bootstrap') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-theme.min.css', 'bootstrap') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
 </head>
 <body>
 <div class="container">
@@ -13,7 +14,7 @@
         <p>Teamspeak verification allows you to be sure of who you are talking to.</p>
         <p>A verified user will have a &#10003; after their name and their client description will be their Minecraft username</p>
         <p><em>To see a clients description, click on them and their description is shown in the right hand side info box</em></p>
-        <p>Example: <img src="../web/img/fairy.png"/>
+        <p>Example: <img src="{{ asset('images/fairy.png') }}"/>
         </p>
         <h1>Verify your account!</h1>
         <form id="auth" action="" method="">
@@ -48,8 +49,8 @@
         <em>Minecraft faces are added based on Minotar and to change inside teamspeak requires reverification</em>
     </div>
 </div>
-<script src="../web/assets/jquery/dist/jquery.min.js"></script>
-<script src="../web/assets/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="{{ asset('jquery.min.js', 'jquery') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js', 'bootstrap') }}"></script>
 <script type="text/javascript">
     $(document).ready(function(){
 
