@@ -1,10 +1,15 @@
 body {
-    background-image: url('../images/pat.png');
+    background-image: url('../images/graphy.png');
+    padding-top: 150px;
+    padding-bottom: 150px;
 }
-.jumbotron {
-    text-align: center;
-    background-image: url('../images/connecto.png');
-    margin-top: 50px;
+.page-wrapper {
+    background-image: url('../images/main.png');
+    border: 1px solid #dddddd;
+    -moz-box-shadow: 5px 5px rgba(0,0,0,0.2);
+    -webkit-box-shadow: 5px 5px rgba(0,0,0,0.2);
+    box-shadow: 5px 5px rgba(0,0,0,0.2);
+    padding: 15px;
 }
 .form-control {
     text-align: center;

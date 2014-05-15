@@ -11,9 +11,15 @@
     {% endblock %}
 </head>
 <body>
+<div class="container">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="row page-wrapper text-center">
 {% block content %}
 
 {% endblock %}
+        </div>
+    </div>
+</div>
 {% block javascripts %}
 <script src="{{ asset('jquery.min.js', 'jquery') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js', 'bootstrap') }}"></script>
