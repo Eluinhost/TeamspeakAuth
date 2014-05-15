@@ -44,10 +44,9 @@ class TeamspeakAuthController extends ContainerAware {
             }
 
             $uuid = $ts3->getUUIDForClient($client);
-            $randomCode = substr(md5(rand()), 0, 10);
 
             $codeRepository = $this->container->get('coderepository');
-            $codeRepository->insertCodeForUUID($uuid, $randomCode);
+            $codeRepository->insertCodeForUUID($uuid);
 
             $response->setData([
                 'UUID' => $uuid
@@ -63,7 +62,7 @@ class TeamspeakAuthController extends ContainerAware {
         } catch ( \PDOException $ex) {
             $response->setStatusCode(500);
             $response->setData([
-                'error' => 'Error connecting to the database' . json_encode($ex->getMessage())
+                'error' => 'Error connecting to the database'
             ]);
             return $response;
         }
