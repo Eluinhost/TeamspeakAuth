@@ -10,6 +10,8 @@ parameters:
     host: localhost
     port: 3306
     database: authentication
+    minecraft_table: minecraft_codes
+    teamspeak_table: teamspeak_codes
     username: ""
     password: ""
   minecraft:
