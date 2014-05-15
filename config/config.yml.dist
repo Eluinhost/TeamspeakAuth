@@ -22,7 +22,7 @@ parameters:
 
 services:
   ts3interface:
-    class: PublicUHC\TeamspeakAuth\TeamspeakHelper
+    class: PublicUHC\TeamspeakAuth\Helpers\DefaultTeamspeakHelper
     arguments: ["%teamspeak.host%", "%teamspeak.query_port%", "%teamspeak.port%", "%teamspeak.username%", "%teamspeak.password%"]
   tscodes:
     class: PublicUHC\TeamspeakAuth\Repositories\DefaultCodeRepository

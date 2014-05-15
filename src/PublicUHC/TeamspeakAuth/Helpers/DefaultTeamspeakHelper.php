@@ -1,13 +1,13 @@
 <?php
 
-namespace PublicUHC\TeamspeakAuth;
+namespace PublicUHC\TeamspeakAuth\Helpers;
 
 use TeamSpeak3;
 use TeamSpeak3_Adapter_ServerQuery_Exception;
 use TeamSpeak3_Node_Client;
 use TeamSpeak3_Node_Server;
 
-class TeamspeakHelper {
+class DefaultTeamspeakHelper implements TeamspeakHelper {
 
     private $host;
     private $queryPort;
@@ -23,13 +23,8 @@ class TeamspeakHelper {
         $this->password = $password;
     }
 
-    /**
-     * Return the UUID for the given name
-     * @param $name string the name to search for
-     * @return TeamSpeak3_Node_Client|null the client if found, null otherwise
-     */
     public function getClientForName($name) {
-        $server = self::getServerInstance();
+        $server = $this->getServerInstance();
         $client = null;
         try{
             $client = $server->clientGetByName($name);
