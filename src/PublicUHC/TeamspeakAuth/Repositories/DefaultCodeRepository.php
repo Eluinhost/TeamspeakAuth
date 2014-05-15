@@ -21,9 +21,11 @@ class DefaultCodeRepository implements CodeRepository {
     {
         $stmt = $this->connection->prepare('INSERT INTO ' . $this->table_name . '(uuid, code, created_time) VALUES (:uuid, :code, NOW()) ON DUPLICATE KEY UPDATE code=:code, created_time=NOW()');
         $stmt->bindParam('uuid', $userID, PDO::PARAM_STR);
-        $stmt->bindParam('code', self::generateCode(), PDO::PARAM_STR);
+        $code = self::generateCode();
+        $stmt->bindParam('code', $code, PDO::PARAM_STR);
 
         $stmt->execute();
+        return $code;
     }
 
     public function generateCode($length = 10)

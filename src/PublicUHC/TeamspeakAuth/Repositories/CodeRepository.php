@@ -7,6 +7,7 @@ interface CodeRepository {
     /**
      * Generate a code and insert it into the database for the given userID
      * @param $userID string an identifier for the user
+     * @return $code string the generated code
      */
     public function insertCodeForUserID($userID);
 
