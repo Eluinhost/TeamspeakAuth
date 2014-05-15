@@ -2,11 +2,14 @@
 
 namespace PublicUHC\TeamspeakAuth\Controllers;
 
+use PublicUHC\TeamspeakAuth\Helpers\MinecraftHelper;
 use PublicUHC\TeamspeakAuth\Helpers\TeamspeakHelper;
+use PublicUHC\TeamspeakAuth\Repositories\CodeRepository;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use TeamSpeak3_Node_Client;
 
 class TeamspeakAuthController extends ContainerAware {
 
@@ -19,6 +22,10 @@ class TeamspeakAuthController extends ContainerAware {
         $mc_code = $request->query->get('mc_code');
 
         try {
+            /**
+             * @var $tsCodes CodeRepository
+             * @var $mcCodes CodeRepository
+             */
             $tsCodes = $this->container->get('tscodes');
             $mcCodes = $this->container->get('mccodes');
 
@@ -30,17 +37,47 @@ class TeamspeakAuthController extends ContainerAware {
                 return $response;
             }
 
-            //TODO check the rest of the parameters
+            if (!$mcCodes->doesCodeMatchForUserID($mc_code, $mc_uuid)) {
+                $response->setStatusCode(400);
+                $response->setData([
+                    'error' => 'Invalid code for the given Minecraft username'
+                ]);
+                return $response;
+            }
 
-            //TODO run the teamspeak auth part
+            /** @var $tsHelper TeamspeakHelper */
+            $tsHelper = $this->container->get('teamspeakhelper');
 
-            //TODO delete the codes
+            /** @var $client Teamspeak3_Node_Client */
+            $client = $tsHelper->getClientByUUID($ts_uuid);
+
+            //set the description
+            $tsHelper->setClientDescription($client, $mc_uuid);
+
+            //add the required server group
+            $groupID = $this->container->getParameter('teamspeak.group_id');
+            $client->addServerGroup($groupID);
+
+            /** @var $mcHelper MinecraftHelper */
+            $mcHelper = $this->container->get('minecrafthelper');
+
+            $playerIcon = $mcHelper->getIconForUsername($mc_uuid);
+            $tsHelper->setClientIcon($client, $playerIcon);
+
+            $tsCodes->removeForUserID($ts_uuid);
+            $mcCodes->removeForUserID($mc_uuid);
 
             return $response;
         } catch ( \PDOException $ex ) {
             $response->setStatusCode(500);
             $response->setData([
                 'error' => 'Error connecting to the database'
+            ]);
+            return $response;
+        } catch ( \TeamSpeak3_Exception $ex ) {
+            $response->setStatusCode(500);
+            $response->setData([
+                'error' => 'There was a problem with Teamspeak, please try again later'
             ]);
             return $response;
         }
