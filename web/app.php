@@ -1,23 +1,11 @@
 <?php
 
-use Assetic\Asset\AssetCollection;
-use Assetic\Asset\GlobAsset;
-use Assetic\AssetWriter;
-use Assetic\Extension\Twig\AsseticExtension;
-use Assetic\Extension\Twig\TwigFormulaLoader;
-use Assetic\Factory\AssetFactory;
-use Assetic\Factory\LazyAssetManager;
-use Assetic\Factory\Resource\DirectoryResource;
-use Assetic\Filter\CssRewriteFilter;
-use Assetic\FilterManager;
 use PublicUHC\TeamspeakAuth\AssetExtension;
-use PublicUHC\TeamspeakAuth\AsseticLoader;
 use PublicUHC\TeamspeakAuth\ControllerResolver;
 use PublicUHC\TeamspeakAuth\ParameterBagNested;
 use Symfony\Bridge\Twig\Extension\RoutingExtension;
 use Symfony\Bridge\Twig\TwigEngine;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Request;
