@@ -87,4 +87,8 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
     {
         $client->modifyDb(['client_description' => $description]);
     }
+
+    public function getClientByUUID($uuid) {
+        return $this->server->clientGetByUid($uuid);
+    }
 }

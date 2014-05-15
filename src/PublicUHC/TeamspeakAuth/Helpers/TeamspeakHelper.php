@@ -41,4 +41,11 @@ interface TeamspeakHelper {
      * @param $description string the description to show
      */
     public function setClientDescription(TeamSpeak3_Node_Client $client, $description);
+
+    /**
+     * Get the client by their UUID
+     * @param $uuid string the uuid to look for
+     * @return mixed
+     */
+    public function getClientByUUID($uuid);
 } 
