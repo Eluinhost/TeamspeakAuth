@@ -16,4 +16,18 @@ interface TeamspeakCodeRepository {
      * @return string the code
      */
     public function generateCode($length = 10);
+
+    /**
+     * Check if the code and uuid match
+     * @param $code string the code
+     * @param $uuid string the uuid
+     * @return boolean
+     */
+    public function doesCodeMatchForUUID($code, $uuid);
+
+    /**
+     * Removes the record for the given uuid
+     * @param $uuid string the uuid
+     */
+    public function removeForUUID($uuid);
 } 
