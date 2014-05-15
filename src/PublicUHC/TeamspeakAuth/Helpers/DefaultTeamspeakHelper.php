@@ -9,18 +9,10 @@ use TeamSpeak3_Node_Server;
 
 class DefaultTeamspeakHelper implements TeamspeakHelper {
 
-    private $host;
-    private $queryPort;
-    private $serverPort;
-    private $username;
-    private $password;
+    private $server;
 
-    public function __construct($host, $queryPort, $serverPort, $username, $password = '') {
-        $this->host = $host;
-        $this->queryPort = $queryPort;
-        $this->serverPort = $serverPort;
-        $this->username = $username;
-        $this->password = $password;
+    public function __construct(TeamSpeak3_Node_Server $server) {
+        $this->server = $server;
     }
 
     public function getClientForName($name) {
@@ -37,10 +29,7 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
         return ''.$client->infoDb()['client_unique_identifier'];
     }
 
-    /**
-     * @return TeamSpeak3_Node_Server
-     */
     public function getServerInstance() {
-        return TeamSpeak3::factory("serverquery://{$this->username}:{$this->password}@{$this->host}:{$this->queryPort}/?server_port={$this->serverPort}");
+        return $this->server;
     }
 } 

@@ -23,7 +23,11 @@ parameters:
 services:
   teamspeakhelper:
     class: PublicUHC\TeamspeakAuth\Helpers\DefaultTeamspeakHelper
-    arguments: ["%teamspeak.host%", "%teamspeak.query_port%", "%teamspeak.port%", "%teamspeak.username%", "%teamspeak.password%"]
+    arguments: ["@teamspeakserver"]
+  teamspeakserver:
+    factory_class: TeamSpeak3
+    factory_method: factory
+    arguments: ["serverquery://%teamspeak.username%:%teamspeak.password%@%teamspeak.host%:%teamspeak.query_port%/?server_port=%teamspeak.port%"]
   tscodes:
     class: PublicUHC\TeamspeakAuth\Repositories\DefaultCodeRepository
     arguments: ["@pdo", "%database.teamspeak_table%", "%minutesToLast%"]
