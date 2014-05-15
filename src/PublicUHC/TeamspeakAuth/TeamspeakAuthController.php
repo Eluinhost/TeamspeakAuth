@@ -9,8 +9,40 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TeamspeakAuthController extends ContainerAware {
 
-    public function authAction() {
-        //TODO
+    public function authAction(Request $request) {
+        $response = new JsonResponse();
+
+        $ts_uuid = $request->query->get('ts_uuid');
+        $ts_code = $request->query->get('ts_code');
+        $mc_uuid = $request->query->get('mc_uuid');
+        $mc_code = $request->query->get('mc_code');
+
+        try {
+            $tsCodes = $this->container->get('tscodes');
+            $mcCodes = $this->container->get('mccodes');
+
+            if (!$tsCodes->doesCodeMatchForUserID($ts_code, $ts_uuid)) {
+                $response->setStatusCode(400);
+                $response->setData([
+                    'error' => 'Invalid code for the given Teamspeak UUID'
+                ]);
+                return $response;
+            }
+
+            //TODO check the rest of the parameters
+
+            //TODO run the teamspeak auth part
+
+            //TODO delete the codes
+
+            return $response;
+        } catch ( \PDOException $ex ) {
+            $response->setStatusCode(500);
+            $response->setData([
+                'error' => 'Error connecting to the database'
+            ]);
+            return $response;
+        }
     }
 
     public function requestTeamspeakAction(Request $request) {
