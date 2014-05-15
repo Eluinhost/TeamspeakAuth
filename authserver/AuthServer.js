@@ -94,6 +94,19 @@ function addCodeToDatabase(connection, username, code) {
 }
 
 /**
+ * Returns a promise that resolves after the given duration
+ * @param duration the ms to sleep for
+ * @returns Deferred the promise that will resolve
+ */
+function sleep(duration) {
+    var deferred = new jQuery.Deferred();
+    setTimeout(function() {
+        deferred.resolve();
+    }, duration);
+    return deferred.promise();
+}
+
+/**
  * Generate a code for the client and kick them
  * @param client the client to process
  */
@@ -103,10 +116,15 @@ function processClient(client) {
     jQuery.when(getConnection())
         .then(function (connection) {
             return addCodeToDatabase(connection, client.username, code);
-        }).then(function() {
+        })
+        .then(function(){
+            return sleep(3000)
+        })
+        .then(function() {
             console.log('User: ' + client.username + ", Code: " + code);
             kickClientWithCode(client, code);
-        }).fail(function(err) {
+        })
+        .fail(function(err) {
             console.log('Database connection error: ' + err);
             kickClientWithMessage(client, 'There was a problem with the database, please try again later.');
         });
