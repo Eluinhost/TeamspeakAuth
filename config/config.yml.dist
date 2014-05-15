@@ -24,7 +24,7 @@ services:
     class: PublicUHC\TeamspeakAuth\TeamspeakHelper
     arguments: ["%teamspeak.host%", "%teamspeak.query_port%", "%teamspeak.port%", "%teamspeak.username%", "%teamspeak.password%"]
   coderepository:
-    class: PublicUHC\TeamspeakAuth\TeamspeakCodeRepository
+    class: PublicUHC\TeamspeakAuth\Repositories\DefaultTeamspeakCodeRepository
     arguments: ["@pdo", "%database.teamspeak_table%", "%database.minecraft_table%"]
   pdo:
     class: PDO

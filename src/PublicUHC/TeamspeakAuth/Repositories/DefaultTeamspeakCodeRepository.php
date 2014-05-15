@@ -1,10 +1,10 @@
 <?php
-namespace PublicUHC\TeamspeakAuth;
+namespace PublicUHC\TeamspeakAuth\Repositories;
 
 
 use PDO;
 
-class TeamspeakCodeRepository {
+class DefaultTeamspeakCodeRepository implements TeamspeakCodeRepository {
 
     private $connection;
     private $ts_table;
@@ -24,11 +24,6 @@ class TeamspeakCodeRepository {
         $stmt->execute();
     }
 
-    /**
-     * Generate a random code up to 32 characters long
-     * @param int $length the length, default 10
-     * @return string the code
-     */
     public function generateCode($length = 10) {
         return substr(md5(rand()), 0, $length);
     }
