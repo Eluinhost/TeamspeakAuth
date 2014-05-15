@@ -8,11 +8,13 @@ class DefaultCodeRepository implements CodeRepository {
 
     private $connection;
     private $table_name;
+    private $mintuesToLast;
 
-    public function __construct(PDO $connection, $table_name)
+    public function __construct(PDO $connection, $table_name, $minutesToLast)
     {
         $this->connection = $connection;
         $this->table_name = $table_name;
+        $this->mintuesToLast = $minutesToLast;
     }
 
     public function insertCodeForUserID($userID)
@@ -31,9 +33,12 @@ class DefaultCodeRepository implements CodeRepository {
 
     public function doesCodeMatchForUserID($code, $userID)
     {
-        $stmt = $this->connection->prepare('SELECT * FROM ' . $this->table_name . ' WHERE uuid = :uuid AND code = :code');
+        $stmt = $this->connection->prepare(
+            'SELECT * FROM ' . $this->table_name . ' WHERE uuid = :uuid AND code = :code AND TIMESTAMPDIFF(MINUTE,created_time,NOW()) < :minutes LIMIT 1'
+        );
         $stmt->bindParam('uuid', $userID, PDO::PARAM_STR);
         $stmt->bindParam('code', $code, PDO::PARAM_STR);
+        $stmt->bindParam('minutes', $this->mintuesToLast, PDO::PARAM_INT);
 
         $success = $stmt->execute();
 

@@ -1,4 +1,5 @@
 parameters:
+  minutesToLast: 15
   teamspeak:
     host: localhost
     port: 9988
@@ -25,10 +26,10 @@ services:
     arguments: ["%teamspeak.host%", "%teamspeak.query_port%", "%teamspeak.port%", "%teamspeak.username%", "%teamspeak.password%"]
   tscodes:
     class: PublicUHC\TeamspeakAuth\Repositories\DefaultCodeRepository
-    arguments: ["@pdo", "%database.teamspeak_table%"]
+    arguments: ["@pdo", "%database.teamspeak_table%", "%minutesToLast%"]
   mccodes:
     class: PublicUHC\TeamspeakAuth\Repositories\DefaultCodeRepository
-    arguments: ["@pdo", "%database.minecraft_table%"]
+    arguments: ["@pdo", "%database.minecraft_table%", "%minutesToLast%"]
   pdo:
     class: PDO
     arguments: ["mysql:host=%database.host%;dbname=%database.database%", "%database.username%", "%database.password%"]

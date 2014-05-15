@@ -7,12 +7,13 @@ var jQuery = require('jquery-deferred');
 var mime = require('mime');
 var util = require('util');
 
-var minecraft, database;
+var minecraft, database, minutes;
 
 try {
     var doc = yaml.safeLoad(fs.readFileSync(__dirname + '/../config/config.yml', 'utf8'));
     minecraft = doc.parameters.minecraft;
     database = doc.parameters.database;
+    minutes = doc.parameters.minutesToLast;
 } catch (e) {
     console.log(e);
     return;
@@ -53,7 +54,7 @@ function getConnection() {
  * @param code the code to send
  */
 function kickClientWithCode(client, code) {
-    kickClientWithMessage(client, 'Your code is ' + code + ', it will last for the next 15 minutes.');
+    kickClientWithMessage(client, 'Your code is ' + code + ', it will last for the next ' + minutes + ' minutes.');
 }
 
 /**
