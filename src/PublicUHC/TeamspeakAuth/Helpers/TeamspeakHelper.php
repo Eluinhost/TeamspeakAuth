@@ -26,4 +26,12 @@ interface TeamspeakHelper {
      * @return TeamSpeak3_Node_Server
      */
     public function getServerInstance();
+
+    /**
+     * Set the icon for the given client
+     * @param TeamSpeak3_Node_Client $client the client to modify
+     * @param $icon
+     * @return
+     */
+    public function setClientIcon(TeamSpeak3_Node_Client $client, $icon);
 } 
