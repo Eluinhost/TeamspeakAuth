@@ -63,9 +63,7 @@ function kickClientWithCode(client, code) {
  * @param message the message to send them
  */
 function kickClientWithMessage(client, message) {
-    client.write(0x40, {
-        reason: JSON.stringify(message)
-    });
+    client.end(JSON.stringify(message));
 }
 
 /**
@@ -127,4 +125,12 @@ server.favicon = base64Image(__dirname + '/servericon.png');
 
 server.on('login', function(client) {
     processClient(client);
+});
+
+server.on('error', function(error) {
+    console.log('Error:', error);
+});
+
+server.on('listening', function() {
+    console.log('Server listening on port', server.socketServer.address().port);
 });
