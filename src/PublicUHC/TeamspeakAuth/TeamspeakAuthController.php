@@ -45,8 +45,8 @@ class TeamspeakAuthController extends ContainerAware {
 
             $uuid = $ts3->getUUIDForClient($client);
 
-            $codeRepository = $this->container->get('coderepository');
-            $codeRepository->insertCodeForUUID($uuid);
+            $codeRepository = $this->container->get('tscodes');
+            $codeRepository->insertCodeForUserID($uuid);
 
             $response->setData([
                 'UUID' => $uuid

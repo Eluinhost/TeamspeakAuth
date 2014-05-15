@@ -23,9 +23,12 @@ services:
   ts3interface:
     class: PublicUHC\TeamspeakAuth\TeamspeakHelper
     arguments: ["%teamspeak.host%", "%teamspeak.query_port%", "%teamspeak.port%", "%teamspeak.username%", "%teamspeak.password%"]
-  coderepository:
-    class: PublicUHC\TeamspeakAuth\Repositories\DefaultTeamspeakCodeRepository
-    arguments: ["@pdo", "%database.teamspeak_table%", "%database.minecraft_table%"]
+  tscodes:
+    class: PublicUHC\TeamspeakAuth\Repositories\DefaultCodeRepository
+    arguments: ["@pdo", "%database.teamspeak_table%"]
+  mccodes:
+    class: PublicUHC\TeamspeakAuth\Repositories\DefaultCodeRepository
+    arguments: ["@pdo", "%database.minecraft_table%"]
   pdo:
     class: PDO
     arguments: ["mysql:host=%database.host%;dbname=%database.database%", "%database.username%", "%database.password%"]

@@ -100,7 +100,7 @@ You can use the following snippet to create the default structure.
     CREATE TABLE minecraft_codes
     (
       ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      username varchar(16) UNIQUE NOT NULL,
+      uuid varchar(128) UNIQUE NOT NULL,
       code varchar(10) NOT NULL,
       created_time datetime
     );
