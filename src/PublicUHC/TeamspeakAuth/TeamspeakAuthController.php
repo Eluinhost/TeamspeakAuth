@@ -2,6 +2,7 @@
 
 namespace PublicUHC\TeamspeakAuth;
 
+use PublicUHC\TeamspeakAuth\Helpers\TeamspeakHelper;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -61,7 +62,7 @@ class TeamspeakAuthController extends ContainerAware {
         /**
          * @var $ts3 TeamspeakHelper
          */
-        $ts3 = $this->container->get('ts3interface');
+        $ts3 = $this->container->get('teamspeakhelper');
 
         try {
 

@@ -21,7 +21,7 @@ parameters:
     motd: "§eAuth Server"
 
 services:
-  ts3interface:
+  teamspeakhelper:
     class: PublicUHC\TeamspeakAuth\Helpers\DefaultTeamspeakHelper
     arguments: ["%teamspeak.host%", "%teamspeak.query_port%", "%teamspeak.port%", "%teamspeak.username%", "%teamspeak.password%"]
   tscodes:
