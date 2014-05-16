@@ -5,103 +5,22 @@
 {% block content %}
 <h1>Teamspeak Verification</h1>
 <br/>
-<p>Teamspeak verification allows you to be sure of who you are talking to.</p>
-<p>A verified user will have a &#10003; after their name and their client description will be their Minecraft username</p>
-<p><em>To see a clients description, click on them and their description is shown in the right hand side info box</em></p>
-<p>Example: <img src="{{ asset('images/fairy.png') }}"/>
+<p>
+    Teamspeak verification allows you to be sure of who you are talking to.
 </p>
-<h1>Verify your account!</h1>
-<form id="auth" action="" method="">
-    <h2>Step 1: Enter your current Teamspeak Nickname</h2>
-    <input type="text" class="form-control" id="ts_name" placeholder="Current Teamspeak Nickname">
-    <div id="request_code_alert" class="alert alert-danger fade in">
-        <a class="close alert-close" href="#">&times;</a>
-        <span id="request_code_error">Unknown Error</span>
-    </div>
-    <h2>Step 2: Click 'Request Codes' and check your messages in Teamspeak</h2>
-    <a id="request_codes" class="btn btn-primary btn-md" role="button">Request Codes</a>
-    <h2>Step 3: Input the codes supplied to you here:</h2>
-    <input type="text" class="form-control" id="ts_uuid" placeholder="Teamspeak UUID">
-    <input type="text" class="form-control" id="ts_code" placeholder="Teamspeak Auth code">
-    <h2>Step 4: Connect to 'auth.publicuhc.com' in Minecraft 1.7</h2> <!-- TODO show host/port from config file here -->
-    <h2>Step 5: Put your minecraft username + the code supplied by the server here:</h2>
-    <input type="text" class="form-control" id="mc_name" placeholder="Minecraft nickname">
-    <input type="text" class="form-control" id="code" placeholder="Minecraft Auth code">
-    <h2>Step 6: Click 'Verify Account!' to check all your codes are correct</h2>
-    <div id="check_auth_alert" class="alert alert-danger fade in">
-        <a class="close alert-close" href="#">&times;</a>
-        <span id="check_auth_error">Unknown Error</span>
-    </div>
-    <div id="auth_success" class="alert alert-success fade in">
-        <a class="close alert-close" href="#">&times;</a>
-        <span id="auth_success_error">Verified Successfully!</span>
-    </div>
-    <button id="check_auth" type="submit">Verify Account!</button>
-</form>
-<em>All fields are case sensitive and codes last for 15 minutes after generation.</em>
-<br/>
-<em>Minecraft faces are added based on Minotar and to change inside teamspeak requires reverification</em>
-{% endblock %}
-
-{% block javascripts %}
-    {{  parent() }}
-    <script type="text/javascript">
-        $(document).ready(function(){
-
-            $('#request_codes').click(function(e){
-                $('#request_code_alert').hide();
-                e.preventDefault();
-                $.get(
-                        "{{ path('teamspeakcode') }}",
-                        {
-                            'ts_name': $('#ts_name').val()
-                        }
-                )
-                        .done(function(data) {
-                            console.log(data);
-                            $('#ts_uuid').val(data.UUID);
-                        })
-                        .fail(function(xhr) {
-                            if(typeof xhr.responseJSON === 'undefined'){
-                                $('#request_code_error').html('Unexpected response from server');
-                            }else{
-                                var error = xhr.responseJSON.error;
-                                $('#request_code_error').html(error);
-                            }
-                            $('#request_code_alert').show();
-                        });
-            });
-
-            $('#check_auth').click(function(e){
-                $('#check_auth_alert').hide();
-                e.preventDefault();
-                $.get(
-                        "{{ path('authcheck') }}",
-                        {
-                            'ts_uuid':$('#ts_uuid').val(),
-                            'ts_code':$('#ts_code').val(),
-                            'mc_uuid':$('#mc_name').val(),
-                            'mc_code':$('#code').val()
-                        }
-                )
-                        .done(function(data) {
-                            $('#auth_success').show();
-                        })
-                        .fail(function(xhr) {
-                            if(typeof xhr.responseJSON === 'undefined'){
-                                $('#check_auth_error').html('Unexpected response from server');
-                            }else{
-                                var error = xhr.responseJSON.error;
-                                $('#check_auth_error').html(error);
-                            }
-                            $('#check_auth_alert').show();
-                        });
-            });
-            $('.alert').hide();
-            $('.alert-close').click(function(e){
-                e.preventDefault();
-                $(this).parent().hide();
-            });
-        });
-    </script>
+<p>
+    A verified user will have their description set to their Minecraft username and will have an icon that is their ingame skin.
+</p>
+<p>
+    <em>To see a clients description, click on them and their description is shown in the right hand side info box</em>
+</p>
+<p>
+    Example: <img src="{{ asset('images/fairy.png') }}"/>
+</p>
+<p>
+    <a id="request_codes" class="btn btn-primary btn-md" role="button" href="{{ path('teamspeakrequest') }}">Start verification here</a>
+</p>
+<p>
+    <em>Minecraft faces are added based on Minotar and to change inside teamspeak requires reverification</em>
+</p>
 {% endblock %}
