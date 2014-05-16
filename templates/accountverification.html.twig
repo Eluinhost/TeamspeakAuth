@@ -51,8 +51,7 @@
                     }
                 )
                 .done(function(data) {
-                    console.log('success');
-                            //TODO go to success page
+                    window.location = '{{ path('complete') }}/' + $('#mc_name').val();
                 })
                 .fail(function(xhr) {
                     if(typeof xhr.responseJSON === 'undefined'){
