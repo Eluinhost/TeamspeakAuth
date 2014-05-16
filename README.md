@@ -137,6 +137,64 @@ You can use the following snippet to create the default structure.
       code varchar(10) NOT NULL,
       created_time datetime
     );
+
+### Set up web server
+
+Apache:
+
+You want to point the webroot to the /web folder of this project. The .htaccess will handle routing everything through app.php correctly
+
+nginx:
+
+You want to set up something similar to this, routing through the app.php file. Make sure the root is the /web folder. (This is from my own configuration of a Symfony application, you will need to bend it to your will)
+
+    server {
+        server_name auth.publicuhc.com www.auth.publicuhc.com;
+        listen 37.59.47.201;
+        root /home/publicuhc/domains/auth.publicuhc.com/public_html/web;
+        index index.html index.htm index.php;
+        access_log /var/log/virtualmin/auth.publicuhc.com_access_log;
+        error_log /var/log/virtualmin/auth.publicuhc.com_error_log;
+        fastcgi_param GATEWAY_INTERFACE CGI/1.1;
+        fastcgi_param SERVER_SOFTWARE nginx;
+        fastcgi_param QUERY_STRING $query_string;
+        fastcgi_param REQUEST_METHOD $request_method;
+        fastcgi_param CONTENT_TYPE $content_type;
+        fastcgi_param CONTENT_LENGTH $content_length;
+        fastcgi_param SCRIPT_FILENAME /home/publicuhc/domains/auth.publicuhc.com/public_html/web$fastcgi_script_name;
+        fastcgi_param SCRIPT_NAME $fastcgi_script_name;
+        fastcgi_param REQUEST_URI $request_uri;
+        fastcgi_param DOCUMENT_URI $document_uri;
+        fastcgi_param DOCUMENT_ROOT /home/publicuhc/domains/auth.publicuhc.com/public_html/web;
+        fastcgi_param SERVER_PROTOCOL $server_protocol;
+        fastcgi_param REMOTE_ADDR $remote_addr;
+        fastcgi_param REMOTE_PORT $remote_port;
+        fastcgi_param SERVER_ADDR $server_addr;
+        fastcgi_param SERVER_PORT $server_port;
+        fastcgi_param SERVER_NAME $server_name;
+        fastcgi_param HTTPS $https;
+
+        # strip app.php/ prefix if it is present
+        rewrite ^/app\.php/?(.*)$ /$1 permanent;
+
+        location / {
+            index app.php;
+            try_files $uri @rewriteapp;
+        }
+
+        location @rewriteapp {
+            rewrite ^(.*)$ /app.php/$1 last;
+        }
+
+        # pass the PHP scripts to FastCGI server from upstream phpfcgi
+        location ~ ^/(app|app_dev|config)\.php(/|$) {
+            fastcgi_pass unix:/var/php-nginx/139906447829275.sock/socket;
+            fastcgi_split_path_info ^(.+\.php)(/.*)$;
+            include fastcgi_params;
+            fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param  HTTPS off;
+        }
+    }
     
 How to run the fake Minecraft server
 ------------------------------------
