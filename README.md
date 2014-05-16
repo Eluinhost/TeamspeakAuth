@@ -1,5 +1,3 @@
-REFACTORING/UPDATING - THIS REPOSITORY WILL NOT WORK IN IT'S CURRENT STATE
-
 TS3 Authentication for Minecraft Accounts
 =========================================
 
