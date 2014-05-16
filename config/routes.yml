@@ -25,4 +25,4 @@ verifyaccount:
 
 complete:
     path:     /complete/{mc_name}
-    defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakAuthController::completeAction' }
+    defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakAuthController::completeAction', mc_name: ~ }

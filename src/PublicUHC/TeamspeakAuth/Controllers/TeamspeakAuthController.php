@@ -158,7 +158,6 @@ class TeamspeakAuthController extends ContainerAware {
 
     public function verifyAccountPageAction($uuid) {
         if(null == $uuid) {
-            error_log($uuid);
             throw new NotFoundHttpException();
         }
 
@@ -172,6 +171,10 @@ class TeamspeakAuthController extends ContainerAware {
     }
 
     public function completeAction($mc_name) {
+        if(null == $mc_name) {
+            throw new NotFoundHttpException();
+        }
+
         $templating = $this->container->get('templating');
         return new Response($templating->render('complete.html.twig',
             [
