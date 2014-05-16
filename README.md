@@ -65,6 +65,8 @@ Personally installing [Visual Studio Express 2013 for Windows Desktop](http://ww
 Copy the file /config/config.yml.dist to /config/config.yml and edit the parameters to fit your server
 
     parameters:
+      minutesToLast: 15             # Number of minutes codes are valid for
+      iconURL: "https://minotar.net/helm/%username%/16.png" # URL to get the faces from, replace %username% with the minecraft username
       teamspeak:
         host: localhost             # The address of the teamspeak server
         port: 9988                  # The port of the server to use
@@ -84,12 +86,28 @@ Copy the file /config/config.yml.dist to /config/config.yml and edit the paramet
         host: localhost             # The address to listen on for the fake server
         port: 35879                 # The port to listen on for the fake server
         motd: "§eAuth Server"       # The MOTD to display on the server list
-    
+
     #  Ignore everything below here unless you know what you are doing #
     services:
-      ts3interface:
-        class: PublicUHC\TeamspeakAuth\TeamspeakHelper
-        arguments: ["%teamspeak.host%", "%teamspeak.query_port%", "%teamspeak.port%", "%teamspeak.username%", "%teamspeak.password%"]
+      minecrafthelper:
+        class: PublicUHC\TeamspeakAuth\Helpers\DefaultMinecraftHelper
+        arguments: ["%iconURL%"]
+      teamspeakhelper:
+        class: PublicUHC\TeamspeakAuth\Helpers\DefaultTeamspeakHelper
+        arguments: ["@teamspeakserver"]
+      teamspeakserver:
+        factory_class: TeamSpeak3
+        factory_method: factory
+        arguments: ["serverquery://%teamspeak.username%:%teamspeak.password%@%teamspeak.host%:%teamspeak.query_port%/?server_port=%teamspeak.port%"]
+      tscodes:
+        class: PublicUHC\TeamspeakAuth\Repositories\DefaultCodeRepository
+        arguments: ["@pdo", "%database.teamspeak_table%", "%minutesToLast%"]
+      mccodes:
+        class: PublicUHC\TeamspeakAuth\Repositories\DefaultCodeRepository
+        arguments: ["@pdo", "%database.minecraft_table%", "%minutesToLast%"]
+      pdo:
+        class: PDO
+        arguments: ["mysql:host=%database.host%;dbname=%database.database%", "%database.username%", "%database.password%"]
         
 ### Set up database
 
