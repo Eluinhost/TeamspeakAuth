@@ -124,7 +124,7 @@ class TeamspeakAuthController extends ContainerAware {
 
             $timeToLast = $this->container->getParameter('minutesToLast');
 
-            $client->message("[Verification Codes] UUID: '{$uuid}' AUTH CODE: '{$code}'. This code work for the next {$timeToLast} minutes");
+            $client->message("[Verification Code] AUTH CODE: '{$code}'. This code work for the next {$timeToLast} minutes");
 
             $response->setData([
                 'UUID' => $uuid
