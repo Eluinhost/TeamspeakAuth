@@ -76,7 +76,7 @@ function kickClientWithMessage(client, message) {
 function addCodeToDatabase(connection, username, code) {
     var deferred = new jQuery.Deferred();
     connection.query(
-        'INSERT INTO ??(username, code, created_time) VALUES (?, ?, NOW()) ON DUPLICATE KEY UPDATE code=?,created_time=NOW()',
+        'INSERT INTO ??(uuid, code, created_time) VALUES (?, ?, NOW()) ON DUPLICATE KEY UPDATE code=?,created_time=NOW()',
         [
             database.minecraft_table,
             username,
