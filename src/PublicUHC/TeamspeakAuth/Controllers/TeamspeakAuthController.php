@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use TeamSpeak3_Node_Client;
 
 class TeamspeakAuthController extends ContainerAware {
@@ -69,12 +70,14 @@ class TeamspeakAuthController extends ContainerAware {
 
             return $response;
         } catch ( \PDOException $ex ) {
+            error_log($ex->getMessage());
             $response->setStatusCode(500);
             $response->setData([
                 'error' => 'Error connecting to the database'
             ]);
             return $response;
         } catch ( \TeamSpeak3_Exception $ex ) {
+            error_log($ex->getMessage());
             $response->setStatusCode(500);
             $response->setData([
                 'error' => 'There was a problem with Teamspeak, please try again later'
@@ -145,5 +148,20 @@ class TeamspeakAuthController extends ContainerAware {
     public function indexAction() {
         $templating = $this->container->get('templating');
         return new Response($templating->render('index.html.twig'));
+    }
+
+    public function teamspeakRequestPageAction() {
+        $templating = $this->container->get('templating');
+        return new Response($templating->render('teamspeakrequest.html.twig'));
+    }
+
+    public function verifyAccountPageAction($uuid) {
+        if(null == $uuid) {
+            error_log($uuid);
+            throw new NotFoundHttpException();
+        }
+
+        $templating = $this->container->get('templating');
+        return new Response($templating->render('accountverification.html.twig', ['ts_uuid'=>$uuid]));
     }
 } 
