@@ -57,6 +57,7 @@ class TeamspeakAuthController extends ContainerAware {
 
             //add the required server group
             $groupID = $this->container->getParameter('teamspeak.group_id');
+            $client->remServerGroup($groupID);
             $client->addServerGroup($groupID);
 
             /** @var $mcHelper MinecraftHelper */
