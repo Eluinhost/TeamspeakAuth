@@ -55,7 +55,7 @@ class DefaultCodeRepository implements CodeRepository {
 
     public function removeForUserID($userID)
     {
-        $stmt = $this->connection->prepare('DELETE FROM ' . $this->table_name . ' WHERE uuid = ?');
+        $stmt = $this->connection->prepare('DELETE FROM ' . $this->table_name . ' WHERE uuid = :uuid');
         $stmt->bindParam('uuid', $userID, PDO::PARAM_STR);
         $stmt->execute();
     }
