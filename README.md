@@ -15,6 +15,15 @@ account where they will be kicked immediately with a message containing a code. 
 username and the provided code into the website. If all the data matches the website will then contact the Teamspeak
 server and set up the user.
 
+What it does
+------------
+
+When verified the site will do the following for the client:
+
+- Sets the client's description to their Minecraft username
+- Adds the user to a chosen server group
+- Uploads the head from the skin of the user to the server's icons and assigns the client the icon
+
 Installation
 ------------
 
