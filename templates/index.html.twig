@@ -58,7 +58,8 @@
                         }
                 )
                         .done(function(data) {
-                            $('#ts_uuid').val(data['UUID']);
+                            console.log(data);
+                            $('#ts_uuid').val(data.UUID);
                         })
                         .fail(function(xhr) {
                             if(typeof xhr.responseJSON === 'undefined'){
@@ -79,8 +80,8 @@
                         {
                             'ts_uuid':$('#ts_uuid').val(),
                             'ts_code':$('#ts_code').val(),
-                            'mc_name':$('#mc_name').val(),
-                            'code':$('#code').val()
+                            'mc_uuid':$('#mc_name').val(),
+                            'mc_code':$('#code').val()
                         }
                 )
                         .done(function(data) {
