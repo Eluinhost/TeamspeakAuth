@@ -66,7 +66,8 @@ Copy the file /config/config.yml.dist to /config/config.yml and edit the paramet
 
     parameters:
       minutesToLast: 15             # Number of minutes codes are valid for
-      iconURL: "https://minotar.net/helm/%username%/16.png" # URL to get the faces from, replace %username% with the minecraft username
+      iconURL: "https://minotar.net/helm/;username;/16.png" # URL to get the faces from, replaces ;username; with the minecraft username
+      serverAddress: "auth.publicuhc.com or publicuhc.com:35879" # The address to show on the webpage for the auth server
       teamspeak:
         host: localhost             # The address of the teamspeak server
         port: 9988                  # The port of the server to use
