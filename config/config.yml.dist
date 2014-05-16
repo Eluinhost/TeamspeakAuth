@@ -1,6 +1,6 @@
 parameters:
   minutesToLast: 15
-  iconURL: "https://minotar.net/helm/%username%/16.png"
+  iconURL: "https://minotar.net/helm/;username;/16.png"
   teamspeak:
     host: localhost
     port: 9988
