@@ -1,4 +1,4 @@
-# routes.yml
+# 'API' like routes that return JSON for the front end
 authcheck:
     path:     /auth
     defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakAuthController::authAction' }
@@ -7,6 +7,18 @@ teamspeakcode:
     path:     /teamspeakcode
     defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakAuthController::requestTeamspeakAction' }
 
+# Standard front end pages
+
 homepage:
     path:     /
     defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakAuthController::indexAction' }
+
+teamspeakrequest:
+    path:     /teamspeakrequest
+    defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakAuthController::teamspeakRequestPageAction' }
+
+verifyaccount:
+    path:     /verifyaccount/{uuid}
+    defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakAuthController::verifyAccountPageAction', uuid: ~ }
+    requirements:
+        uuid: .+

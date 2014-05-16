@@ -1,0 +1,74 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Teamspeak Authentication - Verify Minecraft Account{% endblock %}
+
+{% block content %}
+    <div class="col-lg-10 col-lg-offset-1">
+        <div class="row">
+            <h1>Verify your Minecraft Account</h1>
+            <p>
+                Connect to the server SERVER_ADDRESS in Minecraft 1.7.
+            </p>
+            <p>
+                You should then get a kicked with a code, enter both your username and code below (case sensitive).
+            </p>
+            <p>
+                Also input the code you received from teamspeak before into the final box.
+            </p>
+            <hr>
+
+            <div id="code_alert" class="alert alert-danger fade in">
+                <a class="close alert-close" href="#">&times;</a>
+                <span id="code_error">Unknown Error</span>
+            </div>
+            <div class="input-group">
+                <input type="text" class="form-control" id="mc_name" placeholder="Minecraft Nickname"/>
+                <input type="text" class="form-control" id="mc_code" placeholder="Minecraft Code"/>
+                <input type="text" class="form-control" id="ts_code" placeholder="Teamspeak Code"/>
+                <input type="hidden" id="ts_uuid" value="{{ ts_uuid }}"/>
+                <span class="input-group-btn">
+                    <button class="btn btn-default" id="verify_codes" type="button">Verify Code</button>
+                </span>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#verify_codes').click(function(e){
+                $('#code_alert').hide();
+                e.preventDefault();
+                $.get(
+                    "{{ path('authcheck') }}",
+                    {
+                        'ts_uuid':$('#ts_uuid').val(),
+                        'ts_code':$('#ts_code').val(),
+                        'mc_uuid':$('#mc_name').val(),
+                        'mc_code':$('#mc_code').val()
+                    }
+                )
+                .done(function(data) {
+                    console.log('success');
+                            //TODO go to success page
+                })
+                .fail(function(xhr) {
+                    if(typeof xhr.responseJSON === 'undefined'){
+                        $('#code_error').html('Unexpected response from server');
+                    }else{
+                        var error = xhr.responseJSON.error;
+                        $('#code_error').html(error);
+                    }
+                    $('#code_alert').show();
+                });
+            });
+            $('.alert').hide();
+            $('.alert-close').click(function(e){
+                e.preventDefault();
+                $(this).parent().hide();
+            });
+        });
+    </script>
+{% endblock %}
