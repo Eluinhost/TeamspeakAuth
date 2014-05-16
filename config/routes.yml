@@ -22,3 +22,7 @@ verifyaccount:
     defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakAuthController::verifyAccountPageAction', uuid: ~ }
     requirements:
         uuid: .+
+
+complete:
+    path:     /complete/{mc_name}
+    defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakAuthController::completeAction' }

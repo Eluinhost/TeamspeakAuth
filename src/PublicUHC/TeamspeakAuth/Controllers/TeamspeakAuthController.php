@@ -170,4 +170,14 @@ class TeamspeakAuthController extends ContainerAware {
             ]
         ));
     }
+
+    public function completeAction($mc_name) {
+        $templating = $this->container->get('templating');
+        return new Response($templating->render('complete.html.twig',
+            [
+                'mc_name' => $mc_name,
+                'imgURL' => str_replace(';username;', $mc_name, $this->container->getParameter('iconURL'))
+            ]
+        ));
+    }
 } 
