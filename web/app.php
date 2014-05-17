@@ -33,7 +33,7 @@ $requestContext->fromRequest($request);
 /**
  * Set up the file locator to get our config files from
  */
-$configLocator = new FileLocator(array(__DIR__ . '/../config/'));
+$configLocator = new FileLocator(__DIR__ . '/../config/');
 
 /*
  * Load the routing from the file /config/routes.yml
@@ -51,7 +51,7 @@ $diLoader->load('config.yml');
 /**
  * Set up twig and add it to the container
  */
-$twigEnvironment = new Twig_Environment(new Twig_Loader_Filesystem(__DIR__ . './../templates/'));
+$twigEnvironment = new Twig_Environment(new Twig_Loader_Filesystem(__DIR__ . '/../templates/'));
 $twigEnvironment->addExtension(new RoutingExtension(new UrlGenerator($collection, $requestContext)));
 $templating = new TwigEngine($twigEnvironment, new TemplateNameParser());
 $container->set('templating', $templating);
