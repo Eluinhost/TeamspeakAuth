@@ -113,11 +113,14 @@ function sleep(duration) {
 function processClient(client) {
     var code = chance.hash({length: 10, casing: 'upper'});
 
+    var dbConnection;
     jQuery.when(getConnection())
         .then(function (connection) {
-            return addCodeToDatabase(connection, client.username, code);
+            dbConnection = connection;
+            return addCodeToDatabase(dbConnection, client.username, code);
         })
         .then(function(){
+            dbConnection.end();
             return sleep(3000)
         })
         .then(function() {
@@ -125,6 +128,9 @@ function processClient(client) {
             kickClientWithCode(client, code);
         })
         .fail(function(err) {
+            if(dbConnection != null) {
+                dbConnection.end();
+            }
             console.log('Database connection error: ' + err);
             kickClientWithMessage(client, 'There was a problem with the database, please try again later.');
         });
