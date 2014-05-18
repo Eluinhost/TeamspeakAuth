@@ -39,7 +39,7 @@ function getConnection() {
     });
 
     connection.connect(function(err) {
-        if (err) {
+        if (err != null) {
             deferred.reject(err);
         }
         deferred.resolve(connection);
@@ -84,7 +84,7 @@ function addCodeToDatabase(connection, username, code) {
             code
         ],
         function(err, results) {
-            if (err) {
+            if (err != null) {
                 deferred.reject(err);
             }
             deferred.resolve();
