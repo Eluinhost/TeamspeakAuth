@@ -61,9 +61,7 @@ $container->set('templating', $templating);
  */
 $assetsHelper = new AssetsHelper($request->getBasePath());
 
-$assetsHelper->addPackage('bootstrap', new PathPackage('assets/bootstrap/dist'));
-$assetsHelper->addPackage('jquery', new PathPackage('assets/jquery/dist'));
-$assetsHelper->addPackage('fontawesome', new PathPackage('assets/fontawesome'));
+$assetsHelper->addPackage('vendor', new PathPackage('vendor'));
 
 $assetsExtension = new AssetExtension($assetsHelper);
 $twigEnvironment->addExtension($assetsExtension);
