@@ -27,49 +27,59 @@ When verified the site will do the following for the client:
 Installation
 ------------
 
-This project has the following requirements:
+This project has the following direct requirements:
 
 - PHP
 - MySQL
 - Web Server with PHP support
-- NodeJS
-- Bower
+- NodeJS with NPM
 - Composer
-- NPM
+
+The module 'ursa' used by the auth server requires the following also be installed:
+
+- OpenSSL
+- Python 2.7
+
+Ursa has the following notes for Windows users:
+
+    On Windows, you'll need to install some dependencies first:
+     - [node-gyp](https://github.com/TooTallNate/node-gyp/) (`npm install -g node-gyp`)
+       - [Python 2.7](http://www.python.org/download/releases/2.7.3#download) (not 3.3)
+       - Vistual Studio 2010 or higher (including Express editions)
+         - Windows XP/Vista/7:
+            - Microsoft Visual Studio C++ 2010 ([Express](http://go.microsoft.com/?linkid=9709949) version works well)
+            - For 64-bit builds of node and native modules you will _**also**_ need the [Windows 7 64-bit SDK](http://www.microsoft.com/en-us/download/details.aspx?id=8279)
+            - If you get errors that the 64-bit compilers are not installed you may also need the [compiler update for the Windows SDK 7.1](http://www.microsoft.com/en-us/download/details.aspx?id=4422)
+         - Windows 8:
+            - Microsoft Visual Studio C++ 2012 for Windows Desktop ([Express](http://go.microsoft.com/?linkid=9816758) version works well)
+     - [OpenSSL](http://slproweb.com/products/Win32OpenSSL.html) (normal, not light)
+    in the same bitness as your Node.js installation.
+      - The build script looks for OpenSSL in the default install directory  
+      (`C:\OpenSSL-Win32` or `C:\OpenSSL-Win64`)
+      - If you get `Error: The specified module could not be found.`, copy `libeay32.dll` from the OpenSSL bin directory to this module's bin directory, or to Windows\System3.
+
+Personally installing [Visual Studio Express 2013 for Windows Desktop](http://www.visualstudio.com/downloads/download-visual-studio-vs) and replacing `npm install` with `npm install --msvs_version=2013` ran from the Visual Studio 'Developer Command Prompt' was enough (OpenSSL and Python still required)
+
 
 ### Set up dependencies
 
 Download all dependencies by running the following in the root of the project:
 
-`composer install`
-
-`bower install`
-
 `npm install`
 
-The auth server depends on the node module 'ursa' which has the following notes for running on Windows machines:
+`grunt install`
 
-On Windows, you'll need to install some dependencies first:
- - [node-gyp](https://github.com/TooTallNate/node-gyp/) (`npm install -g node-gyp`)
-   - [Python 2.7](http://www.python.org/download/releases/2.7.3#download) (not 3.3)
-   - Vistual Studio 2010 or higher (including Express editions)
-     - Windows XP/Vista/7:
-        - Microsoft Visual Studio C++ 2010 ([Express](http://go.microsoft.com/?linkid=9709949) version works well)
-        - For 64-bit builds of node and native modules you will _**also**_ need the [Windows 7 64-bit SDK](http://www.microsoft.com/en-us/download/details.aspx?id=8279)
-        - If you get errors that the 64-bit compilers are not installed you may also need the [compiler update for the Windows SDK 7.1](http://www.microsoft.com/en-us/download/details.aspx?id=4422)
-     - Windows 8:
-        - Microsoft Visual Studio C++ 2012 for Windows Desktop ([Express](http://go.microsoft.com/?linkid=9816758) version works well)
- - [OpenSSL](http://slproweb.com/products/Win32OpenSSL.html) (normal, not light)
-in the same bitness as your Node.js installation.
-  - The build script looks for OpenSSL in the default install directory  
-  (`C:\OpenSSL-Win32` or `C:\OpenSSL-Win64`)
-  - If you get `Error: The specified module could not be found.`, copy `libeay32.dll` from the OpenSSL bin directory to this module's bin directory, or to Windows\System3.
+You can then create a config.yml with the command:
 
-Personally installing [Visual Studio Express 2013 for Windows Desktop](http://www.visualstudio.com/downloads/download-visual-studio-vs) and replacing `npm install` with `npm install --msvs_version=2013` ran from the Visual Studio 'Developer Command Prompt' was enough (OpenSSL and Python still required)
+`grunt configure`
 
 ### Set up configuration
 
-Copy the file /config/config.yml.dist to /config/config.yml and edit the parameters to fit your server
+You can create/edit your config.yml file by running the command:
+
+`grunt configure`
+
+You can also open the config.yml file and edit it directly:
 
     parameters:
       minutesToLast: 15             # Number of minutes codes are valid for
@@ -146,7 +156,7 @@ You want to point the webroot to the /web folder of this project. The .htaccess 
 
 nginx:
 
-You want to set up something similar to this, routing through the app.php file. Make sure the root is the /web folder. (This is from my own configuration of a Symfony application, you will need to bend it to your will)
+You want to set up something similar to this, routing through the app.php file. Make sure the root is the /web folder. (This is from my own configuration using FastCGI, your configuration may require something different)
 
     server {
         server_name auth.publicuhc.com www.auth.publicuhc.com;
@@ -187,7 +197,7 @@ You want to set up something similar to this, routing through the app.php file. 
         }
 
         # pass the PHP scripts to FastCGI server from upstream phpfcgi
-        location ~ ^/(app|app_dev|config)\.php(/|$) {
+        location ~ ^/(app)\.php(/|$) {
             fastcgi_pass unix:/var/php-nginx/139906447829275.sock/socket;
             fastcgi_split_path_info ^(.+\.php)(/.*)$;
             include fastcgi_params;
