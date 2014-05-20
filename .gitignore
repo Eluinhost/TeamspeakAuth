@@ -5,6 +5,7 @@ composer.phar
 /vendor
 /config/config.yml
 npm-debug.log
+/bower_components
 /build
 /node_modules
 
