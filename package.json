@@ -29,5 +29,7 @@
         "grunt-contrib-nodeunit": "~0.3.3",
         "grunt-contrib-uglify": "~0.4.0"
     },
-    "private": true
+    "private": true,
+    "vendor_dir": "web/vendor",
+    "bower_dir": "bower_components"
 }

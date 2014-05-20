@@ -9,19 +9,23 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        clean: [
-            'web/vendor',
-            'bower_components'
-        ],
+        js_dir: '<%= pkg.vendor_dir %>/js',
+        css_dir: '<%= pkg.vendor_dir %>/css',
+        font_dir: '<%= pkg.vendor_dir %>/fonts',
+        clean: {
+            bower: ['<%= pkg.bower_dir %>'],
+            build: ['<%= pkg.vendor_dir %>']
+        },
         copy: {
             fonts: {
                 src: [
-                    'bower_components/bootstrap/dist/fonts/*',
-                    'bower_components/fontawesome/fonts/*'
+                    '<%= pkg.bower_dir %>/bootstrap/dist/fonts/*',
+                    '<%= pkg.bower_dir %>/fontawesome/fonts/*'
                 ],
-                dest: 'web/vendor/fonts/',
+                dest: '<%= font_dir %>',
                 flatten: true,
-                expand: true
+                expand: true,
+                nonull: true
             }
         },
         concat: {
@@ -30,18 +34,18 @@ module.exports = function(grunt) {
             },
             js: {
                 src: [
-                    'bower_components/jquery/dist/jquery.js',
-                    'bower_components/bootstrap/dist/js/bootstrap.js'
+                    '<%= pkg.bower_dir %>/jquery/dist/jquery.js',
+                    '<%= pkg.bower_dir %>/bootstrap/dist/js/bootstrap.js'
                 ],
-                dest: 'web/vendor/js/<%= pkg.name %>.js'
+                dest: '<%= js_dir %>/<%= pkg.name %>.js'
             },
             css: {
                 src: [
-                    'bower_components/bootstrap/dist/css/bootstrap.css',
-                    'bower_components/bootstrap/dist/css/bootstrap-theme.css',
-                    'bower_components/font-awesome/css/font-awesome.css'
+                    '<%= pkg.bower_dir %>/bootstrap/dist/css/bootstrap.css',
+                    '<%= pkg.bower_dir %>/bootstrap/dist/css/bootstrap-theme.css',
+                    '<%= pkg.bower_dir %>/font-awesome/css/font-awesome.css'
                 ],
-                dest: 'web/vendor/css/<%= pkg.name %>.css'
+                dest: '<%= css_dir %>/<%= pkg.name %>.css'
             }
         },
         uglify: {
@@ -55,20 +59,27 @@ module.exports = function(grunt) {
             },
             js: {
                 files: {
-                    'web/vendor/js/<%= pkg.name %>.min.js': ['<%= concat.js.dest %>']
+                    '<%= js_dir %>/<%= pkg.name %>.min.js': ['<%= concat.js.dest %>']
                 }
             }
         },
         cssmin: {
             minify: {
                 expand: true,
-                cwd: 'web/vendor/css/',
+                cwd: '<%= css_dir %>',
                 src: ['*.css', '!*.min.css'],
-                dest: 'web/vendor/css/',
+                dest: '<%= css_dir %>',
                 ext: '.min.css'
             }
         }
     });
 
-    grunt.registerTask('install', ['clean', 'bower-install-simple', 'concat', 'uglify', 'cssmin', 'copy']);
+    grunt.registerTask('dist-js', ['concat:js', 'uglify:js']);
+    grunt.registerTask('dist-css', ['concat:css', 'cssmin:minify']);
+    grunt.registerTask('dist-fonts', ['copy:fonts']);
+
+    grunt.registerTask('bower-install', ['clean:bower', 'bower-install-simple']);
+    grunt.registerTask('dist', ['clean:build', 'dist-js', 'dist-css', 'dist-fonts']);
+
+    grunt.registerTask('default', ['bower-install', 'dist']);
 };
