@@ -1,6 +1,6 @@
 {
-    "name": "MinecraftAuthentication",
-    "version": "0.1.0",
+    "name": "TeamspeakAuth",
+    "version": "1.0.0",
     "description": "Teamspeak 'Authentication' based on Minecraft accounts",
     "license": "GPLv3",
     "author": "Graham Howden <graham_howden1@yahoo.co.uk",
