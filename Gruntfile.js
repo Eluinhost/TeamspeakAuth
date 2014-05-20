@@ -10,12 +10,13 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        js_dir: '<%= pkg.vendor_dir %>/js',
-        css_dir: '<%= pkg.vendor_dir %>/css',
-        font_dir: '<%= pkg.vendor_dir %>/fonts',
+        js_dir: '<%= pkg.web_vendor_dir %>/js',
+        css_dir: '<%= pkg.web_vendor_dir %>/css',
+        font_dir: '<%= pkg.web_vendor_dir %>/fonts',
         clean: {
             bower: ['<%= pkg.bower_dir %>'],
-            build: ['<%= pkg.vendor_dir %>']
+            build: ['<%= pkg.web_vendor_dir %>'],
+            composer: ['<%= pkg.composer_vendor_dir %>']
         },
         copy: {
             fonts: {
