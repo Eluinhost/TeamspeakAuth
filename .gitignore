@@ -1,14 +1,11 @@
 # Project Files #
 #################
-/target
-dependency-reduced-pom.xml
-atlassian-ide-plugin.xml
 composer.phar
 /web/assets
 /vendor
 /config/config.yml
-*.pyc
 npm-debug.log
+/bower_components
 /build
 /node_modules
 
