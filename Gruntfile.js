@@ -6,6 +6,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-composer');
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -79,7 +80,8 @@ module.exports = function(grunt) {
     grunt.registerTask('dist-fonts', ['copy:fonts']);
 
     grunt.registerTask('bower-install', ['clean:bower', 'bower-install-simple']);
+    grunt.registerTask('composer-install', ['composer:install']);
     grunt.registerTask('dist', ['clean:build', 'dist-js', 'dist-css', 'dist-fonts']);
 
-    grunt.registerTask('default', ['bower-install', 'dist']);
+    grunt.registerTask('default', ['composer-install', 'bower-install', 'dist']);
 };
