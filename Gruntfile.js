@@ -233,7 +233,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask(
         'dist-fonts',
-        'Creates the distribution fonts in the web folder from bower dependencies'
+        'Creates the distribution fonts in the web folder from bower dependencies',
         ['copy:fonts']
     );
 
