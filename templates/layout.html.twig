@@ -4,9 +4,7 @@
     <title>{% block page_title %}Teamspeak Authentication{% endblock %}</title>
 
     {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.min.css', 'bootstrap') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap-theme.min.css', 'bootstrap') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css', 'fontawesome') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/TeamspeakAuth.min.css', 'vendor') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}">
     {% endblock %}
 </head>
@@ -21,8 +19,7 @@
     </div>
 </div>
 {% block javascripts %}
-<script src="{{ asset('jquery.min.js', 'jquery') }}"></script>
-<script src="{{ asset('js/bootstrap.min.js', 'bootstrap') }}"></script>
+<script src="{{ asset('js/TeamspeakAuth.min.js', 'vendor') }}"></script>
 {% endblock %}
 </body>
 </html>
