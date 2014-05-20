@@ -4,7 +4,7 @@ parameters:
   serverAddress: "auth.publicuhc.com or publicuhc.com:35879"
   teamspeak:
     host: localhost
-    port: 9988
+    port: 9987
     username: serveradmin
     password: ""
     query_port: 10011
