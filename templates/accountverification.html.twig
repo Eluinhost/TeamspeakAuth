@@ -38,6 +38,11 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function(){
+            $(document).keypress(function(e){
+                if (e.which == 13){
+                    $("#verify_codes").click();
+                }
+            });
             $('#verify_codes').click(function(e){
                 $('#code_alert').hide();
                 e.preventDefault();
