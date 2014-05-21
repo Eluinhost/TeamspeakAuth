@@ -1,10 +1,10 @@
 parameters:
   minutesToLast: 15
   iconURL: "https://minotar.net/helm/;username;/16.png"
-  serverAddress: "auth.publicuhc.com or publicuhc.com:35879"
+  serverAddress: "auth.example.com or example.com:35879"
   teamspeak:
-    host: localhost
-    port: 9988
+    host: ts.example.com
+    port: 9987
     username: serveradmin
     password: ""
     query_port: 10011

@@ -1,7 +1,6 @@
 # Project Files #
 #################
 composer.phar
-/web/assets
 /vendor
 /config/config.yml
 npm-debug.log

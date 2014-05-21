@@ -209,6 +209,12 @@ module.exports = function(grunt) {
                             default: '<%= configYML.parameters.minecraft.motd %>'
                         },
                         {
+                            config: 'configYML.parameters.serverAddress',
+                            type: 'input',
+                            message: 'Server address string to tell people to connect to for website:',
+                            default: '<%= configYML.parameters.serverAddress %>'
+                        },
+                        {
                             config: 'configYMLwrite',
                             type: 'confirm',
                             message: 'Do you want to write to the file config.yml?',
@@ -233,7 +239,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask(
         'dist-fonts',
-        'Creates the distribution fonts in the web folder from bower dependencies'
+        'Creates the distribution fonts in the web folder from bower dependencies',
         ['copy:fonts']
     );
 

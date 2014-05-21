@@ -34,6 +34,7 @@ This project has the following direct requirements:
 - Web Server with PHP support
 - NodeJS with NPM
 - Composer
+- Grunt CLI module installed globally (`npm install grunt-cli -g`)
 
 The module 'ursa' used by the auth server requires the following also be installed:
 
