@@ -20,7 +20,8 @@ module.exports = function(grunt) {
         clean: {
             bower: ['<%= pkg.bower_dir %>'],
             build: ['<%= pkg.web_vendor_dir %>'],
-            composer: ['<%= pkg.composer_vendor_dir %>']
+            composer: ['<%= pkg.composer_vendor_dir %>'],
+            cache: ['cache']
         },
         availabletasks: {
             tasks: {
@@ -299,5 +300,11 @@ module.exports = function(grunt) {
             }
             grunt.file.write('config/config.yml', YAML.stringify(grunt.config('configYML')));
         }
+    );
+
+    grunt.registerTask(
+        'clear-cache',
+        'Clears the template cache',
+        ['clean:cache']
     );
 };

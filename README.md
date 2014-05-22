@@ -213,3 +213,10 @@ How to run the fake Minecraft server
 To run the authentication server all you need to do is run authserver/AuthServer.js with node:
 
 `node AuthServer.js`
+
+Editing templates
+-----------------
+
+You can edit the templates in the folder 'templates'. It uses the [Twig Framework](http://twig.sensiolabs.org/).
+
+After making any changes to templates make sure to delete the cache folder or run `grunt clear-cache`

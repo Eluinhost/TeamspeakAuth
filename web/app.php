@@ -51,7 +51,7 @@ $diLoader->load('config.yml');
 /**
  * Set up twig and add it to the container
  */
-$twigEnvironment = new Twig_Environment(new Twig_Loader_Filesystem(__DIR__ . '/../templates/'));
+$twigEnvironment = new Twig_Environment(new Twig_Loader_Filesystem(__DIR__ . '/../templates/'), ['cache' => __DIR__ . '/../cache/']);
 $twigEnvironment->addExtension(new RoutingExtension(new UrlGenerator($collection, $requestContext)));
 $templating = new TwigEngine($twigEnvironment, new TemplateNameParser());
 $container->set('templating', $templating);

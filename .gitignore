@@ -8,6 +8,7 @@ npm-debug.log
 /build
 /node_modules
 /web/vendor
+/cache
 
 # IDE files #
 #############
