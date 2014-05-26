@@ -134,29 +134,47 @@ You can use the following snippet to create the default structure.
 
     DROP TABLE IF EXISTS minecraft_codes;
     DROP TABLE IF EXISTS teamspeak_codes;
+    DROP TABLE IF EXISTS mc_history;
+    DROP TABLE IF EXISTS ts_history;
     DROP TABLE IF EXISTS auth_history;
-    CREATE TABLE minecraft_codes
+    CREATE TABLE mc_history
     (
       ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
       uuid varchar(128) UNIQUE NOT NULL,
+      name varchar(16) NOT NULL,
+      updated_time datetime
+    );
+    CREATE TABLE ts_history
+    (
+      ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      uuid varchar(128) UNIQUE NOT NULL,
+      name varchar(128) NOT NULL,
+      updated_time datetime
+    );
+    CREATE TABLE minecraft_codes
+    (
+      ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      mc_id int NOT NULL,
       code varchar(10) NOT NULL,
-      created_time datetime
+      created_time datetime,
+      FOREIGN KEY (mc_id) REFERENCES mc_history(ID)
     );
     CREATE TABLE teamspeak_codes
     (
       ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      uuid varchar(128) UNIQUE NOT NULL,
+      ts_id int NOT NULL,
       code varchar(10) NOT NULL,
-      created_time datetime
+      created_time datetime,
+      FOREIGN KEY (ts_id) REFERENCES ts_history(ID)
     );
-    CREATE TABLE auth_histroy
+    CREATE TABLE auth_history
     (
       ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      mc_uuid varchar(128) UNIQUE NOT NULL,
-      ts_uuid varchar(128) UNIQUE NOT NULL,
+      mc_id int NOT NULL,
+      ts_id int NOT NULL,
       created_time datetime,
-      last_mc_name varchar(16) NOT NULL,
-      last_ts_name varchar(128) NOT NULL
+      FOREIGN KEY (mc_id) REFERENCES mc_history(ID),
+      FOREIGN KEY (ts_id) REFERENCES ts_history(ID)
     );
 
 ### Set up web server
