@@ -134,6 +134,7 @@ You can use the following snippet to create the default structure.
 
     DROP TABLE IF EXISTS minecraft_codes;
     DROP TABLE IF EXISTS teamspeak_codes;
+    DROP TABLE IF EXISTS auth_history;
     CREATE TABLE minecraft_codes
     (
       ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -147,6 +148,15 @@ You can use the following snippet to create the default structure.
       uuid varchar(128) UNIQUE NOT NULL,
       code varchar(10) NOT NULL,
       created_time datetime
+    );
+    CREATE TABLE auth_histroy
+    (
+      ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      mc_uuid varchar(128) UNIQUE NOT NULL,
+      ts_uuid varchar(128) UNIQUE NOT NULL,
+      created_time datetime,
+      last_mc_name varchar(16) NOT NULL,
+      last_ts_name varchar(128) NOT NULL
     );
 
 ### Set up web server
