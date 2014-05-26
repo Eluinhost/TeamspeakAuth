@@ -177,18 +177,6 @@ module.exports = function(grunt) {
                             default: '<%= configYML.parameters.database.database %>'
                         },
                         {
-                            config: 'configYML.parameters.database.minecraft_table',
-                            type: 'input',
-                            message: 'MySQL minecraft table:',
-                            default: '<%= configYML.parameters.database.minecraft_table %>'
-                        },
-                        {
-                            config: 'configYML.parameters.database.teamspeak_table',
-                            type: 'input',
-                            message: 'MySQL teamspeak table:',
-                            default: '<%= configYML.parameters.database.teamspeak_table %>'
-                        },
-                        {
                             config: 'configYML.parameters.minecraft.host',
                             type: 'input',
                             message: 'Auth Server host to bind to:',
