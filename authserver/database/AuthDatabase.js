@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize'),
-    config = require('./../config/config');
+    config = require('./../config/config'),
     sequelize = new Sequelize(config.database.database, config.database.username, config.database.password, {
         dialect: 'mysql',
         host: config.database.host,
