@@ -1,23 +1,11 @@
 var mc = require('minecraft-protocol');
-var yaml = require('js-yaml');
 var fs   = require('fs');
 var chance = require('chance').Chance();
 var mysql = require('mysql');
 var jQuery = require('jquery-deferred');
 var mime = require('mime');
 var util = require('util');
-
-var minecraft, database, minutes;
-
-try {
-    var doc = yaml.safeLoad(fs.readFileSync(__dirname + '/../config/config.yml', 'utf8'));
-    minecraft = doc.parameters.minecraft;
-    database = doc.parameters.database;
-    minutes = doc.parameters.minutesToLast;
-} catch (e) {
-    console.log(e);
-    return;
-}
+var config = require('./config/config');
 
 function base64Image(src) {
     var data = fs.readFileSync(src).toString("base64");
@@ -31,11 +19,11 @@ function getConnection() {
     var deferred = new jQuery.Deferred();
 
     var connection = mysql.createConnection({
-        host     : database.host,
-        user     : database.username,
-        password : database.password,
-        port     : database.port,
-        database : database.database
+        host     : config.database.host,
+        user     : config.database.username,
+        password : config.database.password,
+        port     : config.database.port,
+        database : config.database.database
     });
 
     connection.connect(function(err) {
@@ -54,7 +42,7 @@ function getConnection() {
  * @param code the code to send
  */
 function kickClientWithCode(client, code) {
-    kickClientWithMessage(client, 'Your code is ' + code + ', it will last for the next ' + minutes + ' minutes.');
+    kickClientWithMessage(client, 'Your code is ' + code + ', it will last for the next ' + config.minutes + ' minutes.');
 }
 
 /**
@@ -78,7 +66,7 @@ function addCodeToDatabase(connection, username, code) {
     connection.query(
         'INSERT INTO ??(uuid, code, created_time) VALUES (?, ?, NOW()) ON DUPLICATE KEY UPDATE code=?,created_time=NOW()',
         [
-            database.minecraft_table,
+            config.database.minecraft_table,
             username,
             code,
             code
@@ -139,9 +127,9 @@ function processClient(client) {
 var server = mc.createServer({
     'online-mode': true,
     encryption: true,
-    host: minecraft.host,
-    port: minecraft.port,
-    motd: minecraft.motd,
+    host: config.minecraft.host,
+    port: config.minecraft.port,
+    motd: config.minecraft.motd,
     'max-players': -1
 });
 
