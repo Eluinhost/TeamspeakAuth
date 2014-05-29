@@ -42,8 +42,20 @@ services:
     class: PublicUHC\TeamspeakAuth\Repositories\DefaultUserRepositroy
     arguments: ["@pdo", "%database.tablePrefix%minecraftaccounts"]
   tsusers:
-      class: PublicUHC\TeamspeakAuth\Repositories\DefaultUserRepositroy
-      arguments: ["@pdo", "%database.tablePrefix%teamspeakaccounts"]
-  pdo:
-    class: PDO
-    arguments: ["mysql:host=%database.host%;dbname=%database.database%", "%database.username%", "%database.password%"]
+    class: PublicUHC\TeamspeakAuth\Repositories\DefaultUserRepositroy
+    arguments: ["@pdo", "%database.tablePrefix%teamspeakaccounts"]
+  annotationmetadata:
+    factory_class: Doctrine\ORM\Tools\Setup
+    factory_method: createAnnotationMetadataConfiguration
+    arguments: [['%global.srcroot%'], true]
+  entityManager:
+    factory_class: Doctrine\ORM\EntityManager
+    factory_method: create
+    arguments: [{driver: 'pdo_mysql', user: '%database.username%', password: '%database.password%', dbname: '%database.database%'}, '@annotationmetadata', '@doctrineeventmanager']
+  doctrineeventmanager:
+    class: Doctrine\Common\EventManager
+    calls:
+        - [addEventListener, ['loadClassMetadata','@tableprefix']]
+  tableprefix:
+    class: PublicUHC\TeamspeakAuth\DoctrineExtensions\TablePrefix
+    arguments: ['%database.tablePrefix%']
