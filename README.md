@@ -130,52 +130,11 @@ You can also open the config.yml file and edit it directly:
         
 ### Set up database
 
-You can use the following snippet to create the default structure.
+First create your database and fill out the details in the config.yml manually or by using `grunt configure`.
 
-    DROP TABLE IF EXISTS minecraft_codes;
-    DROP TABLE IF EXISTS teamspeak_codes;
-    DROP TABLE IF EXISTS mc_history;
-    DROP TABLE IF EXISTS ts_history;
-    DROP TABLE IF EXISTS auth_history;
-    CREATE TABLE mc_history
-    (
-      ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      uuid varchar(128) UNIQUE NOT NULL,
-      name varchar(16) NOT NULL,
-      updated_time datetime
-    );
-    CREATE TABLE ts_history
-    (
-      ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      uuid varchar(128) UNIQUE NOT NULL,
-      name varchar(128) NOT NULL,
-      updated_time datetime
-    );
-    CREATE TABLE minecraft_codes
-    (
-      ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      mc_id int NOT NULL,
-      code varchar(10) NOT NULL,
-      created_time datetime,
-      FOREIGN KEY (mc_id) REFERENCES mc_history(ID)
-    );
-    CREATE TABLE teamspeak_codes
-    (
-      ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      ts_id int NOT NULL,
-      code varchar(10) NOT NULL,
-      created_time datetime,
-      FOREIGN KEY (ts_id) REFERENCES ts_history(ID)
-    );
-    CREATE TABLE auth_history
-    (
-      ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      mc_id int NOT NULL,
-      ts_id int NOT NULL,
-      created_time datetime,
-      FOREIGN KEY (mc_id) REFERENCES mc_history(ID),
-      FOREIGN KEY (ts_id) REFERENCES ts_history(ID)
-    );
+If you use `grunt configure` answer yes to run the migrations and the database structure will be created. If you filled it in manually you can run `grunt run-migrations`
+
+To update your database after updating the application running `grunt run-migrations` will update to the latest structure (assuming correct config.yml)
 
 ### Set up web server
 
