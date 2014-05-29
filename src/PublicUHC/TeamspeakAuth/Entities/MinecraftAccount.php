@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @Entity
@@ -31,6 +33,14 @@ class MinecraftAccount {
      * @var $codes ArrayCollection
      */
     private $codes;
+
+    /**
+     * @ManyToMany(targetEntity="PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount", inversedBy="minecraftAccounts")
+     * @JoinTable(name="authentications",
+     *      joinColumns={@JoinColumn(name="TeamspeakAccountId")},
+     *      inverseJoinColumns={@JoinColumn(name="MinecraftAccountId")}
+     */
+    private $teamspeakAccounts;
 
     public function __construct()
     {

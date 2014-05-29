@@ -32,6 +32,14 @@ class TeamspeakAccount {
      */
     private $codes;
 
+    /**
+     * @ManyToMany(targetEntity="PublicUHC\TeamspeakAuth\Entities\MinecraftAccount", inversedBy="teamspeakAccounts")
+     * @JoinTable(name="authentications",
+     *      joinColumns={@JoinColumn(name="MinecraftAccountId")},
+     *      inverseJoinColumns={@JoinColumn(name="TeamspeakAccountId")}
+     */
+    private $minecraftAccounts;
+
     public function __construct()
     {
         $this->codes = new ArrayCollection();
