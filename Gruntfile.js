@@ -12,7 +12,6 @@ module.exports = function(grunt) {
 
     var YAML = require('yamljs');
     var jQuery = require('jquery-deferred');
-    var database = require('./authserver/database/AuthDatabase');
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -268,15 +267,12 @@ module.exports = function(grunt) {
         'load-config',
         'Loads the config.yml file into grunt for editing with \'configure\', if file doesn\'t exist uses config.yml.dist',
         function() {
-            var file = 'config/config.yml';
+            var file = __dirname + '/config/config.yml';
             if( !grunt.file.exists(file) ) {
-                file = 'config/config.yml.dist';
+                file = __dirname + '/config/config.yml.dist';
             }
             var configFile = grunt.file.readYAML(file);
-            var configMerge = {
-                configYML: configFile
-            };
-            grunt.config.merge(configMerge);
+            grunt.config.merge({configYML: configFile});
         }
     );
 
@@ -304,7 +300,7 @@ module.exports = function(grunt) {
         function() {
             var done = this.async();
             if(grunt.config.get('configYMLdatabasewrite') == null || grunt.config.get('configYMLdatabasewrite') == true) {
-                console.log('Running migrations');
+                var database = require('./authserver/database/AuthDatabase');
                 var authDatabase = new database.AuthDatabase();
                 jQuery.when(authDatabase.init()).then(function() {
                     console.log('Migrations complete');
