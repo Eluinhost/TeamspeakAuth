@@ -23,25 +23,18 @@ Authentication.belongsTo(TeamspeakAccount, {as: 'TeamspeakAccount'});
 var AuthDatabase = function() {};
 
 AuthDatabase.prototype.init = function() {
-    sequelize.sync().success(function() {
-        console.log('done');
-    }).error(function(err){
-        console.log(err);
-    });
-/*
-    this.connection.authenticate().complete(function(err) {
+    sequelize.authenticate().complete(function(err) {
         if(!!err) {
             console.log('Unable to connect to the database: ', err);
             return;
         }
-        var migrator = self.connection.getMigrator({
-            path:        __dirname + '/migrations'
+        var migrator = sequelize.getMigrator({
+            path: __dirname + '/migrations'
         });
-        migrator.migrate().success(function() {
+        migrator.migrate({method: 'down'}).success(function() {
             console.log('done');
         });
     });
-*/
 };
 
 var authDatabase = new AuthDatabase();
