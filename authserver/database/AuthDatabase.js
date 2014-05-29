@@ -5,29 +5,30 @@ var Sequelize = require('sequelize'),
         host: config.database.host,
         port: config.database.port
     }),
-    MinecraftCode = sequelize.import(__dirname + '/models/MinecraftCode'),
-    MinecraftAccount = sequelize.import(__dirname + '/models/MinecraftAccount'),
-    TeamspeakCode = sequelize.import(__dirname + '/models/TeamspeakCode'),
-    TeamspeakAccount = sequelize.import(__dirname + '/models/TeamspeakAccount'),
-    Authentication = sequelize.import(__dirname + '/models/Authentication'),
     jQuery = require('jquery-deferred');
 
-MinecraftCode.belongsTo(MinecraftAccount, {as: 'Account'});
-MinecraftAccount.hasOne(MinecraftCode, {as: 'CurrentCode'});
-TeamspeakCode.belongsTo(TeamspeakAccount, {as: 'Account'});
-TeamspeakAccount.hasOne(TeamspeakCode, {as: 'CurrentCode'});
-MinecraftAccount.hasMany(Authentication, {as: 'Authentications'});
-TeamspeakAccount.hasMany(Authentication, {as: 'Authentications'});
-Authentication.belongsTo(MinecraftAccount, {as: 'MinecraftAccount'});
-Authentication.belongsTo(TeamspeakAccount, {as: 'TeamspeakAccount'});
+module.exports.MinecraftCode = sequelize.import(__dirname + '/models/MinecraftCode');
+module.exports.MinecraftAccount = sequelize.import(__dirname + '/models/MinecraftAccount');
+module.exports.TeamspeakCode = sequelize.import(__dirname + '/models/TeamspeakCode');
+module.exports.TeamspeakAccount = sequelize.import(__dirname + '/models/TeamspeakAccount');
+module.exports.Authentication = sequelize.import(__dirname + '/models/Authentication');
 
-var AuthDatabase = function() {};
+module.exports.MinecraftCode.belongsTo(module.exports.MinecraftAccount, {as: 'Account'});
+module.exports.MinecraftAccount.hasOne(module.exports.MinecraftCode, {as: 'CurrentCode'});
+module.exports.TeamspeakCode.belongsTo(module.exports.TeamspeakAccount, {as: 'Account'});
+module.exports.TeamspeakAccount.hasOne(module.exports.TeamspeakCode, {as: 'CurrentCode'});
+module.exports.MinecraftAccount.hasMany(module.exports.Authentication, {as: 'Authentications'});
+module.exports.TeamspeakAccount.hasMany(module.exports.Authentication, {as: 'Authentications'});
+module.exports.Authentication.belongsTo(module.exports.MinecraftAccount, {as: 'MinecraftAccount'});
+module.exports.Authentication.belongsTo(module.exports.TeamspeakAccount, {as: 'TeamspeakAccount'});
+
+module.exports.AuthDatabase = function() {};
 
 /**
  * Initialize the database
  * @returns {Deferred} A promise that resolve on completion or rejects on failure
  */
-AuthDatabase.prototype.init = function() {
+module.exports.AuthDatabase.prototype.init = function() {
     var deferred = new jQuery.Deferred();
     sequelize.authenticate().complete(function(err) {
         if(!!err) {
@@ -38,6 +39,27 @@ AuthDatabase.prototype.init = function() {
             path: __dirname + '/migrations'
         });
         migrator.migrate().success(function() {
+            deferred.resolve();
+        }).fail(function() {
+            deferred.reject();
+        });
+    });
+    return deferred.promise();
+};
+
+/**
+ * Update the account with the given UUID with the given name, if it doesn't exist it creates it
+ * @param {String} uuid the UUID to udpate
+ * @param {String} name the latest name
+ * @returns {Deferred} A promise that resolves on complete or fails on error (shouldn't happen)
+ */
+module.exports.AuthDatabase.prototype.updateMinecraftAccountUUIDWithName = function(uuid, name) {
+    var deferred = jQuery.Deferred();
+    //try to find the account with the given ID or create it if it doesn't exist
+    module.exports.MinecraftAccount.findOrCreate({uuid: uuid},{name: name}).success(function(clientAccount) {
+        clientAccount.updateAttributes({
+            name: name
+        }).success(function() {
             deferred.resolve();
         }).fail(function() {
             deferred.reject();
