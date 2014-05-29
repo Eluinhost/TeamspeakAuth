@@ -11,6 +11,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-available-tasks');
 
     var YAML = require('yamljs');
+    var jQuery = require('jquery-deferred');
+    var database = require('./authserver/database/AuthDatabase');
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -27,7 +29,7 @@ module.exports = function(grunt) {
             tasks: {
                 options: {
                     filter: 'include',
-                    tasks: ['default', 'install', 'clean', 'configure']
+                    tasks: ['default', 'install', 'clean', 'configure', 'run-migrations']
                 }
             }
         },
@@ -208,6 +210,12 @@ module.exports = function(grunt) {
                             type: 'confirm',
                             message: 'Do you want to write to the file config.yml?',
                             default: 'Y'
+                        },
+                        {
+                            config: 'configYMLdatabasewrite',
+                            type: 'confirm',
+                            message: 'Do you also want to update/create the database schema to the latest version?',
+                            default: 'Y'
                         }
                     ]
                 }
@@ -275,7 +283,7 @@ module.exports = function(grunt) {
     grunt.registerTask(
         'configure',
         'Create/edit the config.yml file',
-        ['load-config', 'prompt:configYML', 'save-config']
+        ['load-config', 'prompt:configYML', 'save-config', 'run-migrations']
     );
 
     grunt.registerTask(
@@ -287,6 +295,25 @@ module.exports = function(grunt) {
                 return;
             }
             grunt.file.write('config/config.yml', YAML.stringify(grunt.config('configYML')));
+        }
+    );
+
+    grunt.registerTask(
+        'run-migrations',
+        'Runs the database migrations to update the database to the latest version',
+        function() {
+            var done = this.async();
+            if(grunt.config.get('configYMLdatabasewrite') == null || grunt.config.get('configYMLdatabasewrite') == true) {
+                console.log('Running migrations');
+                var authDatabase = new database.AuthDatabase();
+                jQuery.when(authDatabase.init()).then(function() {
+                    console.log('Migrations complete');
+                    done();
+                }).fail(function() {
+                    console.log('There was an error trying to apply the migrations');
+                    done();
+                });
+            }
         }
     );
 
