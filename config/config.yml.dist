@@ -23,26 +23,26 @@ parameters:
 services:
   minecrafthelper:
     class: PublicUHC\TeamspeakAuth\Helpers\DefaultMinecraftHelper
-    arguments: ["%iconURL%"]
+    arguments: ['%iconURL%']
   teamspeakhelper:
     class: PublicUHC\TeamspeakAuth\Helpers\DefaultTeamspeakHelper
-    arguments: ["@teamspeakserver"]
+    arguments: ['@teamspeakserver']
   teamspeakserver:
     factory_class: TeamSpeak3
     factory_method: factory
-    arguments: ["serverquery://%teamspeak.username%:%teamspeak.password%@%teamspeak.host%:%teamspeak.query_port%/?server_port=%teamspeak.port%"]
+    arguments: ['serverquery://%teamspeak.username%:%teamspeak.password%@%teamspeak.host%:%teamspeak.query_port%/?server_port=%teamspeak.port%']
   tscodes:
     class: PublicUHC\TeamspeakAuth\Repositories\DefaultCodeRepository
-    arguments: ["@pdo", "%database.tablePrefix%teamspeakcodes", "%minutesToLast%"]
+    arguments: ['@pdo', 'teamspeakcodes', '%minutesToLast%']
   mccodes:
     class: PublicUHC\TeamspeakAuth\Repositories\DefaultCodeRepository
-    arguments: ["@pdo", "%database.tablePrefix%minecraftcodes", "%minutesToLast%"]
+    arguments: ['@pdo', 'minecraftcodes', '%minutesToLast%']
   mcusers:
-    class: PublicUHC\TeamspeakAuth\Repositories\DefaultUserRepositroy
-    arguments: ["@pdo", "%database.tablePrefix%minecraftaccounts"]
+    class: PublicUHC\TeamspeakAuth\Repositories\DefaultUserRepository
+    arguments: ['@pdo', 'minecraftaccounts']
   tsusers:
-    class: PublicUHC\TeamspeakAuth\Repositories\DefaultUserRepositroy
-    arguments: ["@pdo", "%database.tablePrefix%teamspeakaccounts"]
+    class: PublicUHC\TeamspeakAuth\Repositories\DefaultUserRepository
+    arguments: ['@pdo', 'teamspeakaccounts']
   annotationmetadata:
     factory_class: Doctrine\ORM\Tools\Setup
     factory_method: createAnnotationMetadataConfiguration
@@ -54,7 +54,7 @@ services:
   doctrineeventmanager:
     class: Doctrine\Common\EventManager
     calls:
-        - [addEventListener, ['loadClassMetadata','@tableprefix']]
+    - [addEventListener, ['loadClassMetadata','@tableprefix']]
   tableprefix:
     class: PublicUHC\TeamspeakAuth\DoctrineExtensions\TablePrefix
     arguments: ['%database.tablePrefix%']
