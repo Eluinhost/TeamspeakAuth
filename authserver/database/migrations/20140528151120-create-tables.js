@@ -1,8 +1,9 @@
-var async = require('async');
+var async = require('async'),
+    config = require('./../../config/config');
 
 var setupAuthenticationsTable = function(migration, DataTypes) {
     migration.createTable(
-        'authentications',
+        config.database.tablePrefix + 'authentications',
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -32,7 +33,7 @@ var setupAuthenticationsTable = function(migration, DataTypes) {
 
 var setupMinecraftAccountsTable = function(migration, DataTypes) {
     migration.createTable(
-        'minecraftaccounts',
+        config.database.tablePrefix + 'minecraftaccounts',
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -62,7 +63,7 @@ var setupMinecraftAccountsTable = function(migration, DataTypes) {
 
 var setupTeamspeakAccountsTable = function(migration, DataTypes) {
     migration.createTable(
-        'teamspeakaccounts',
+        config.database.tablePrefix + 'teamspeakaccounts',
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -92,7 +93,7 @@ var setupTeamspeakAccountsTable = function(migration, DataTypes) {
 
 var setupMinecraftCodesTable = function(migration, DataTypes) {
     migration.createTable(
-        'minecraftcodes',
+        config.database.tablePrefix + 'minecraftcodes',
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -122,7 +123,7 @@ var setupMinecraftCodesTable = function(migration, DataTypes) {
 
 var setupTeamspeakCodesTable = function(migration, DataTypes) {
     migration.createTable(
-        'teamspeakcodes',
+        config.database.tablePrefix + 'teamspeakcodes',
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -150,11 +151,6 @@ var setupTeamspeakCodesTable = function(migration, DataTypes) {
     );
 };
 
-var deleteTables = function(migration) {
-
-    return jobArray;
-};
-
 module.exports = {
     up: function(migration, DataTypes, done) {
         // add altering commands here, calling 'done' when finished
@@ -171,11 +167,11 @@ module.exports = {
     },
     down: function(migration, DataTypes, done) {
         async.series(
-            migration.dropTable('authentications'),
-            migration.dropTable('minecraftaccounts'),
-            migration.dropTable('teamspeakaccounts'),
-            migration.dropTable('minecraftcodes'),
-            migration.dropTable('teamspeakcodes'),
+            migration.dropTable(config.database.tablePrefix + 'authentications'),
+            migration.dropTable(config.database.tablePrefix + 'minecraftaccounts'),
+            migration.dropTable(config.database.tablePrefix + 'teamspeakaccounts'),
+            migration.dropTable(config.database.tablePrefix + 'minecraftcodes'),
+            migration.dropTable(config.database.tablePrefix + 'teamspeakcodes'),
             done()
         );
     }

@@ -15,6 +15,7 @@ parameters:
     database: authentication
     username: ""
     password: ""
+    tablePrefix: "auth_"
   minecraft:
     host: 0.0.0.0
     port: 35879
@@ -33,16 +34,16 @@ services:
     arguments: ["serverquery://%teamspeak.username%:%teamspeak.password%@%teamspeak.host%:%teamspeak.query_port%/?server_port=%teamspeak.port%"]
   tscodes:
     class: PublicUHC\TeamspeakAuth\Repositories\DefaultCodeRepository
-    arguments: ["@pdo", "teamspeakcodes", "%minutesToLast%"]
+    arguments: ["@pdo", "%database.tablePrefix%teamspeakcodes", "%minutesToLast%"]
   mccodes:
     class: PublicUHC\TeamspeakAuth\Repositories\DefaultCodeRepository
-    arguments: ["@pdo", "minecraftcodes", "%minutesToLast%"]
+    arguments: ["@pdo", "%database.tablePrefix%minecraftcodes", "%minutesToLast%"]
   mcusers:
     class: PublicUHC\TeamspeakAuth\Repositories\DefaultUserRepositroy
-    arguments: ["@pdo", "minecraftaccounts"]
+    arguments: ["@pdo", "%database.tablePrefix%minecraftaccounts"]
   tsusers:
       class: PublicUHC\TeamspeakAuth\Repositories\DefaultUserRepositroy
-      arguments: ["@pdo", "teamspeakaccounts"]
+      arguments: ["@pdo", "%database.tablePrefix%teamspeakaccounts"]
   pdo:
     class: PDO
     arguments: ["mysql:host=%database.host%;dbname=%database.database%", "%database.username%", "%database.password%"]
