@@ -1,18 +1,8 @@
 var yaml = require('js-yaml'),
     fs   = require('fs');
 
-try {
-    var doc = yaml.safeLoad(fs.readFileSync(__dirname + '/../../config/config.yml', 'utf8'));
-    var minecraft = doc.parameters.minecraft;
-    var database = doc.parameters.database;
-    var minutes = doc.parameters.minutesToLast;
-} catch (e) {
-    console.log(e);
-    return;
-}
+var doc = yaml.safeLoad(fs.readFileSync(__dirname + '/../../config/config.yml', 'utf8'));
 
-module.exports = {
-    database: database,
-    minecraft: minecraft,
-    minutes: minutes
-};
+module.exports.minecraft = doc.parameters.minecraft;
+module.exports.database = doc.parameters.database;
+module.exports.parameters = doc.parameters;

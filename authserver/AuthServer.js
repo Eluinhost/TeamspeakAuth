@@ -42,7 +42,7 @@ function getConnection() {
  * @param code the code to send
  */
 function kickClientWithCode(client, code) {
-    kickClientWithMessage(client, 'Your code is ' + code + ', it will last for the next ' + config.minutes + ' minutes.');
+    kickClientWithMessage(client, 'Your code is ' + code + ', it will last for the next ' + config.parameters.minutesToLast + ' minutes.');
 }
 
 /**
