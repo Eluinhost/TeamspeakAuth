@@ -26,7 +26,7 @@ services:
     arguments: ['%iconURL%']
   teamspeakhelper:
     class: PublicUHC\TeamspeakAuth\Helpers\DefaultTeamspeakHelper
-    arguments: ['@teamspeakserver']
+    arguments: ['@teamspeakserver', '@entityManager']
   teamspeakserver:
     factory_class: TeamSpeak3
     factory_method: factory
@@ -50,11 +50,4 @@ services:
   entityManager:
     factory_class: Doctrine\ORM\EntityManager
     factory_method: create
-    arguments: [{driver: 'pdo_mysql', user: '%database.username%', password: '%database.password%', dbname: '%database.database%'}, '@annotationmetadata', '@doctrineeventmanager']
-  doctrineeventmanager:
-    class: Doctrine\Common\EventManager
-    calls:
-    - [addEventListener, ['loadClassMetadata','@tableprefix']]
-  tableprefix:
-    class: PublicUHC\TeamspeakAuth\DoctrineExtensions\TablePrefix
-    arguments: ['%database.tablePrefix%']
+    arguments: [{driver: 'pdo_mysql', user: '%database.username%', password: '%database.password%', dbname: '%database.database%'}, '@annotationmetadata']
