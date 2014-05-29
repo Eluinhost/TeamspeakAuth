@@ -31,18 +31,6 @@ services:
     factory_class: TeamSpeak3
     factory_method: factory
     arguments: ['serverquery://%teamspeak.username%:%teamspeak.password%@%teamspeak.host%:%teamspeak.query_port%/?server_port=%teamspeak.port%']
-  tscodes:
-    class: PublicUHC\TeamspeakAuth\Repositories\DefaultCodeRepository
-    arguments: ['@pdo', 'teamspeakcodes', '%minutesToLast%']
-  mccodes:
-    class: PublicUHC\TeamspeakAuth\Repositories\DefaultCodeRepository
-    arguments: ['@pdo', 'minecraftcodes', '%minutesToLast%']
-  mcusers:
-    class: PublicUHC\TeamspeakAuth\Repositories\DefaultUserRepository
-    arguments: ['@pdo', 'minecraftaccounts']
-  tsusers:
-    class: PublicUHC\TeamspeakAuth\Repositories\DefaultUserRepository
-    arguments: ['@pdo', 'teamspeakaccounts']
   annotationmetadata:
     factory_class: Doctrine\ORM\Tools\Setup
     factory_method: createAnnotationMetadataConfiguration
