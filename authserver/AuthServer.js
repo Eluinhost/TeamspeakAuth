@@ -12,13 +12,20 @@ function processClient(client) {
     var code = util.generateCode(10);
 
     jQuery
-        .when(authDatabase.updateMinecraftAccountUUIDWithName(client.uuid, client.username))
-        //add code
+        .when(util.sleep(3000))
         .then(function() {
-            return util.sleep(3000)
-        }).then(function() {
+            return authDatabase.updateMinecraftAccountUUIDWithName(client.uuid, client.username);
+        })
+        .then(function(account){
+            return authDatabase.addCodeForAccount(account, code);
+        })
+        .then(function() {
             client.end(
                 JSON.stringify('Your code is ' + code + ', it will last for the next ' + config.parameters.minutesToLast + ' minutes.')
+            );
+        }).fail(function() {
+            client.end(
+                JSON.stringify('There was an error creating your code, try again later. If the problem persists please contact an administrator')
             );
         });
 }
