@@ -31,7 +31,7 @@ AuthDatabase.prototype.init = function() {
         var migrator = sequelize.getMigrator({
             path: __dirname + '/migrations'
         });
-        migrator.migrate({method: 'down'}).success(function() {
+        migrator.migrate().success(function() {
             console.log('done');
         });
     });
