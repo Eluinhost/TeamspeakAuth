@@ -2,6 +2,9 @@
 
 namespace PublicUHC\TeamspeakAuth\Controllers;
 
+use DateTime;
+use Doctrine\ORM\EntityManager;
+use PublicUHC\TeamspeakAuth\Entities\TeamspeakCode;
 use PublicUHC\TeamspeakAuth\Helpers\MinecraftHelper;
 use PublicUHC\TeamspeakAuth\Helpers\TeamspeakHelper;
 use PublicUHC\TeamspeakAuth\Repositories\CodeRepository;
@@ -122,12 +125,24 @@ class TeamspeakAuthController extends ContainerAware {
 
             $uuid = $ts3->getUUIDForClient($client);
 
-            $codeRepository = $this->container->get('tscodes');
-            $code = $codeRepository->insertCodeForUserID($uuid);
+            $account = $ts3->updateLastClientUsername($client);
+
+            $code = new TeamspeakCode();
+            $code->setCreatedAt(new DateTime())
+                 ->setUpdatedAt(new DateTime());
+            $account->getCodes()->clear();
+            $account->getCodes()->add($code);
+            $code->setAccount($account);
+
+            /** @var $entityManager EntityManager */
+            $entityManager = $this->container->get('entityManager');
+            $entityManager->persist($code);
+            $entityManager->persist($account);
+            $entityManager->flush();
 
             $timeToLast = $this->container->getParameter('minutesToLast');
-
-            $client->message("[Verification Code] AUTH CODE: '{$code}'. This code work for the next {$timeToLast} minutes");
+            $codeString = $code->getCode();
+            $client->message("[Verification Code] AUTH CODE: '{$codeString}'. This code work for the next {$timeToLast} minutes");
 
             $response->setData([
                 'UUID' => $uuid
