@@ -177,12 +177,6 @@ module.exports = function(grunt) {
                             default: '<%= configYML.parameters.database.database %>'
                         },
                         {
-                            config: 'configYML.parameters.database.tablePrefix',
-                            type: 'input',
-                            message: 'Table prefix:',
-                            default: '<%= configYML.parameters.database.tablePrefix'
-                        },
-                        {
                             config: 'configYML.parameters.minecraft.host',
                             type: 'input',
                             message: 'Auth Server host to bind to:',
