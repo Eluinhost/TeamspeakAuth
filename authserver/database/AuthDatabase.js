@@ -9,7 +9,8 @@ var Sequelize = require('sequelize'),
     MinecraftAccount = sequelize.import(__dirname + '/models/MinecraftAccount'),
     TeamspeakCode = sequelize.import(__dirname + '/models/TeamspeakCode'),
     TeamspeakAccount = sequelize.import(__dirname + '/models/TeamspeakAccount'),
-    Authentication = sequelize.import(__dirname + '/models/Authentication');
+    Authentication = sequelize.import(__dirname + '/models/Authentication'),
+    jQuery = require('jquery-deferred');
 
 MinecraftCode.belongsTo(MinecraftAccount, {as: 'Account'});
 MinecraftAccount.hasOne(MinecraftCode, {as: 'CurrentCode'});
@@ -22,7 +23,12 @@ Authentication.belongsTo(TeamspeakAccount, {as: 'TeamspeakAccount'});
 
 var AuthDatabase = function() {};
 
+/**
+ * Initialize the database
+ * @returns {Deferred} A promise that resolve on completion or rejects on failure
+ */
 AuthDatabase.prototype.init = function() {
+    var deferred = new jQuery.Deferred();
     sequelize.authenticate().complete(function(err) {
         if(!!err) {
             console.log('Unable to connect to the database: ', err);
@@ -32,7 +38,10 @@ AuthDatabase.prototype.init = function() {
             path: __dirname + '/migrations'
         });
         migrator.migrate().success(function() {
-            console.log('done');
+            deferred.resolve();
+        }).fail(function() {
+            deferred.reject();
         });
     });
+    return deferred.promise();
 };
