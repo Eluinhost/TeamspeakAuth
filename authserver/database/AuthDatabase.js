@@ -36,6 +36,3 @@ AuthDatabase.prototype.init = function() {
         });
     });
 };
-
-var authDatabase = new AuthDatabase();
-authDatabase.init();
