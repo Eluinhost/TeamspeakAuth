@@ -15,7 +15,6 @@ parameters:
     database: authentication
     username: ""
     password: ""
-    tablePrefix: "auth_"
   minecraft:
     host: 0.0.0.0
     port: 35879
