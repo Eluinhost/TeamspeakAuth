@@ -43,7 +43,7 @@ class DefaultUserRepository implements UserRepository {
      */
     function setLastNameForUUID($uuid, $username)
     {
-        $stmt = $this->connection->prepare('INSERT INTO ' . $this->table_name . '(uuid, name, updated_time) VALUES (:uuid, :name, NOW()) ON DUPLICATE KEY UPDATE name=:name, updated_time=NOW()');
+        $stmt = $this->connection->prepare('INSERT INTO ' . $this->table_name . '(uuid, name, updatedAt, createdAt) VALUES (:uuid, :name, NOW(), NOW()) ON DUPLICATE KEY UPDATE name=:name, updatedAt=NOW()');
         $stmt->bindParam('uuid', $uuid);
         $stmt->bindParam('name', $username);
 
