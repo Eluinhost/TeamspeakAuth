@@ -15,8 +15,7 @@
     "js-yaml": "3.0.2",
     "mime": "1.2.11",
     "minecraft-protocol": "Eluinhost/node-minecraft-protocol",
-    "mysql": "2.2.0",
-    "persistencejs": "0.3.0",
+    "mysql": "^2.3.1",
     "sequelize": "^1.7.5"
   },
   "devDependencies": {
