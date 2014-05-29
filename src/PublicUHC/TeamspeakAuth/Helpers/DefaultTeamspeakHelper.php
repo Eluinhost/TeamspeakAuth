@@ -2,7 +2,10 @@
 
 namespace PublicUHC\TeamspeakAuth\Helpers;
 
+use DateTime;
+use Doctrine\ORM\EntityManager;
 use Exception;
+use PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount;
 use TeamSpeak3;
 use TeamSpeak3_Adapter_FileTransfer;
 use TeamSpeak3_Adapter_ServerQuery_Exception;
@@ -12,9 +15,11 @@ use TeamSpeak3_Node_Server;
 class DefaultTeamspeakHelper implements TeamspeakHelper {
 
     private $server;
+    private $entityManager;
 
-    public function __construct(TeamSpeak3_Node_Server $server) {
+    public function __construct(TeamSpeak3_Node_Server $server, EntityManager $entityManager) {
         $this->server = $server;
+        $this->entityManager = $entityManager;
     }
 
     public function getClientForName($name) {
@@ -90,5 +95,31 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
 
     public function getClientByUUID($uuid) {
         return $this->server->clientGetByUid($uuid);
+    }
+
+    /**
+     * @param TeamSpeak3_Node_Client $client
+     * @return TeamspeakAccount the updated account
+     */
+    public function updateLastClientUsername(TeamSpeak3_Node_Client $client)
+    {
+        $uuid = $this->getUUIDForClient($client);
+        $account =  $this->entityManager->getRepository('PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount')->findOneBy([
+            'uuid' => $uuid
+        ]);
+
+        if(null == $account) {
+            $account = new TeamspeakAccount();
+            $account->setCreatedAt(new DateTime())
+                    ->setUUID($uuid);
+        }
+
+        $account->setName($client['client_nickname'])
+                ->setUpdatedAt(new DateTime());
+
+        $this->entityManager->persist($account);
+        $this->entityManager->flush();
+
+        return $account;
     }
 }
