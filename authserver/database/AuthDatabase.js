@@ -51,7 +51,7 @@ module.exports.AuthDatabase.prototype.init = function() {
  * Update the account with the given UUID with the given name, if it doesn't exist it creates it
  * @param {String} uuid the UUID to udpate
  * @param {String} name the latest name
- * @returns {Deferred} A promise that resolves on complete or fails on error (shouldn't happen)
+ * @returns {Deferred} A promise that resolves to the MinecraftAccount complete or fails on error (shouldn't happen)
  */
 module.exports.AuthDatabase.prototype.updateMinecraftAccountUUIDWithName = function(uuid, name) {
     var deferred = jQuery.Deferred();
@@ -60,10 +60,32 @@ module.exports.AuthDatabase.prototype.updateMinecraftAccountUUIDWithName = funct
         clientAccount.updateAttributes({
             name: name
         }).success(function() {
+            deferred.resolve(clientAccount);
+        }).fail(function() {
+            deferred.reject();
+        });
+    });
+    return deferred.promise();
+};
+
+/**
+ * Adds a minecraft code for the given minecraft account
+ * @param {MinecraftAccount} account the account to add to
+ * @param {String} code the code to give them
+ * @returns {Deferred} A promise that resolves on complete or rejects on error (shouldnt happen)
+ */
+module.exports.AuthDatabase.prototype.addCodeForAccount = function(account, code) {
+    var deferred = jQuery.Deferred();
+    module.exports.MinecraftCode.create({
+        code: code
+    }).success(function(minecraftCode) {
+        minecraftCode.setAccount(account).success(function() {
             deferred.resolve();
         }).fail(function() {
             deferred.reject();
         });
+    }).fail(function() {
+        deferred.reject();
     });
     return deferred.promise();
 };
