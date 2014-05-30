@@ -1,6 +1,7 @@
 <?php
 namespace PublicUHC\TeamspeakAuth\Entities;
 
+use DateTime;
 use Doctrine\ORM\Id;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -27,20 +28,26 @@ trait DatabaseTrait {
         return $this->id;
     }
 
+    /**
+     * @return DateTime
+     */
     public function getCreatedAt() {
-        return $this->id;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt($at) {
+    public function setCreatedAt(DateTime $at) {
         $this->createdAt = $at;
         return $this;
     }
 
+    /**
+     * @return DateTime
+     */
     public function getUpdatedAt() {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt($at) {
+    public function setUpdatedAt(DateTime $at) {
         $this->updatedAt = $at;
         return $this;
     }

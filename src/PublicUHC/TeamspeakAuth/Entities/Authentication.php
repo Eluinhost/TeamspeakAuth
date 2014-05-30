@@ -27,6 +27,9 @@ class Authentication {
      */
     private $minecraftAccount;
 
+    /**
+     * @return TeamspeakAccount
+     */
     public function getTeamspeakAccount() {
         return $this->teamspeakAccount;
     }
@@ -36,6 +39,9 @@ class Authentication {
         return $this;
     }
 
+    /**
+     * @return MinecraftAccount
+     */
     public function getMinecraftAccount() {
         return $this->minecraftAccount;
     }
