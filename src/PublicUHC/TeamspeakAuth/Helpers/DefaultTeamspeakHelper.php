@@ -45,6 +45,8 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
                        ->setUpdatedAt(new DateTime());
 
         $this->entityManager->persist($authenitcation);
+        $tsAccount->getCodes()->clear();
+        $mcAccount->getCodes()->clear();
         $this->entityManager->flush();
 
         $playerIcon = $this->mcHelper->getIconForUsername($mcAccount->getUUID());
