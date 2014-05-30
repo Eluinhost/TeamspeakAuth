@@ -49,7 +49,8 @@
         $.get('{{ path('latestauths') }}', function(data) {
             list.empty();
             $.each(data, function(index, element) {
-                list.append('<li><label>' + element.ts_name + '</label></li><li class="minecraft-name"><img src="http://minotar.net/helm/' + element.mc_name + '" class="minecraft-image"/> ' + element.mc_name + '</li>');
+                var label = $('<div/>').text(element.ts_name).html();
+                list.append('<li><label>' + label + '</label></li><li class="minecraft-name"><img src="http://minotar.net/helm/' + element.mc_name + '" class="minecraft-image"/> ' + element.mc_name + '</li>');
             });
         });
     });
