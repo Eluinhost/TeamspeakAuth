@@ -43,6 +43,11 @@ class TeamspeakAccount {
     public function __construct()
     {
         $this->codes = new ArrayCollection();
+        $this->minecraftAccounts = new ArrayCollection();
+    }
+
+    public function getMinecraftAccounts() {
+        return $this->minecraftAccounts;
     }
 
     public function getUUID() {

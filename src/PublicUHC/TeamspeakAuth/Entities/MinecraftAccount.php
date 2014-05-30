@@ -45,6 +45,11 @@ class MinecraftAccount {
     public function __construct()
     {
         $this->codes = new ArrayCollection();
+        $this->teamspeakAccounts = new ArrayCollection();
+    }
+
+    public function getTeamspeakAccounts() {
+        return $this->teamspeakAccounts;
     }
 
     public function getUUID() {
