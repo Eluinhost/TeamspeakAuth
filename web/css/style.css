@@ -24,3 +24,9 @@ body {
     color: #BBBBBB;
     text-decoration: underline;
 }
+
+.center-justified {
+    margin: 0 auto;
+    text-align: justify;
+    width: 30em;
+}
