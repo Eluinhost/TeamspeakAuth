@@ -18,6 +18,7 @@ body {
 .copyright-footer {
     color: #BBBBBB;
     float: right;
+    padding-top: 15px;
 }
 .copyright-footer a {
     color: #BBBBBB;
