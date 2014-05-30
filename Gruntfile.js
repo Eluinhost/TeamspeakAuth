@@ -11,6 +11,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-available-tasks');
 
     var YAML = require('yamljs');
+    var jQuery = require('jquery-deferred');
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -27,14 +28,13 @@ module.exports = function(grunt) {
             tasks: {
                 options: {
                     filter: 'include',
-                    tasks: ['default', 'install', 'clean', 'configure']
+                    tasks: ['default', 'install', 'clean', 'configure', 'run-migrations']
                 }
             }
         },
         copy: {
             fonts: {
                 src: [
-                    '<%= pkg.bower_dir %>/bootstrap/dist/fonts/*',
                     '<%= pkg.bower_dir %>/fontawesome/fonts/*'
                 ],
                 dest: '<%= font_dir %>',
@@ -44,21 +44,24 @@ module.exports = function(grunt) {
             }
         },
         concat: {
-            options: {
-                separator: ';'
-            },
             js: {
                 src: [
+                    '<%= pkg.bower_dir %>/modernizr/modernizr.js',
                     '<%= pkg.bower_dir %>/jquery/dist/jquery.js',
-                    '<%= pkg.bower_dir %>/bootstrap/dist/js/bootstrap.js'
+                    '<%= pkg.bower_dir %>/fastclick/lib/fastclick.js',
+                    '<%= pkg.bower_dir %>/foundation/js/foundation/foundation.js',
+                    '<%= pkg.bower_dir %>/foundation/js/foundation/foundation.offcanvas.js',
+                    '<%= pkg.bower_dir %>/foundation/js/foundation/foundation.alert.js'
                 ],
-                dest: '<%= js_dir %>/<%= pkg.name %>.js'
+                dest: '<%= js_dir %>/<%= pkg.name %>.js',
+                options: {
+                    separator: ';'
+                }
             },
             css: {
                 src: [
-                    '<%= pkg.bower_dir %>/bootstrap/dist/css/bootstrap.css',
-                    '<%= pkg.bower_dir %>/bootstrap/dist/css/bootstrap-theme.css',
-                    '<%= pkg.bower_dir %>/font-awesome/css/font-awesome.css'
+                    '<%= pkg.bower_dir %>/fontawesome/css/font-awesome.css',
+                    '<%= pkg.bower_dir %>/foundation/css/foundation.css'
                 ],
                 dest: '<%= css_dir %>/<%= pkg.name %>.css'
             }
@@ -177,18 +180,6 @@ module.exports = function(grunt) {
                             default: '<%= configYML.parameters.database.database %>'
                         },
                         {
-                            config: 'configYML.parameters.database.minecraft_table',
-                            type: 'input',
-                            message: 'MySQL minecraft table:',
-                            default: '<%= configYML.parameters.database.minecraft_table %>'
-                        },
-                        {
-                            config: 'configYML.parameters.database.teamspeak_table',
-                            type: 'input',
-                            message: 'MySQL teamspeak table:',
-                            default: '<%= configYML.parameters.database.teamspeak_table %>'
-                        },
-                        {
                             config: 'configYML.parameters.minecraft.host',
                             type: 'input',
                             message: 'Auth Server host to bind to:',
@@ -219,6 +210,12 @@ module.exports = function(grunt) {
                             config: 'configYMLwrite',
                             type: 'confirm',
                             message: 'Do you want to write to the file config.yml?',
+                            default: 'Y'
+                        },
+                        {
+                            config: 'configYMLdatabasewrite',
+                            type: 'confirm',
+                            message: 'Do you also want to update/create the database schema to the latest version?',
                             default: 'Y'
                         }
                     ]
@@ -272,22 +269,19 @@ module.exports = function(grunt) {
         'load-config',
         'Loads the config.yml file into grunt for editing with \'configure\', if file doesn\'t exist uses config.yml.dist',
         function() {
-            var file = 'config/config.yml';
+            var file = __dirname + '/config/config.yml';
             if( !grunt.file.exists(file) ) {
-                file = 'config/config.yml.dist';
+                file = __dirname + '/config/config.yml.dist';
             }
             var configFile = grunt.file.readYAML(file);
-            var configMerge = {
-                configYML: configFile
-            };
-            grunt.config.merge(configMerge);
+            grunt.config.merge({configYML: configFile});
         }
     );
 
     grunt.registerTask(
         'configure',
         'Create/edit the config.yml file',
-        ['load-config', 'prompt:configYML', 'save-config']
+        ['load-config', 'prompt:configYML', 'save-config', 'run-migrations']
     );
 
     grunt.registerTask(
@@ -299,6 +293,25 @@ module.exports = function(grunt) {
                 return;
             }
             grunt.file.write('config/config.yml', YAML.stringify(grunt.config('configYML')));
+        }
+    );
+
+    grunt.registerTask(
+        'run-migrations',
+        'Runs the database migrations to update the database to the latest version',
+        function() {
+            var done = this.async();
+            if(grunt.config.get('configYMLdatabasewrite') == null || grunt.config.get('configYMLdatabasewrite') == true) {
+                var database = require('./authserver/database/AuthDatabase');
+                var authDatabase = new database.AuthDatabase();
+                jQuery.when(authDatabase.init()).then(function() {
+                    console.log('Migrations complete');
+                    done();
+                }).fail(function() {
+                    console.log('There was an error trying to apply the migrations');
+                    done();
+                });
+            }
         }
     );
 

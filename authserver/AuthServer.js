@@ -1,160 +1,59 @@
-var mc = require('minecraft-protocol');
-var yaml = require('js-yaml');
-var fs   = require('fs');
-var chance = require('chance').Chance();
-var mysql = require('mysql');
-var jQuery = require('jquery-deferred');
-var mime = require('mime');
-var util = require('util');
-
-var minecraft, database, minutes;
-
-try {
-    var doc = yaml.safeLoad(fs.readFileSync(__dirname + '/../config/config.yml', 'utf8'));
-    minecraft = doc.parameters.minecraft;
-    database = doc.parameters.database;
-    minutes = doc.parameters.minutesToLast;
-} catch (e) {
-    console.log(e);
-    return;
-}
-
-function base64Image(src) {
-    var data = fs.readFileSync(src).toString("base64");
-    return util.format("data:%s;base64,%s", mime.lookup(src), data);
-}
-
-/**
- * @returns Deferred that resolves to the connection if successful
- */
-function getConnection() {
-    var deferred = new jQuery.Deferred();
-
-    var connection = mysql.createConnection({
-        host     : database.host,
-        user     : database.username,
-        password : database.password,
-        port     : database.port,
-        database : database.database
-    });
-
-    connection.connect(function(err) {
-        if (err != null) {
-            deferred.reject(err);
-        }
-        deferred.resolve(connection);
-    });
-
-    return deferred.promise();
-}
-
-/**
- * Kick the client with the given code
- * @param client the client to kick
- * @param code the code to send
- */
-function kickClientWithCode(client, code) {
-    kickClientWithMessage(client, 'Your code is ' + code + ', it will last for the next ' + minutes + ' minutes.');
-}
-
-/**
- * Kick the client with the given message
- * @param client the client to kick
- * @param message the message to send them
- */
-function kickClientWithMessage(client, message) {
-    client.end(JSON.stringify(message));
-}
-
-/**
- * Add the code and username to the database
- * @param connection the connection to use
- * @param username the username to add for
- * @param code the code to apply
- * @returns Deferred the promise that resolves on success
- */
-function addCodeToDatabase(connection, username, code) {
-    var deferred = new jQuery.Deferred();
-    connection.query(
-        'INSERT INTO ??(uuid, code, created_time) VALUES (?, ?, NOW()) ON DUPLICATE KEY UPDATE code=?,created_time=NOW()',
-        [
-            database.minecraft_table,
-            username,
-            code,
-            code
-        ],
-        function(err, results) {
-            if (err != null) {
-                deferred.reject(err);
-            }
-            deferred.resolve();
-        }
-    );
-    return deferred.promise();
-}
-
-/**
- * Returns a promise that resolves after the given duration
- * @param duration the ms to sleep for
- * @returns Deferred the promise that will resolve
- */
-function sleep(duration) {
-    var deferred = new jQuery.Deferred();
-    setTimeout(function() {
-        deferred.resolve();
-    }, duration);
-    return deferred.promise();
-}
+var mc = require('minecraft-protocol'),
+    jQuery = require('jquery-deferred'),
+    config = require('./config/config'),
+    util = require('./lib/ServerUtil'),
+    database = require('./database/AuthDatabase');
 
 /**
  * Generate a code for the client and kick them
- * @param client the client to process
+ * @param {Client} client the client to process
  */
 function processClient(client) {
-    var code = chance.hash({length: 10, casing: 'upper'});
+    var code = util.generateCode(10);
 
-    var dbConnection;
-    jQuery.when(getConnection())
-        .then(function (connection) {
-            dbConnection = connection;
-            return addCodeToDatabase(dbConnection, client.username, code);
+    jQuery
+        .when(util.sleep(3000))
+        .then(function() {
+            return authDatabase.updateMinecraftAccountUUIDWithName(client.username, client.username);
         })
-        .then(function(){
-            dbConnection.end();
-            return sleep(3000)
+        .then(function(account){
+            return authDatabase.addCodeForAccount(account, code);
         })
         .then(function() {
-            console.log('User: ' + client.username + ", Code: " + code);
-            kickClientWithCode(client, code);
-        })
-        .fail(function(err) {
-            if(dbConnection != null) {
-                dbConnection.end();
-            }
-            console.log('Database connection error: ' + err);
-            kickClientWithMessage(client, 'There was a problem with the database, please try again later.');
+            client.end(
+                JSON.stringify('Your code is ' + code + ', it will last for the next ' + config.parameters.minutesToLast + ' minutes.')
+            );
+        }).fail(function() {
+            client.end(
+                JSON.stringify('There was an error creating your code, try again later. If the problem persists please contact an administrator')
+            );
         });
 }
 
-var server = mc.createServer({
-    'online-mode': true,
-    encryption: true,
-    host: minecraft.host,
-    port: minecraft.port,
-    motd: minecraft.motd,
-    'max-players': -1
-});
+authDatabase = new database.AuthDatabase();
 
-server.favicon = base64Image(__dirname + '/servericon.png');
+jQuery.when(authDatabase.init()).then(function() {
 
-server.on('login', function(client) {
-    processClient(client);
-});
+    var server = mc.createServer({
+        'online-mode': true,
+        encryption: true,
+        host: config.minecraft.host,
+        port: config.minecraft.port,
+        motd: config.minecraft.motd,
+        'max-players': -1
+    });
 
-server.on('error', function(error) {
-    console.log('Error:', error);
-});
+    server.favicon = util.base64Image(__dirname + '/servericon.png');
 
-server.on('listening', function() {
-    console.log('Server listening on port', server.socketServer.address().port);
+    server.on('login', function (client) {
+        processClient(client);
+    });
+
+    server.on('error', function (error) {
+        console.log('Error:', error);
+    });
+
+    server.on('listening', function () {
+        console.log('Server listening on port', server.socketServer.address().port);
+    });
 });

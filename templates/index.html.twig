@@ -3,24 +3,32 @@
 {% block page_title %}Teamspeak Authentication - Home{% endblock %}
 
 {% block content %}
-<h1>Teamspeak Verification</h1>
+<h1>Teamspeak Authentication</h1>
 <br/>
 <p>
-    Teamspeak verification allows you to be sure of who you are talking to.
+    Teamspeak authentication allows you to be sure of who you are talking to.
 </p>
 <p>
-    A verified user will have their description set to their Minecraft username and will have an icon that is their ingame skin.
+    A verified user will have the following:
 </p>
-<p>
-    <em>To see a clients description, click on them and their description is shown in the right hand side info box</em>
+<p class="center-justified">
+    <i class="fa fa-check-square-o"></i> Their Minecraft username will be shown in their description
 </p>
+<p class="center-justified">
+    <i class="fa fa-check-square-o"></i> A special 'verified' group
+</p>
+<p class="center-justified">
+    <i class="fa fa-check-square-o"></i> An icon of their Minecraft skin's face
+</p>
+<hr>
 <p>
     Example: <img src="{{ asset('images/fairy.png') }}"/>
 </p>
-<p>
-    <a id="request_codes" class="btn btn-primary btn-md" role="button" href="{{ path('teamspeakrequest') }}">Start verification here</a>
+<p class="text-warning">
+    <em><i class="fa fa-exclamation-triangle"></i> Minecraft faces are based on Minotar. To update them you will need to reverify</em>
 </p>
+<hr>
 <p>
-    <em>Minecraft faces are added based on Minotar and to change inside teamspeak requires reverification</em>
+    <a id="request_codes" class="button [radius round]" role="button" href="{{ path('teamspeakrequest') }}">Start verification here</a>
 </p>
 {% endblock %}
