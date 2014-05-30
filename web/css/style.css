@@ -1,8 +1,15 @@
+@import url(http://fonts.googleapis.com/css?family=Bevan);
+
 body {
     background-image: url('../images/graphy.png');
     padding-top: 50px;
     padding-bottom: 150px;
+    font-family: 'Tahoma', sans-serif;
 }
+h1 {
+    font-family: 'Bevan', serif;
+}
+
 .page-wrapper {
     background-image: url('../images/main.png');
     border: 1px solid #dddddd;
