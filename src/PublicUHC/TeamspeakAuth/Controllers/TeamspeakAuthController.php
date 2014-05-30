@@ -4,10 +4,14 @@ namespace PublicUHC\TeamspeakAuth\Controllers;
 
 use DateTime;
 use Doctrine\ORM\EntityManager;
+use PublicUHC\TeamspeakAuth\Entities\MinecraftAccount;
+use PublicUHC\TeamspeakAuth\Entities\MinecraftCode;
+use PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount;
 use PublicUHC\TeamspeakAuth\Entities\TeamspeakCode;
 use PublicUHC\TeamspeakAuth\Helpers\MinecraftHelper;
 use PublicUHC\TeamspeakAuth\Helpers\TeamspeakHelper;
 use PublicUHC\TeamspeakAuth\Repositories\CodeRepository;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,55 +30,69 @@ class TeamspeakAuthController extends ContainerAware {
         $mc_code = $request->query->get('mc_code');
 
         try {
-            /**
-             * @var $tsCodes CodeRepository
-             * @var $mcCodes CodeRepository
-             */
-            $tsCodes = $this->container->get('tscodes');
-            $mcCodes = $this->container->get('mccodes');
 
-            if (!$tsCodes->doesCodeMatchForUserID($ts_code, $ts_uuid)) {
+            /** @var $entityManager EntityManager */
+            $entityManager = $this->container->get('entityManager');
+
+            $tsCodeRepository = $entityManager->getRepository('PublicUHC\TeamspeakAuth\Entities\TeamspeakCode');
+
+            /** @var $tsCode TeamspeakCode */
+            $tsCode = $tsCodeRepository->findOneBy(['code' => $ts_code]);
+
+            if(null == $tsCode) {
                 $response->setStatusCode(400);
                 $response->setData([
-                    'error' => 'Invalid code for the given Teamspeak UUID'
+                    'error' => 'Invalid Teamspeak code supplied'
                 ]);
                 return $response;
             }
 
-            if (!$mcCodes->doesCodeMatchForUserID($mc_code, $mc_uuid)) {
+            /** @var $tsAccount TeamspeakAccount */
+            $tsAccount = $tsCode->getAccount();
+
+            if($tsAccount->getUUID() != $ts_uuid) {
                 $response->setStatusCode(400);
                 $response->setData([
-                    'error' => 'Invalid code for the given Minecraft username'
+                    'error' => 'Invalid code for the given Teamspeak account'
                 ]);
                 return $response;
             }
+
+            $mcCodeRepository = $entityManager->getRepository('PublicUHC\TeamspeakAuth\Entities\MinecraftCode');
+
+            /** @var $mcCode MinecraftCode */
+            $mcCode = $mcCodeRepository->findOneBy(['code' => $mc_code]);
+
+            if(null == $mcCode) {
+                $response->setStatusCode(400);
+                $response->setData([
+                    'error' => 'Invalid Minecraft code supplied'
+                ]);
+                return $response;
+            }
+
+            /** @var $mcAccount MinecraftAccount */
+            $mcAccount = $mcCode->getAccount();
+
+            if($mcAccount->getUUID() != $mc_uuid) {
+                $response->setStatusCode(400);
+                $response->setData([
+                    'error' => 'Invalid code for the given Minecraft account'
+                ]);
+                return $response;
+            }
+
+            //ALL CODES MATCHED, RUN THE PROCESS
 
             /** @var $tsHelper TeamspeakHelper */
             $tsHelper = $this->container->get('teamspeakhelper');
 
-            /** @var $client Teamspeak3_Node_Client */
-            $client = $tsHelper->getClientByUUID($ts_uuid);
-
-            //set the description
-            $tsHelper->setClientDescription($client, $mc_uuid);
-
-            //add the required server group
-            $groupID = $this->container->getParameter('teamspeak.group_id');
-            //attempt to remove them from the group first
             try {
-                $client->remServerGroup($groupID);
-            } catch (\TeamSpeak3_Exception $ex) {}
-            $client->addServerGroup($groupID);
-
-            /** @var $mcHelper MinecraftHelper */
-            $mcHelper = $this->container->get('minecrafthelper');
-
-            $playerIcon = $mcHelper->getIconForUsername($mc_uuid);
-            $tsHelper->setClientIcon($client, $playerIcon);
-
-            $tsCodes->removeForUserID($ts_uuid);
-            $mcCodes->removeForUserID($mc_uuid);
-
+                $tsHelper->verifyClient($tsAccount, $mcAccount);
+            } catch (Exception $ex) {
+                error_log($ex->getMessage());
+                error_log($ex->getTraceAsString());
+            }
             return $response;
         } catch ( \PDOException $ex ) {
             error_log($ex->getMessage());
