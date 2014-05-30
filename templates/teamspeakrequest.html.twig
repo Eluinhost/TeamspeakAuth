@@ -3,7 +3,7 @@
 {% block title %}Teamspeak Authentication - Request Teamspeak Code{% endblock %}
 
 {% block content %}
-    <div class="col-lg-10 col-lg-offset-1">
+    <div class="small-10 small-offset-1 columns">
         <div class="row">
             <h1>Request a Teamspeak Code</h1>
             <p>
@@ -13,16 +13,16 @@
                 You should then get a message inside Teamspeak containing a code. Keep this code for later on.
             </p>
             <hr>
+            <div class="error_area">
 
-            <div id="code_alert" class="alert alert-danger fade in">
-                <a class="close alert-close" href="#">&times;</a>
-                <span id="code_error">Unknown Error</span>
             </div>
-            <div class="input-group">
-                <input type="text" class="form-control" id="ts_name" placeholder="Teamspeak Nickname" autofocus/>
-                <span class="input-group-btn">
-                    <button class="btn btn-default" id="request_codes" type="button">Request Code</button>
-                </span>
+            <div class="row collapse">
+                <div class="small-10 columns">
+                    <input type="text" class="form-control" id="ts_name" placeholder="Teamspeak Nickname" autofocus/>
+                </div>
+                <div class="small-2 columns">
+                    <a href="#" id="request_codes" class="button postfix">Request Code</a>
+                </div>
             </div>
         </div>
     </div>
@@ -32,32 +32,27 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function(){
+            $(document).foundation('alert');
             $(document).keypress(function(e){
                 if (e.which == 13){
                     $("#request_codes").click();
                 }
             });
             $('#request_codes').click(function(e){
-                $('.alert').hide();
+                $('.error_area').empty();
                 e.preventDefault();
-                $.get("{{ path('teamspeakcode') }}", {'ts_name': $('#ts_name').val()})
-                .done(function(data){
+                $.get("{{ path('teamspeakcode') }}", {'ts_name': $('#ts_name').val()}).done(function(data){
                     var uuid = data.UUID;
                     window.location = '{{ path('verifyaccount') }}/' + uuid;
-                })
-                .fail(function(xhr){
+                }).fail(function(xhr){
+                    var error = 'Unknown Error';
                     if(typeof xhr.responseJSON === 'undefined'){
-                        $('#code_error').html('Unexpected response from server');
-                    }else{
-                        $('#code_error').html(xhr.responseJSON.error);
+                        error = 'Unexpected response from server';
+                    } else {
+                        error = xhr.responseJSON.error;
                     }
-                    $('#code_alert').show();
+                    $('.error_area').append('<div data-alert class="alert-box alert round">' + error + '<a href="#" class="close">&times;</a></div>');
                 });
-            });
-            $('.alert').hide();
-            $('.alert-close').click(function(e){
-                e.preventDefault();
-                $(this).parent().hide();
             });
         });
     </script>

@@ -35,7 +35,6 @@ module.exports = function(grunt) {
         copy: {
             fonts: {
                 src: [
-                    '<%= pkg.bower_dir %>/bootstrap/dist/fonts/*',
                     '<%= pkg.bower_dir %>/fontawesome/fonts/*'
                 ],
                 dest: '<%= font_dir %>',
@@ -47,8 +46,12 @@ module.exports = function(grunt) {
         concat: {
             js: {
                 src: [
+                    '<%= pkg.bower_dir %>/modernizr/modernizr.js',
                     '<%= pkg.bower_dir %>/jquery/dist/jquery.js',
-                    '<%= pkg.bower_dir %>/bootstrap/dist/js/bootstrap.js'
+                    '<%= pkg.bower_dir %>/fastclick/lib/fastclick.js',
+                    '<%= pkg.bower_dir %>/foundation/js/foundation/foundation.js',
+                    '<%= pkg.bower_dir %>/foundation/js/foundation/foundation.offcanvas.js',
+                    '<%= pkg.bower_dir %>/foundation/js/foundation/foundation.alert.js'
                 ],
                 dest: '<%= js_dir %>/<%= pkg.name %>.js',
                 options: {
@@ -57,9 +60,8 @@ module.exports = function(grunt) {
             },
             css: {
                 src: [
-                    '<%= pkg.bower_dir %>/bootstrap/dist/css/bootstrap.css',
-                    '<%= pkg.bower_dir %>/bootstrap/dist/css/bootstrap-theme.css',
-                    '<%= pkg.bower_dir %>/fontawesome/css/font-awesome.css'
+                    '<%= pkg.bower_dir %>/fontawesome/css/font-awesome.css',
+                    '<%= pkg.bower_dir %>/foundation/css/foundation.css'
                 ],
                 dest: '<%= css_dir %>/<%= pkg.name %>.css'
             }
