@@ -12,15 +12,48 @@
 <div class="row">
     <div class="small-10 small-offset-1 columns">
         <div class="row page-wrapper text-center">
-{% block content %}
+            <div class="off-canvas-wrap" data-offcanvas>
+                <div class="inner-wrap">
+                    <section class="main-section">
+                        {% block content %}
 
-{% endblock %}
-        <div class="copyright-footer">&copy;Eluinhost 2014. <a href="https://github.com/Eluinhost/TeamspeakAuth"><em>Source Code</em></a></div>
+                        {% endblock %}
+                    </section>
+                    <div class="latest-footer">
+                        <a class="left-off-canvas-toggle" href="#">Latest Authentications</a>
+                    </div>
+                    <div class="copyright-footer">&copy;Eluinhost 2014. <a href="https://github.com/Eluinhost/TeamspeakAuth"><em>Source Code</em></a></div>
+                    <!-- Off Canvas Menu -->
+                    <aside class="left-off-canvas-menu">
+                        <ul class="off-canvas-list">
+
+                        </ul>
+                    </aside>
+                    <a class="exit-off-canvas"></a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 {% block javascripts %}
 <script src="{{ asset('js/TeamspeakAuth.min.js', 'vendor') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(document).foundation('alert');
+        $(document).foundation('offcanvas');
+    });
+    $('.left-off-canvas-toggle').on('click', function() {
+        var list = $('.off-canvas-list');
+        list.empty();
+        list.append('<li><label>Loading...</label></li>');
+        $.get('{{ path('latestauths') }}', function(data) {
+            list.empty();
+            $.each(data, function(index, element) {
+                list.append('<li><label>' + element.ts_name + '</label></li><li class="minecraft-name"><img src="http://minotar.net/helm/' + element.mc_name + '" class="minecraft-image"/> ' + element.mc_name + '</li>');
+            });
+        });
+    });
+</script>
 {% endblock %}
 </body>
 </html>

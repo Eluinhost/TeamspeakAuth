@@ -6,6 +6,7 @@ body {
     padding-bottom: 150px;
     font-family: 'Tahoma', sans-serif;
 }
+
 h1 {
     font-family: 'Bevan', serif;
 }
@@ -16,8 +17,12 @@ h1 {
     -moz-box-shadow: 5px 5px rgba(0,0,0,0.2);
     -webkit-box-shadow: 5px 5px rgba(0,0,0,0.2);
     box-shadow: 5px 5px rgba(0,0,0,0.2);
+}
+
+.inner-wrap {
     padding: 15px 15px 5px 15px;
 }
+
 .form-control {
     text-align: center;
 }
@@ -27,6 +32,30 @@ h1 {
     float: right;
     padding-top: 15px;
 }
+
+.minecraft-image {
+    width: 1em;
+    height: 1em;
+}
+
+ul.off-canvas-list li.minecraft-name {
+    display: block;
+    padding: 0.66667rem;
+    color: rgba(255, 255, 255, 0.7);
+    border-bottom: 1px solid #262626;
+    transition: background 300ms ease;
+}
+
+.move-right .exit-off-canvas {
+    background: rgba(255,255,255,.5);
+}
+
+.latest-footer {
+    color: #BBBBBB;
+    float: left;
+    padding-top: 15px;
+}
+
 .copyright-footer a {
     color: #BBBBBB;
     text-decoration: underline;
