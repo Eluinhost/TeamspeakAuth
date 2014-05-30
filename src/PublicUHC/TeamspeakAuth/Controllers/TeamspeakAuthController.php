@@ -5,7 +5,10 @@ namespace PublicUHC\TeamspeakAuth\Controllers;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
+use PublicUHC\TeamspeakAuth\Entities\Authentication;
 use PublicUHC\TeamspeakAuth\Entities\MinecraftAccount;
 use PublicUHC\TeamspeakAuth\Entities\MinecraftCode;
 use PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount;
@@ -205,6 +208,37 @@ class TeamspeakAuthController extends ContainerAware {
             ]);
             return $response;
         }
+    }
+
+    public function latestAuthsAction(Request $request) {
+        $response = new JsonResponse();
+
+        /** @var $entityManager EntityManager */
+        $entityManager = $this->container->get('entityManager');
+
+        $qb = $entityManager->createQueryBuilder();
+
+        $qb->select('authentication')
+            ->from('PublicUHC\TeamspeakAuth\Entities\Authentication', 'authentication')
+            ->orderBy('authentication.updatedAt', 'DESC')
+            ->setMaxResults(10);
+
+        $returnArray = [];
+
+        $results = $qb->getQuery()->getResult(Query::HYDRATE_OBJECT);
+        /** @var $result Authentication */
+        foreach($results as $result) {
+            array_push($returnArray, [
+                'updatedAt' => $result->getUpdatedAt()->format(DateTime::RFC2822),
+                'createdAt' => $result->getCreatedAt()->format(DateTime::RFC2822),
+                'ts_name' => $result->getTeamspeakAccount()->getName(),
+                'mc_name' => $result->getMinecraftAccount()->getName()
+            ]);
+        }
+
+        $response->setData($returnArray);
+
+        return $response;
     }
 
     public function indexAction() {
