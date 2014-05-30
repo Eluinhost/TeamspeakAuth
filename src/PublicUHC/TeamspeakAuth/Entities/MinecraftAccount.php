@@ -35,21 +35,18 @@ class MinecraftAccount {
     private $codes;
 
     /**
-     * @ManyToMany(targetEntity="PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount", inversedBy="minecraftAccounts")
-     * @JoinTable(name="authentications",
-     *      joinColumns={@JoinColumn(name="TeamspeakAccountId")},
-     *      inverseJoinColumns={@JoinColumn(name="MinecraftAccountId")})
+     * @OneToMany(targetEntity="PublicUHC\TeamspeakAuth\Entities\Authentication", mappedBy="minecraftAccount")
      */
-    private $teamspeakAccounts;
+    private $authentications;
 
     public function __construct()
     {
         $this->codes = new ArrayCollection();
-        $this->teamspeakAccounts = new ArrayCollection();
+        $this->authentications = new ArrayCollection();
     }
 
-    public function getTeamspeakAccounts() {
-        return $this->teamspeakAccounts;
+    public function getAuthentications() {
+        return $this->authentications;
     }
 
     public function getUUID() {
