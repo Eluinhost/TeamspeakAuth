@@ -42,7 +42,6 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function(){
-            $(document).foundation('alert');
             $(document).keypress(function(e){
                 if (e.which == 13){
                     $("#verify_codes").click();
@@ -68,7 +67,7 @@
                     } else {
                         error = xhr.responseJSON.error
                     }
-                    $('.error_area').append('<div data-alert class="alert-box alert round">' + error + '<a href="#" class="close">&times;</a></div>');
+                    $('.error_area').append('<div data-alert class="alert-box alert round">' + error + '</div>');
                 });
             });
         });
