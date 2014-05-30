@@ -14,7 +14,7 @@ function processClient(client) {
     jQuery
         .when(util.sleep(3000))
         .then(function() {
-            return authDatabase.updateMinecraftAccountUUIDWithName(client.uuid, client.username);
+            return authDatabase.updateMinecraftAccountUUIDWithName(client.username, client.username);
         })
         .then(function(account){
             return authDatabase.addCodeForAccount(account, code);
