@@ -26,7 +26,7 @@ services:
     arguments: ['%iconURL%']
   teamspeakhelper:
     class: PublicUHC\TeamspeakAuth\Helpers\DefaultTeamspeakHelper
-    arguments: ['@teamspeakserver', '@entityManager']
+    arguments: ['@teamspeakserver', '@entityManager', '%teamspeak.group_id%', '@minecrafthelper']
   teamspeakserver:
     factory_class: TeamSpeak3
     factory_method: factory

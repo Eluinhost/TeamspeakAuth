@@ -2,11 +2,19 @@
 
 namespace PublicUHC\TeamspeakAuth\Helpers;
 
+use PublicUHC\TeamspeakAuth\Entities\MinecraftAccount;
 use PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount;
 use TeamSpeak3_Node_Client;
 use TeamSpeak3_Node_Server;
 
 interface TeamspeakHelper {
+
+    /**
+     * Adds an 'authentication' between the two accounts and updates teamspeak to show status
+     * @param TeamspeakAccount $tsAccount the teamspeak account
+     * @param MinecraftAccount $mcAccount the minecraft account
+     */
+    public function verifyClient(TeamspeakAccount $tsAccount, MinecraftAccount $mcAccount);
 
     /**
      * @param TeamSpeak3_Node_Client $client

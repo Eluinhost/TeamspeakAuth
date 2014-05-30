@@ -5,6 +5,7 @@ namespace PublicUHC\TeamspeakAuth\Helpers;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Exception;
+use PublicUHC\TeamspeakAuth\Entities\MinecraftAccount;
 use PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount;
 use TeamSpeak3;
 use TeamSpeak3_Adapter_FileTransfer;
@@ -16,10 +17,35 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
 
     private $server;
     private $entityManager;
+    private $groupID;
+    private $mcHelper;
 
-    public function __construct(TeamSpeak3_Node_Server $server, EntityManager $entityManager) {
+    public function __construct(TeamSpeak3_Node_Server $server, EntityManager $entityManager, $group_id, MinecraftHelper $mcHelper) {
         $this->server = $server;
         $this->entityManager = $entityManager;
+        $this->groupID = $group_id;
+        $this->mcHelper = $mcHelper;
+    }
+
+    public function verifyClient(TeamspeakAccount $tsAccount, MinecraftAccount $mcAccount) {
+        $client = $this->getClientByUUID($tsAccount->getUUID());
+        $this->setClientDescription($client, $mcAccount->getUUID());
+
+        //attempt to remove them from the group first
+        try {
+            $client->remServerGroup($this->groupID);
+        } catch (\TeamSpeak3_Exception $ex) {}
+        $client->addServerGroup($this->groupID);
+
+        $tsAccount->getMinecraftAccounts()->add($mcAccount);
+        $mcAccount->getTeamspeakAccounts()->add($tsAccount);
+
+        $this->entityManager->persist($tsAccount);
+        $this->entityManager->persist($mcAccount);
+        $this->entityManager->flush();
+
+        $playerIcon = $this->mcHelper->getIconForUsername($mcAccount->getUUID());
+        $this->setClientIcon($client, $playerIcon);
     }
 
     public function getClientForName($name) {
