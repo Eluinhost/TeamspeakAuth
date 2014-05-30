@@ -38,7 +38,7 @@ class MinecraftAccount {
      * @ManyToMany(targetEntity="PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount", inversedBy="minecraftAccounts")
      * @JoinTable(name="authentications",
      *      joinColumns={@JoinColumn(name="TeamspeakAccountId")},
-     *      inverseJoinColumns={@JoinColumn(name="MinecraftAccountId")}
+     *      inverseJoinColumns={@JoinColumn(name="MinecraftAccountId")})
      */
     private $teamspeakAccounts;
 
