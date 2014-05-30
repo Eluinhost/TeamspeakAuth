@@ -7,6 +7,10 @@ teamspeakcode:
     path:     /teamspeakcode
     defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakAuthController::requestTeamspeakAction' }
 
+latestauths:
+    path:     /latest
+    defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakAuthController::latestAuthsAction' }
+
 # Standard front end pages
 
 homepage:
