@@ -45,21 +45,21 @@ module.exports = function(grunt) {
             }
         },
         concat: {
-            options: {
-                separator: ';'
-            },
             js: {
                 src: [
                     '<%= pkg.bower_dir %>/jquery/dist/jquery.js',
                     '<%= pkg.bower_dir %>/bootstrap/dist/js/bootstrap.js'
                 ],
-                dest: '<%= js_dir %>/<%= pkg.name %>.js'
+                dest: '<%= js_dir %>/<%= pkg.name %>.js',
+                options: {
+                    separator: ';'
+                }
             },
             css: {
                 src: [
                     '<%= pkg.bower_dir %>/bootstrap/dist/css/bootstrap.css',
                     '<%= pkg.bower_dir %>/bootstrap/dist/css/bootstrap-theme.css',
-                    '<%= pkg.bower_dir %>/font-awesome/css/font-awesome.css'
+                    '<%= pkg.bower_dir %>/fontawesome/css/font-awesome.css'
                 ],
                 dest: '<%= css_dir %>/<%= pkg.name %>.css'
             }
