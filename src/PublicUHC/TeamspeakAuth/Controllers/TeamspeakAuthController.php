@@ -4,20 +4,19 @@ namespace PublicUHC\TeamspeakAuth\Controllers;
 
 use DateTime;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\QueryBuilder;
 use PublicUHC\TeamspeakAuth\Entities\MinecraftAccount;
 use PublicUHC\TeamspeakAuth\Entities\MinecraftCode;
 use PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount;
 use PublicUHC\TeamspeakAuth\Entities\TeamspeakCode;
-use PublicUHC\TeamspeakAuth\Helpers\MinecraftHelper;
 use PublicUHC\TeamspeakAuth\Helpers\TeamspeakHelper;
-use PublicUHC\TeamspeakAuth\Repositories\CodeRepository;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use TeamSpeak3_Node_Client;
 
 class TeamspeakAuthController extends ContainerAware {
 
@@ -34,12 +33,25 @@ class TeamspeakAuthController extends ContainerAware {
             /** @var $entityManager EntityManager */
             $entityManager = $this->container->get('entityManager');
 
-            $tsCodeRepository = $entityManager->getRepository('PublicUHC\TeamspeakAuth\Entities\TeamspeakCode');
+            $tsqb = $entityManager->createQueryBuilder();
 
-            /** @var $tsCode TeamspeakCode */
-            $tsCode = $tsCodeRepository->findOneBy(['code' => $ts_code]);
+            $tsqb->select('code')
+                ->from('PublicUHC\TeamspeakAuth\Entities\TeamspeakCode', 'code')
+                ->where(
+                    $tsqb->expr()->andX(
+                        $tsqb->expr()->gt('code.updatedAt', ':timeago'),
+                        $tsqb->expr()->eq('code.code', ':code')
+                    )
+                )
+                ->setMaxResults(1)
+                ->orderBy('code.updatedAt', 'DESC')
+                ->setParameter('timeago', new DateTime('-' . $this->container->getParameter('minutesToLast') . 'min'))
+                ->setParameter('code', $ts_code);
 
-            if(null == $tsCode) {
+            try {
+                /** @var $tsCode TeamspeakCode */
+                $tsCode = $tsqb->getQuery()->getSingleResult();
+            } catch (NoResultException $ex) {
                 $response->setStatusCode(400);
                 $response->setData([
                     'error' => 'Invalid Teamspeak code supplied'
@@ -58,12 +70,25 @@ class TeamspeakAuthController extends ContainerAware {
                 return $response;
             }
 
-            $mcCodeRepository = $entityManager->getRepository('PublicUHC\TeamspeakAuth\Entities\MinecraftCode');
+            $mcqb = $entityManager->createQueryBuilder();
 
-            /** @var $mcCode MinecraftCode */
-            $mcCode = $mcCodeRepository->findOneBy(['code' => $mc_code]);
+            $mcqb->select('code')
+                ->from('PublicUHC\TeamspeakAuth\Entities\MinecraftCode', 'code')
+                ->where(
+                    $tsqb->expr()->andX(
+                        $tsqb->expr()->gt('code.updatedAt', ':timeago'),
+                        $tsqb->expr()->eq('code.code', ':code')
+                    )
+                )
+                ->setMaxResults(1)
+                ->orderBy('code.updatedAt', 'DESC')
+                ->setParameter('timeago', new DateTime('-' . $this->container->getParameter('minutesToLast') . 'min'))
+                ->setParameter('code', $mc_code);
 
-            if(null == $mcCode) {
+            try {
+                /** @var $mcCode MinecraftCode */
+                $mcCode = $mcqb->getQuery()->getSingleResult();
+            } catch(NoResultException $ex) {
                 $response->setStatusCode(400);
                 $response->setData([
                     'error' => 'Invalid Minecraft code supplied'
