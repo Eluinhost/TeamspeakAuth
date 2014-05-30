@@ -5,6 +5,7 @@ namespace PublicUHC\TeamspeakAuth\Helpers;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Exception;
+use PublicUHC\TeamspeakAuth\Entities\Authentication;
 use PublicUHC\TeamspeakAuth\Entities\MinecraftAccount;
 use PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount;
 use TeamSpeak3;
@@ -37,11 +38,13 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
         } catch (\TeamSpeak3_Exception $ex) {}
         $client->addServerGroup($this->groupID);
 
-        $tsAccount->getMinecraftAccounts()->add($mcAccount);
-        $mcAccount->getTeamspeakAccounts()->add($tsAccount);
+        $authenitcation = new Authentication();
+        $authenitcation->setMinecraftAccount($mcAccount)
+                       ->setTeamspeakAccount($tsAccount)
+                       ->setCreatedAt(new DateTime())
+                       ->setUpdatedAt(new DateTime());
 
-        $this->entityManager->persist($tsAccount);
-        $this->entityManager->persist($mcAccount);
+        $this->entityManager->persist($authenitcation);
         $this->entityManager->flush();
 
         $playerIcon = $this->mcHelper->getIconForUsername($mcAccount->getUUID());
