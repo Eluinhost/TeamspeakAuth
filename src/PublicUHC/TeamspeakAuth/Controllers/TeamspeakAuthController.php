@@ -2,15 +2,24 @@
 
 namespace PublicUHC\TeamspeakAuth\Controllers;
 
-use PublicUHC\TeamspeakAuth\Helpers\MinecraftHelper;
+use DateTime;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
+use PublicUHC\TeamspeakAuth\Entities\Authentication;
+use PublicUHC\TeamspeakAuth\Entities\MinecraftAccount;
+use PublicUHC\TeamspeakAuth\Entities\MinecraftCode;
+use PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount;
+use PublicUHC\TeamspeakAuth\Entities\TeamspeakCode;
 use PublicUHC\TeamspeakAuth\Helpers\TeamspeakHelper;
-use PublicUHC\TeamspeakAuth\Repositories\CodeRepository;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use TeamSpeak3_Node_Client;
 
 class TeamspeakAuthController extends ContainerAware {
 
@@ -23,55 +32,95 @@ class TeamspeakAuthController extends ContainerAware {
         $mc_code = $request->query->get('mc_code');
 
         try {
-            /**
-             * @var $tsCodes CodeRepository
-             * @var $mcCodes CodeRepository
-             */
-            $tsCodes = $this->container->get('tscodes');
-            $mcCodes = $this->container->get('mccodes');
 
-            if (!$tsCodes->doesCodeMatchForUserID($ts_code, $ts_uuid)) {
+            /** @var $entityManager EntityManager */
+            $entityManager = $this->container->get('entityManager');
+
+            $tsqb = $entityManager->createQueryBuilder();
+
+            $tsqb->select('code')
+                ->from('PublicUHC\TeamspeakAuth\Entities\TeamspeakCode', 'code')
+                ->where(
+                    $tsqb->expr()->andX(
+                        $tsqb->expr()->gt('code.updatedAt', ':timeago'),
+                        $tsqb->expr()->eq('code.code', ':code')
+                    )
+                )
+                ->setMaxResults(1)
+                ->orderBy('code.updatedAt', 'DESC')
+                ->setParameter('timeago', new DateTime('-' . $this->container->getParameter('minutesToLast') . 'min'))
+                ->setParameter('code', $ts_code);
+
+            try {
+                /** @var $tsCode TeamspeakCode */
+                $tsCode = $tsqb->getQuery()->getSingleResult();
+            } catch (NoResultException $ex) {
                 $response->setStatusCode(400);
                 $response->setData([
-                    'error' => 'Invalid code for the given Teamspeak UUID'
+                    'error' => 'Invalid Teamspeak code supplied'
                 ]);
                 return $response;
             }
 
-            if (!$mcCodes->doesCodeMatchForUserID($mc_code, $mc_uuid)) {
+            /** @var $tsAccount TeamspeakAccount */
+            $tsAccount = $tsCode->getAccount();
+
+            if($tsAccount->getUUID() != $ts_uuid) {
                 $response->setStatusCode(400);
                 $response->setData([
-                    'error' => 'Invalid code for the given Minecraft username'
+                    'error' => 'Invalid code for the given Teamspeak account'
                 ]);
                 return $response;
             }
+
+            $mcqb = $entityManager->createQueryBuilder();
+
+            $mcqb->select('code')
+                ->from('PublicUHC\TeamspeakAuth\Entities\MinecraftCode', 'code')
+                ->where(
+                    $tsqb->expr()->andX(
+                        $tsqb->expr()->gt('code.updatedAt', ':timeago'),
+                        $tsqb->expr()->eq('code.code', ':code')
+                    )
+                )
+                ->setMaxResults(1)
+                ->orderBy('code.updatedAt', 'DESC')
+                ->setParameter('timeago', new DateTime('-' . $this->container->getParameter('minutesToLast') . 'min'))
+                ->setParameter('code', $mc_code);
+
+            try {
+                /** @var $mcCode MinecraftCode */
+                $mcCode = $mcqb->getQuery()->getSingleResult();
+            } catch(NoResultException $ex) {
+                $response->setStatusCode(400);
+                $response->setData([
+                    'error' => 'Invalid Minecraft code supplied'
+                ]);
+                return $response;
+            }
+
+            /** @var $mcAccount MinecraftAccount */
+            $mcAccount = $mcCode->getAccount();
+
+            if($mcAccount->getUUID() != $mc_uuid) {
+                $response->setStatusCode(400);
+                $response->setData([
+                    'error' => 'Invalid code for the given Minecraft account'
+                ]);
+                return $response;
+            }
+
+            //ALL CODES MATCHED, RUN THE PROCESS
 
             /** @var $tsHelper TeamspeakHelper */
             $tsHelper = $this->container->get('teamspeakhelper');
 
-            /** @var $client Teamspeak3_Node_Client */
-            $client = $tsHelper->getClientByUUID($ts_uuid);
-
-            //set the description
-            $tsHelper->setClientDescription($client, $mc_uuid);
-
-            //add the required server group
-            $groupID = $this->container->getParameter('teamspeak.group_id');
-            //attempt to remove them from the group first
             try {
-                $client->remServerGroup($groupID);
-            } catch (\TeamSpeak3_Exception $ex) {}
-            $client->addServerGroup($groupID);
-
-            /** @var $mcHelper MinecraftHelper */
-            $mcHelper = $this->container->get('minecrafthelper');
-
-            $playerIcon = $mcHelper->getIconForUsername($mc_uuid);
-            $tsHelper->setClientIcon($client, $playerIcon);
-
-            $tsCodes->removeForUserID($ts_uuid);
-            $mcCodes->removeForUserID($mc_uuid);
-
+                $tsHelper->verifyClient($tsAccount, $mcAccount);
+            } catch (Exception $ex) {
+                error_log($ex->getMessage());
+                error_log($ex->getTraceAsString());
+            }
             return $response;
         } catch ( \PDOException $ex ) {
             error_log($ex->getMessage());
@@ -122,12 +171,24 @@ class TeamspeakAuthController extends ContainerAware {
 
             $uuid = $ts3->getUUIDForClient($client);
 
-            $codeRepository = $this->container->get('tscodes');
-            $code = $codeRepository->insertCodeForUserID($uuid);
+            $account = $ts3->updateLastClientUsername($client);
+
+            $code = new TeamspeakCode();
+            $code->setCreatedAt(new DateTime())
+                 ->setUpdatedAt(new DateTime());
+            $account->getCodes()->clear();
+            $account->getCodes()->add($code);
+            $code->setAccount($account);
+
+            /** @var $entityManager EntityManager */
+            $entityManager = $this->container->get('entityManager');
+            $entityManager->persist($code);
+            $entityManager->persist($account);
+            $entityManager->flush();
 
             $timeToLast = $this->container->getParameter('minutesToLast');
-
-            $client->message("[Verification Code] AUTH CODE: '{$code}'. This code work for the next {$timeToLast} minutes");
+            $codeString = $code->getCode();
+            $client->message("[Verification Code] AUTH CODE: '{$codeString}'. This code work for the next {$timeToLast} minutes");
 
             $response->setData([
                 'UUID' => $uuid
@@ -147,6 +208,37 @@ class TeamspeakAuthController extends ContainerAware {
             ]);
             return $response;
         }
+    }
+
+    public function latestAuthsAction(Request $request) {
+        $response = new JsonResponse();
+
+        /** @var $entityManager EntityManager */
+        $entityManager = $this->container->get('entityManager');
+
+        $qb = $entityManager->createQueryBuilder();
+
+        $qb->select('authentication')
+            ->from('PublicUHC\TeamspeakAuth\Entities\Authentication', 'authentication')
+            ->orderBy('authentication.updatedAt', 'DESC')
+            ->setMaxResults(10);
+
+        $returnArray = [];
+
+        $results = $qb->getQuery()->getResult(Query::HYDRATE_OBJECT);
+        /** @var $result Authentication */
+        foreach($results as $result) {
+            array_push($returnArray, [
+                'updatedAt' => $result->getUpdatedAt()->format(DateTime::RFC2822),
+                'createdAt' => $result->getCreatedAt()->format(DateTime::RFC2822),
+                'ts_name' => $result->getTeamspeakAccount()->getName(),
+                'mc_name' => $result->getMinecraftAccount()->getName()
+            ]);
+        }
+
+        $response->setData($returnArray);
+
+        return $response;
     }
 
     public function indexAction() {

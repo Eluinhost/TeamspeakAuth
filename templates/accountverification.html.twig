@@ -3,7 +3,7 @@
 {% block title %}Teamspeak Authentication - Verify Minecraft Account{% endblock %}
 
 {% block content %}
-    <div class="col-lg-10 col-lg-offset-1">
+    <div class="small-10 small-offset-1 columns">
         <div class="row">
             <h1>Verify your Minecraft Account</h1>
             <p>
@@ -17,19 +17,23 @@
             </p>
             <hr>
 
-            <div id="code_alert" class="alert alert-danger fade in">
-                <a class="close alert-close" href="#">&times;</a>
-                <span id="code_error">Unknown Error</span>
+            <div class="error_area">
+
             </div>
-            <div class="input-group">
-                <input type="text" class="form-control" id="mc_name" placeholder="Minecraft Nickname" autofocus/>
-                <input type="text" class="form-control" id="mc_code" placeholder="Minecraft Code"/>
+
+            <div class="row collapse">
+                <div class="small-6 columns">
+                    <input type="text" class="form-control" id="mc_name" placeholder="Minecraft Nickname" autofocus/>
+                </div>
+                <div class="small-6 columns">
+                    <input type="text" class="form-control" id="mc_code" placeholder="Minecraft Code"/>
+                </div>
+            </div>
+            <div class="row">
                 <input type="text" class="form-control" id="ts_code" placeholder="Teamspeak Code"/>
-                <input type="hidden" id="ts_uuid" value="{{ ts_uuid }}"/>
-                <span class="input-group-btn">
-                    <button class="btn btn-default" id="verify_codes" type="button">Verify Code</button>
-                </span>
             </div>
+            <input type="hidden" id="ts_uuid" value="{{ ts_uuid }}"/>
+            <a class="button [radius round]" id="verify_codes" role="button">Verify Code</a>
         </div>
     </div>
 {% endblock %}
@@ -44,7 +48,7 @@
                 }
             });
             $('#verify_codes').click(function(e){
-                $('#code_alert').hide();
+                $('.error_area').empty();
                 e.preventDefault();
                 $.get(
                     "{{ path('authcheck') }}",
@@ -54,24 +58,17 @@
                         'mc_uuid':$('#mc_name').val(),
                         'mc_code':$('#mc_code').val()
                     }
-                )
-                .done(function(data) {
+                ).done(function(data) {
                     window.location = '{{ path('complete') }}/' + $('#mc_name').val();
-                })
-                .fail(function(xhr) {
+                }).fail(function(xhr) {
+                    var error = 'Unknown Error';
                     if(typeof xhr.responseJSON === 'undefined'){
-                        $('#code_error').html('Unexpected response from server');
-                    }else{
-                        var error = xhr.responseJSON.error;
-                        $('#code_error').html(error);
+                        error = 'Unexpected response from server'
+                    } else {
+                        error = xhr.responseJSON.error
                     }
-                    $('#code_alert').show();
+                    $('.error_area').append('<div data-alert class="alert-box alert round">' + error + '</div>');
                 });
-            });
-            $('.alert').hide();
-            $('.alert-close').click(function(e){
-                e.preventDefault();
-                $(this).parent().hide();
             });
         });
     </script>

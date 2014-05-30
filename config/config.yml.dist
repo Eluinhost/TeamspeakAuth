@@ -15,7 +15,6 @@ parameters:
     database: authentication
     username: ""
     password: ""
-    tablePrefix: "auth_"
   minecraft:
     host: 0.0.0.0
     port: 35879
@@ -24,26 +23,19 @@ parameters:
 services:
   minecrafthelper:
     class: PublicUHC\TeamspeakAuth\Helpers\DefaultMinecraftHelper
-    arguments: ["%iconURL%"]
+    arguments: ['%iconURL%']
   teamspeakhelper:
     class: PublicUHC\TeamspeakAuth\Helpers\DefaultTeamspeakHelper
-    arguments: ["@teamspeakserver"]
+    arguments: ['@teamspeakserver', '@entityManager', '%teamspeak.group_id%', '@minecrafthelper']
   teamspeakserver:
     factory_class: TeamSpeak3
     factory_method: factory
-    arguments: ["serverquery://%teamspeak.username%:%teamspeak.password%@%teamspeak.host%:%teamspeak.query_port%/?server_port=%teamspeak.port%"]
-  tscodes:
-    class: PublicUHC\TeamspeakAuth\Repositories\DefaultCodeRepository
-    arguments: ["@pdo", "%database.tablePrefix%teamspeakcodes", "%minutesToLast%"]
-  mccodes:
-    class: PublicUHC\TeamspeakAuth\Repositories\DefaultCodeRepository
-    arguments: ["@pdo", "%database.tablePrefix%minecraftcodes", "%minutesToLast%"]
-  mcusers:
-    class: PublicUHC\TeamspeakAuth\Repositories\DefaultUserRepositroy
-    arguments: ["@pdo", "%database.tablePrefix%minecraftaccounts"]
-  tsusers:
-      class: PublicUHC\TeamspeakAuth\Repositories\DefaultUserRepositroy
-      arguments: ["@pdo", "%database.tablePrefix%teamspeakaccounts"]
-  pdo:
-    class: PDO
-    arguments: ["mysql:host=%database.host%;dbname=%database.database%", "%database.username%", "%database.password%"]
+    arguments: ['serverquery://%teamspeak.username%:%teamspeak.password%@%teamspeak.host%:%teamspeak.query_port%/?server_port=%teamspeak.port%']
+  annotationmetadata:
+    factory_class: Doctrine\ORM\Tools\Setup
+    factory_method: createAnnotationMetadataConfiguration
+    arguments: [['%global.srcroot%'], true]
+  entityManager:
+    factory_class: Doctrine\ORM\EntityManager
+    factory_method: create
+    arguments: [{driver: 'pdo_mysql', user: '%database.username%', password: '%database.password%', dbname: '%database.database%'}, '@annotationmetadata']

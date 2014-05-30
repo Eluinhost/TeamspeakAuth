@@ -97,8 +97,6 @@ You can also open the config.yml file and edit it directly:
         host: localhost             # The address of the database server
         port: 3306                  # The port of the database
         database: authentication            # The database to use
-        minecraft_table: minecraft_codes    # The table name for the minecraft codes
-        teamspeak_table: teamspeak_codes    # The table name for the teamspeak codes
         username: ""                # The username to login to the database
         password: ""                # The password to use
       minecraft:
@@ -107,75 +105,14 @@ You can also open the config.yml file and edit it directly:
         motd: "§eAuth Server"       # The MOTD to display on the server list
 
     #  Ignore everything below here unless you know what you are doing #
-    services:
-      minecrafthelper:
-        class: PublicUHC\TeamspeakAuth\Helpers\DefaultMinecraftHelper
-        arguments: ["%iconURL%"]
-      teamspeakhelper:
-        class: PublicUHC\TeamspeakAuth\Helpers\DefaultTeamspeakHelper
-        arguments: ["@teamspeakserver"]
-      teamspeakserver:
-        factory_class: TeamSpeak3
-        factory_method: factory
-        arguments: ["serverquery://%teamspeak.username%:%teamspeak.password%@%teamspeak.host%:%teamspeak.query_port%/?server_port=%teamspeak.port%"]
-      tscodes:
-        class: PublicUHC\TeamspeakAuth\Repositories\DefaultCodeRepository
-        arguments: ["@pdo", "%database.teamspeak_table%", "%minutesToLast%"]
-      mccodes:
-        class: PublicUHC\TeamspeakAuth\Repositories\DefaultCodeRepository
-        arguments: ["@pdo", "%database.minecraft_table%", "%minutesToLast%"]
-      pdo:
-        class: PDO
-        arguments: ["mysql:host=%database.host%;dbname=%database.database%", "%database.username%", "%database.password%"]
-        
+
 ### Set up database
 
-You can use the following snippet to create the default structure.
+First create your database and fill out the details in the config.yml manually or by using `grunt configure`.
 
-    DROP TABLE IF EXISTS minecraft_codes;
-    DROP TABLE IF EXISTS teamspeak_codes;
-    DROP TABLE IF EXISTS mc_history;
-    DROP TABLE IF EXISTS ts_history;
-    DROP TABLE IF EXISTS auth_history;
-    CREATE TABLE mc_history
-    (
-      ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      uuid varchar(128) UNIQUE NOT NULL,
-      name varchar(16) NOT NULL,
-      updated_time datetime
-    );
-    CREATE TABLE ts_history
-    (
-      ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      uuid varchar(128) UNIQUE NOT NULL,
-      name varchar(128) NOT NULL,
-      updated_time datetime
-    );
-    CREATE TABLE minecraft_codes
-    (
-      ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      mc_id int NOT NULL,
-      code varchar(10) NOT NULL,
-      created_time datetime,
-      FOREIGN KEY (mc_id) REFERENCES mc_history(ID)
-    );
-    CREATE TABLE teamspeak_codes
-    (
-      ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      ts_id int NOT NULL,
-      code varchar(10) NOT NULL,
-      created_time datetime,
-      FOREIGN KEY (ts_id) REFERENCES ts_history(ID)
-    );
-    CREATE TABLE auth_history
-    (
-      ID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      mc_id int NOT NULL,
-      ts_id int NOT NULL,
-      created_time datetime,
-      FOREIGN KEY (mc_id) REFERENCES mc_history(ID),
-      FOREIGN KEY (ts_id) REFERENCES ts_history(ID)
-    );
+If you use `grunt configure` answer yes to run the migrations and the database structure will be created. If you filled it in manually you can run `grunt run-migrations`
+
+To update your database after updating the application running `grunt run-migrations` will update to the latest structure (assuming correct config.yml)
 
 ### Set up web server
 
