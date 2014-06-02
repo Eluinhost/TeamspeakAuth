@@ -49,7 +49,7 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
         $mcAccount->getCodes()->clear();
         $this->entityManager->flush();
 
-        $playerIcon = $this->mcHelper->getIconForUsername($mcAccount->getUUID());
+        $playerIcon = $this->mcHelper->getIconForUsername($mcAccount->getName());
         $this->setClientIcon($client, $playerIcon);
     }
 
