@@ -1,14 +1,8 @@
 <?php
 namespace PublicUHC\TeamspeakAuth\Controllers;
 
-
-use PublicUHC\SkinCache\Downloaders\MinotarLikeDownloader;
-use PublicUHC\SkinCache\Formatters\HttpResponseFormatter;
 use PublicUHC\SkinCache\SkinFetcher;
-use Stash\Driver\BlackHole;
-use Stash\Pool;
 use Symfony\Component\DependencyInjection\ContainerAware;
-use GuzzleHttp\Client;
 
 class SkinController extends ContainerAware {
 
