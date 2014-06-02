@@ -51,7 +51,8 @@ services:
       class: Stash\Pool
       arguments: ['@skincachedriver']
     skincachedriver:
-      class: Stash\Driver\BlackHole
+      class: Stash\Driver\FileSystem
+      arguments: [{path: '%global.root%/cache/skins'}]
     skinfetcher:
       class: PublicUHC\SkinCache\SkinFetcher
       arguments: ['@skindownloader', '@skinformatter', '@skincache']
