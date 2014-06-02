@@ -45,7 +45,7 @@ $collection = $loader->load('routes.yml');
  * Load the DI container from the file /config/config.yml
  */
 $container = new ContainerBuilder(new ParameterBagNested());
-$container->setParameter('global.srcroot', __DIR__ . '/../src/');
+$container->setParameter('global.root', __DIR__ . '/..');
 $diLoader = new Symfony\Component\DependencyInjection\Loader\YamlFileLoader($container, $configLocator);
 $diLoader->load('config.yml');
 
