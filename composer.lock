@@ -11,20 +11,20 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eluinhost/skin-cache.git",
-                "reference": "1f30e54f52e3f3f658be2d5b63315689f2da5e0d"
+                "reference": "2955f7c6de4eff3ca4034077d4af0f01bce3cb3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eluinhost/skin-cache/zipball/1f30e54f52e3f3f658be2d5b63315689f2da5e0d",
-                "reference": "1f30e54f52e3f3f658be2d5b63315689f2da5e0d",
+                "url": "https://api.github.com/repos/eluinhost/skin-cache/zipball/2955f7c6de4eff3ca4034077d4af0f01bce3cb3d",
+                "reference": "2955f7c6de4eff3ca4034077d4af0f01bce3cb3d",
                 "shasum": ""
             },
             "require": {
+                "guzzlehttp/guzzle": "~4.0",
                 "symfony/http-foundation": ">=2.4",
                 "tedivm/stash": "0.11.*"
             },
             "require-dev": {
-                "guzzlehttp/guzzle": "~4.0",
                 "lstrojny/phpunit-function-mocker": "0.2.0",
                 "phpunit/phpunit": "3.7.*"
             },
@@ -48,7 +48,7 @@
                 "source": "https://github.com/eluinhost/skin-cache/tree/master",
                 "issues": "https://github.com/eluinhost/skin-cache/issues"
             },
-            "time": "2014-06-02 18:33:05"
+            "time": "2014-06-02 18:39:19"
         },
         {
             "name": "doctrine/annotations",
@@ -599,6 +599,124 @@
                 "orm"
             ],
             "time": "2014-02-08 16:35:09"
+        },
+        {
+            "name": "guzzlehttp/guzzle",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/guzzle.git",
+                "reference": "85a0ba7de064493c928a8bcdc5eef01e0bde9953"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/85a0ba7de064493c928a8bcdc5eef01e0bde9953",
+                "reference": "85a0ba7de064493c928a8bcdc5eef01e0bde9953",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/streams": "~1.0",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "phpunit/phpunit": "~4.0",
+                "psr/log": "~1.0"
+            },
+            "suggest": {
+                "ext-curl": "Guzzle will use specific adapters if cURL is present"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Guzzle is a PHP HTTP client library and framework for building RESTful web service clients",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "client",
+                "curl",
+                "framework",
+                "http",
+                "http client",
+                "rest",
+                "web service"
+            ],
+            "time": "2014-05-28 05:13:19"
+        },
+        {
+            "name": "guzzlehttp/streams",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/streams.git",
+                "reference": "cf0c8c33ca95cc147efba4c714f630ee44767180"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/streams/zipball/cf0c8c33ca95cc147efba4c714f630ee44767180",
+                "reference": "cf0c8c33ca95cc147efba4c714f630ee44767180",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "GuzzleHttp\\Stream\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Dowling",
+                    "email": "mtdowling@gmail.com",
+                    "homepage": "https://github.com/mtdowling"
+                }
+            ],
+            "description": "Provides a simple abstraction over streams of data (Guzzle 4+)",
+            "homepage": "http://guzzlephp.org/",
+            "keywords": [
+                "Guzzle",
+                "stream"
+            ],
+            "time": "2014-04-03 04:48:24"
         },
         {
             "name": "planetteamspeak/ts3-php-framework",
