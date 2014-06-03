@@ -42,7 +42,7 @@ Initial release
 
 - Fixed a possible error in migrations
 - Use the Minecraft UUID instead of username as an identifier for an account
-- If someone auths with a username that is already in use the old UUID's name is set to null and shows as 'Unknown Account' until they reverify with their new name
+- If someone auths with a minecraft username that is already in use by another minecraft UUID then the old account and it's authentications are removed and the teamspeak account changes are reset
 - Includes a skin cache for caching/serving skins from minotar
 
 Documentation
