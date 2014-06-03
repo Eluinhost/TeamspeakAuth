@@ -41,17 +41,17 @@ services:
   skindownloader:
       class: PublicUHC\SkinCache\Downloaders\MinotarLikeDownloader
       arguments: ['@skinclient', 30]
-    skinclient:
-      class: GuzzleHttp\Client
-      arguments: [{base_url: 'https://minotar.net'}]
-    skinformatter:
-      class: PublicUHC\SkinCache\Formatters\HttpResponseFormatter
-    skincache:
-      class: Stash\Pool
-      arguments: ['@skincachedriver']
-    skincachedriver:
-      class: Stash\Driver\FileSystem
-      arguments: [{path: '%global.root%/cache/skins'}]
-    skinfetcher:
-      class: PublicUHC\SkinCache\SkinFetcher
-      arguments: ['@skindownloader', '@skinformatter', '@skincache']
+  skinclient:
+    class: GuzzleHttp\Client
+    arguments: [{base_url: 'https://minotar.net'}]
+  skinformatter:
+    class: PublicUHC\SkinCache\Formatters\HttpResponseFormatter
+  skincache:
+    class: Stash\Pool
+    arguments: ['@skincachedriver']
+  skincachedriver:
+    class: Stash\Driver\FileSystem
+    arguments: [{path: '%global.root%/cache/skins'}]
+  skinfetcher:
+    class: PublicUHC\SkinCache\SkinFetcher
+    arguments: ['@skindownloader', '@skinformatter', '@skincache']
