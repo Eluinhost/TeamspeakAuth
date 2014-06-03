@@ -41,6 +41,7 @@ Personally installing [Visual Studio Express 2013 for Windows Desktop](http://ww
 Optional Dependencies:
 
 cURL with the PHP extension - not required but recommended, will use it if available
+
 Git - useful to update/download the project
 
 Step 1: Download
