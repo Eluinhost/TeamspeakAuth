@@ -281,26 +281,6 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
     }
 
     /**
-     * @return array An array in the format [['cldbid' => 1, 'description' => 'description 1'],['cldbid' => 2, 'description' => 'description 2']]
-     */
-    public function listClientDescriptions()
-    {
-        $amount = $this->server->clientCountDb();
-        $allClients = $this->server->clientListDb(null, $amount);
-
-        $descriptions = [];
-
-        foreach($allClients as $client) {
-            array_push($descriptions, [
-                'cldbid' => $client['cldbid'],
-                'description' => $client['client_description']
-            ]);
-        }
-
-        return $descriptions;
-    }
-
-    /**
      * Undoes the authentication supplied
      * @param Authentication $authentication the authentication to undo
      */

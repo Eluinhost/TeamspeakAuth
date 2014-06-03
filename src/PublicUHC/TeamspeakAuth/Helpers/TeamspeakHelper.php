@@ -109,11 +109,6 @@ interface TeamspeakHelper {
     public function setIconForUUID($uuid, $data);
 
     /**
-     * @return array An array in the format [['cldbid' => 1, 'description' => 'description 1'],['cldbid' => 2, 'description' => 'description 2']]
-     */
-    public function listClientDescriptions();
-
-    /**
      * Undoes the authentication supplied
      * @param Authentication $authentication the authentication to undo
      */
