@@ -43,14 +43,6 @@ interface TeamspeakHelper {
     public function getServerInstance();
 
     /**
-     * Set the icon for the given client
-     * @param TeamSpeak3_Node_Client $client the client to modify
-     * @param $icon
-     * @return true if successful, false if something failed
-     */
-    public function setClientIcon(TeamSpeak3_Node_Client $client, $icon);
-
-    /**
      * Get the ONLINE client by their UUID
      * @param $uuid string the uuid to look for
      * @return mixed
@@ -105,4 +97,20 @@ interface TeamspeakHelper {
      * @param $groupID int the ID of the group to remove from
      */
     public function removeUUIDFromGroup($uuid, $groupID);
+
+    /**
+     * Set the icon for the user
+     * @param $data string the image data to set to
+     * @param $cldbid int the user's database ID
+     * @return true if complete, false on error
+     */
+    public function setIconForDBId($cldbid, $data);
+
+    /**
+     * Set the icon for the user
+     * @param $data string the image data to set to
+     * @param $uuid string the user's UUID
+     * @return true if complete, false on error
+     */
+    public function setIconForUUID($uuid, $data);
 } 
