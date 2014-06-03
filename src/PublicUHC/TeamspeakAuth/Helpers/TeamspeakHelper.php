@@ -58,9 +58,30 @@ interface TeamspeakHelper {
     public function setClientDescription(TeamSpeak3_Node_Client $client, $description);
 
     /**
-     * Get the client by their UUID
+     * Get the ONLINE client by their UUID
      * @param $uuid string the uuid to look for
      * @return mixed
      */
     public function getClientByUUID($uuid);
+
+    /**
+     * Get the database ID for the given UUID
+     * @param $uuid string the uuid to look for
+     * @return int|false the database ID if found or false otherwise
+     */
+    public function getClientDBId($uuid);
+
+    /**
+     * Set the description for the client database id
+     * @param $description string the description to set
+     * @param $cldbid int the database id for the client
+     */
+    public function setDescriptionForDBId($description, $cldbid);
+
+    /**
+     * Set the description for the client with the given UUID
+     * @param $description string the description to set
+     * @param $uuid string the client's UUID
+     */
+    public function setDescriptionForUUID($description, $uuid);
 } 

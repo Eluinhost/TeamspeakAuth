@@ -11,6 +11,7 @@ use PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount;
 use TeamSpeak3;
 use TeamSpeak3_Adapter_FileTransfer;
 use TeamSpeak3_Adapter_ServerQuery_Exception;
+use TeamSpeak3_Exception;
 use TeamSpeak3_Node_Client;
 use TeamSpeak3_Node_Server;
 
@@ -29,8 +30,10 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
     }
 
     public function verifyClient(TeamspeakAccount $tsAccount, MinecraftAccount $mcAccount) {
+        //TODO remove this, we don't want to use an online client object anywhere if possible
         $client = $this->getClientByUUID($tsAccount->getUUID());
-        $this->setClientDescription($client, $mcAccount->getUUID());
+
+        $this->setDescriptionForUUID($mcAccount->getName(), $tsAccount->getUUID());
 
         //attempt to remove them from the group first
         try {
@@ -119,11 +122,6 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
         return $crc;
     }
 
-    public function setClientDescription(TeamSpeak3_Node_Client $client, $description)
-    {
-        $client->modifyDb(['client_description' => $description]);
-    }
-
     public function getClientByUUID($uuid) {
         return $this->server->clientGetByUid($uuid);
     }
@@ -152,5 +150,43 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
         $this->entityManager->flush();
 
         return $account;
+    }
+
+    /**
+     * Get the database ID for the given UUID
+     * @param $uuid string the uuid to look for
+     * @return int|false the database ID if found or false otherwise
+     */
+    public function getClientDBId($uuid)
+    {
+        try {
+            $infoArray = $this->server->clientGetNameByUid($uuid);
+            return $infoArray['cldbid'];
+        } catch(TeamSpeak3_Exception $ex) {
+            return false;
+        }
+    }
+
+    /**
+     * Set the description for the client database id
+     * @param $description string the description to set
+     * @param $cldbid int the database id for the client
+     */
+    public function setDescriptionForDBId($description, $cldbid)
+    {
+        $this->server->clientModifyDb($cldbid, ['client_description' => $description]);
+    }
+
+    /**
+     * Set the description for the client with the given UUID
+     * @param $description string the description to set
+     * @param $uuid string the client's UUID
+     */
+    public function setDescriptionForUUID($description, $uuid)
+    {
+        $cldbid = $this->getClientDBId($uuid);
+        if( $cldbid !== false) {
+            $this->setDescriptionForDBId($description, $cldbid);
+        }
     }
 }
