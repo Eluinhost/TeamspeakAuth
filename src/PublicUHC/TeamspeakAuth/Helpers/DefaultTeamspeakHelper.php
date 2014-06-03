@@ -306,6 +306,7 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
         $mcAccount->getAuthentications()->removeElement($authentication);
 
         $this->entityManager->remove($authentication);
+        $this->entityManager->remove($mcAccount);
         $this->entityManager->persist($mcAccount);
         $this->entityManager->persist($tsAccount);
 
