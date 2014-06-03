@@ -27,18 +27,18 @@ When verified the site will do the following for the client:
 Changelog
 ---------
 
-### 1.0 
+### 1.0.0
 
 Initial release
 
-### 1.1.
+### 1.1.0
 
 - Added migrations to update old version databases when updating the project, NOT compatable with 1.0
 - Added authentication history tracking and store accounts=>codes
 - Replaced bootstrap for foundation in the webpages and restyled a bit
 - Added a section to the website for viewing the last 10 authentications
 
-### 1.2
+### 1.2.0
 
 - Fixed a possible error in migrations
 - Use the Minecraft UUID instead of username as an identifier for an account
