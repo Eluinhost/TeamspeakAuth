@@ -113,4 +113,11 @@ interface TeamspeakHelper {
      * @param Authentication $authentication the authentication to undo
      */
     public function unauthenticate(Authentication $authentication);
+
+    /**
+     * Check if the teamspeak user with the given UUID is online
+     * @param $uuid string the UUID to check
+     * @return boolean
+     */
+    public function isUUIDOnline($uuid);
 } 

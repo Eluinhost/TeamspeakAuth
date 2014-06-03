@@ -312,4 +312,19 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
 
         $this->entityManager->flush();
     }
+
+    /**
+     * Check if the teamspeak user with the given UUID is online
+     * @param $uuid string the UUID to check
+     * @return boolean
+     */
+    public function isUUIDOnline($uuid)
+    {
+        try {
+            $this->getServerInstance()->clientGetByUid($uuid);
+            return true;
+        } catch( TeamSpeak3_Exception $ex ) {
+            return false;
+        }
+    }
 }
