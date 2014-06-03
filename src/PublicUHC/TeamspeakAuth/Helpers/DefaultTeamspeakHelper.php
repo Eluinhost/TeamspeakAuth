@@ -122,7 +122,7 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
     public function getClientDBId($uuid)
     {
         try {
-            $infoArray = $this->server->clientGetNameByUid($uuid);
+            $infoArray = $this->getServerInstance()->clientGetNameByUid($uuid);
             return $infoArray['cldbid'];
         } catch(TeamSpeak3_Exception $ex) {
             return false;
@@ -136,7 +136,7 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
      */
     public function setDescriptionForDBId($description, $cldbid)
     {
-        $this->server->clientModifyDb($cldbid, ['client_description' => $description]);
+        $this->getServerInstance()->clientModifyDb($cldbid, ['client_description' => $description]);
     }
 
     /**
@@ -159,7 +159,7 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
      */
     public function addDBIdToGroup($cldbid, $groupID)
     {
-        $this->server->serverGroupClientAdd($groupID, $cldbid);
+        $this->getServerInstance()->serverGroupClientAdd($groupID, $cldbid);
     }
 
     /**
@@ -182,7 +182,7 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
      */
     public function removeDBIdFromGroup($cldbid, $groupID)
     {
-        $this->server->serverGroupClientDel($groupID, $cldbid);
+        $this->getServerInstance()->serverGroupClientDel($groupID, $cldbid);
     }
 
     /**
@@ -221,7 +221,7 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
             $transfer->upload($upload["ftkey"], $upload["seekpos"], $data);
 
             //remove the permission and reassign the permission
-            $this->server->clientPermRemove($cldbid, 'i_icon_id');
+            $this->getServerInstance()->clientPermRemove($cldbid, 'i_icon_id');
 
             //do some weird shit with the crc for the permission because TS3 doesn't do things like anything sane
             if ($crc > pow(2,31)) {
@@ -229,7 +229,7 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
             }
 
             //reassign the permission with the new value (the 'name' of the icon)
-            $this->server->clientPermAssign($cldbid, 'i_icon_id', $crc);
+            $this->getServerInstance()->clientPermAssign($cldbid, 'i_icon_id', $crc);
 
             return true;
         }catch(Exception $ex){
