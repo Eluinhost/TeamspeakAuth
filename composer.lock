@@ -11,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/eluinhost/skin-cache.git",
-                "reference": "57283f993462125b89064fce10d72ade67762a59"
+                "reference": "03fcc785d04a6f8a486ead57e37cc59f5163a029"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/eluinhost/skin-cache/zipball/57283f993462125b89064fce10d72ade67762a59",
-                "reference": "57283f993462125b89064fce10d72ade67762a59",
+                "url": "https://api.github.com/repos/eluinhost/skin-cache/zipball/03fcc785d04a6f8a486ead57e37cc59f5163a029",
+                "reference": "03fcc785d04a6f8a486ead57e37cc59f5163a029",
                 "shasum": ""
             },
             "require": {
@@ -48,7 +48,7 @@
                 "source": "https://github.com/eluinhost/skin-cache/tree/master",
                 "issues": "https://github.com/eluinhost/skin-cache/issues"
             },
-            "time": "2014-06-02 21:15:29"
+            "time": "2014-06-03 06:49:30"
         },
         {
             "name": "doctrine/annotations",

@@ -14,6 +14,6 @@ class DefaultMinecraftHelper implements MinecraftHelper {
 
     public function getIconForUsername($username)
     {
-        return $this->skinFetcher->fetchHelm($username, 16);
+        return $this->skinFetcher->fetchHelm($username, 16, false);
     }
 }
