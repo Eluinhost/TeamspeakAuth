@@ -43,13 +43,6 @@ interface TeamspeakHelper {
     public function getServerInstance();
 
     /**
-     * Get the ONLINE client by their UUID
-     * @param $uuid string the uuid to look for
-     * @return mixed
-     */
-    public function getClientByUUID($uuid);
-
-    /**
      * Get the database ID for the given UUID
      * @param $uuid string the uuid to look for
      * @return int|false the database ID if found or false otherwise

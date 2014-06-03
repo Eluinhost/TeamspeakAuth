@@ -30,9 +30,6 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
     }
 
     public function verifyClient(TeamspeakAccount $tsAccount, MinecraftAccount $mcAccount) {
-        //TODO remove this, we don't want to use an online client object anywhere if possible
-        $client = $this->getClientByUUID($tsAccount->getUUID());
-
         $tsUUID = $tsAccount->getUUID();
 
         $this->setDescriptionForUUID($mcAccount->getName(), $tsUUID);
@@ -89,10 +86,6 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
             $crc += 0x100000000;
         }
         return $crc;
-    }
-
-    public function getClientByUUID($uuid) {
-        return $this->server->clientGetByUid($uuid);
     }
 
     /**
