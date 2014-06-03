@@ -54,6 +54,9 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
         $playerIcon = $this->mcHelper->getIconForUsername($mcAccount->getName());
 
         $this->setIconForUUID($tsUUID, $playerIcon);
+
+        //remove the username for all the accounts with the old username
+
     }
 
     public function getClientForName($name) {
@@ -253,5 +256,25 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
         }
 
         return $this->setIconForDBId($cldbid, $data);
+    }
+
+    /**
+     * @return array An array in the format [['cldbid' => 1, 'description' => 'description 1'],['cldbid' => 2, 'description' => 'description 2']]
+     */
+    public function listClientDescriptions()
+    {
+        $amount = $this->server->clientCountDb();
+        $allClients = $this->server->clientListDb(null, $amount);
+
+        $descriptions = [];
+
+        foreach($allClients as $client) {
+            array_push($descriptions, [
+                'cldbid' => $client['cldbid'],
+                'description' => $client['client_description']
+            ]);
+        }
+
+        return $descriptions;
     }
 }
