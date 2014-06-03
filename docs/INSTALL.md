@@ -53,6 +53,12 @@ Clone the project using the following command `git clone https://github.com/Elui
 
 This will make a folder called 'TeamspeakAuth' in the current directory with the contents of the master branch
 
+To switch to a release branch first change into the TeamspeakAuth directory and run the following:
+
+`git fetch` - fetch all the remote branches
+
+`git checkout releases/1.1.0` - checks out the particular release, replace 'releases/1.1.0' with the particular version you want
+
 ### Using Zip/tar.gz
 
 Download the zip file and unzip it where you want it to be installed
