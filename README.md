@@ -24,6 +24,27 @@ When verified the site will do the following for the client:
 - Adds the user to a chosen server group
 - Uploads the head from the skin of the user to the server's icons and assigns the client the icon
 
+Changelog
+---------
+
+### 1.0 
+
+Initial release
+
+### 1.1.
+
+- Added migrations to update old version databases when updating the project, NOT compatable with 1.0
+- Added authentication history tracking and store accounts=>codes
+- Replaced bootstrap for foundation in the webpages and restyled a bit
+- Added a section to the website for viewing the last 10 authentications
+
+### 1.2
+
+- Fixed a possible error in migrations
+- Use the Minecraft UUID instead of username as an identifier for an account
+- If someone auths with a username that is already in use the old UUID's name is set to null and shows as 'Unknown Account' until they reverify with their new name
+- Includes a skin cache for caching/serving skins from minotar
+
 Documentation
 -------------
 
