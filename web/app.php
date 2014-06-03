@@ -45,14 +45,14 @@ $collection = $loader->load('routes.yml');
  * Load the DI container from the file /config/config.yml
  */
 $container = new ContainerBuilder(new ParameterBagNested());
-$container->setParameter('global.srcroot', __DIR__ . '/../src/');
+$container->setParameter('global.root', __DIR__ . '/..');
 $diLoader = new Symfony\Component\DependencyInjection\Loader\YamlFileLoader($container, $configLocator);
 $diLoader->load('config.yml');
 
 /**
  * Set up twig and add it to the container
  */
-$twigEnvironment = new Twig_Environment(new Twig_Loader_Filesystem(__DIR__ . '/../templates/'), ['cache' => __DIR__ . '/../cache/']);
+$twigEnvironment = new Twig_Environment(new Twig_Loader_Filesystem(__DIR__ . '/../templates/'), ['cache' => __DIR__ . '/../cache/templates']);
 $twigEnvironment->addExtension(new RoutingExtension(new UrlGenerator($collection, $requestContext)));
 $templating = new TwigEngine($twigEnvironment, new TemplateNameParser());
 $container->set('templating', $templating);

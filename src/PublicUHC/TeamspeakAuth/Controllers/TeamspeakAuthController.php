@@ -100,7 +100,7 @@ class TeamspeakAuthController extends ContainerAware {
             /** @var $mcAccount MinecraftAccount */
             $mcAccount = $mcCode->getAccount();
 
-            if($mcAccount->getUUID() != $mc_uuid) {
+            if($mcAccount->getName() != $mc_uuid) {
                 $response->setStatusCode(400);
                 $response->setData([
                     'error' => 'Invalid code for the given Minecraft account'
@@ -271,8 +271,7 @@ class TeamspeakAuthController extends ContainerAware {
         $templating = $this->container->get('templating');
         return new Response($templating->render('complete.html.twig',
             [
-                'mc_name' => $mc_name,
-                'imgURL' => str_replace(';username;', $mc_name, $this->container->getParameter('iconURL'))
+                'mc_name' => $mc_name
             ]
         ));
     }

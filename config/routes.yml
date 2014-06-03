@@ -11,6 +11,18 @@ latestauths:
     path:     /latest
     defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakAuthController::latestAuthsAction' }
 
+avatarhelm:
+    path:     /skins/helm/{username}/{size}
+    defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\SkinController::helmAction', size: 16 }
+
+avatarskin:
+    path:     /skins/skin/{username}
+    defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\SkinController::skinAction', size: 16 }
+
+avatarhead:
+    path:     /skins/head/{username}/{size}
+    defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\SkinController::headAction', size: 16 }
+
 # Standard front end pages
 
 homepage:

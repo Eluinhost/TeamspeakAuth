@@ -2,17 +2,18 @@
 namespace PublicUHC\TeamspeakAuth\Helpers;
 
 
+use PublicUHC\SkinCache\SkinFetcher;
+
 class DefaultMinecraftHelper implements MinecraftHelper {
 
-    private $url;
+    private $skinFetcher;
 
-    public function __construct($url) {
-        $this->url = $url;
+    public function __construct(SkinFetcher $skinFetcher) {
+        $this->skinFetcher = $skinFetcher;
     }
 
     public function getIconForUsername($username)
     {
-        $iconURL = str_replace(";username;", $username, $this->url);
-        return file_get_contents($iconURL);
+        return $this->skinFetcher->fetchHelm($username, 16, false);
     }
 }

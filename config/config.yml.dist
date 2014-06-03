@@ -1,6 +1,5 @@
 parameters:
   minutesToLast: 15
-  iconURL: "https://minotar.net/helm/;username;/16.png"
   serverAddress: "auth.example.com or example.com:35879"
   teamspeak:
     host: ts.example.com
@@ -23,7 +22,7 @@ parameters:
 services:
   minecrafthelper:
     class: PublicUHC\TeamspeakAuth\Helpers\DefaultMinecraftHelper
-    arguments: ['%iconURL%']
+    arguments: ['@skinfetcher']
   teamspeakhelper:
     class: PublicUHC\TeamspeakAuth\Helpers\DefaultTeamspeakHelper
     arguments: ['@teamspeakserver', '@entityManager', '%teamspeak.group_id%', '@minecrafthelper']
@@ -34,8 +33,25 @@ services:
   annotationmetadata:
     factory_class: Doctrine\ORM\Tools\Setup
     factory_method: createAnnotationMetadataConfiguration
-    arguments: [['%global.srcroot%'], true]
+    arguments: [['%global.root%/src'], true]
   entityManager:
     factory_class: Doctrine\ORM\EntityManager
     factory_method: create
     arguments: [{driver: 'pdo_mysql', user: '%database.username%', password: '%database.password%', dbname: '%database.database%'}, '@annotationmetadata']
+  skindownloader:
+      class: PublicUHC\SkinCache\Downloaders\MinotarLikeDownloader
+      arguments: ['@skinclient', 30]
+    skinclient:
+      class: GuzzleHttp\Client
+      arguments: [{base_url: 'https://minotar.net'}]
+    skinformatter:
+      class: PublicUHC\SkinCache\Formatters\HttpResponseFormatter
+    skincache:
+      class: Stash\Pool
+      arguments: ['@skincachedriver']
+    skincachedriver:
+      class: Stash\Driver\FileSystem
+      arguments: [{path: '%global.root%/cache/skins'}]
+    skinfetcher:
+      class: PublicUHC\SkinCache\SkinFetcher
+      arguments: ['@skindownloader', '@skinformatter', '@skincache']
