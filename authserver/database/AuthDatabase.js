@@ -55,47 +55,15 @@ module.exports.AuthDatabase.prototype.init = function() {
  */
 module.exports.AuthDatabase.prototype.updateMinecraftAccountUUIDWithName = function(uuid, name) {
     var deferred = jQuery.Deferred();
-    var self = this;
     //try to find the account with the given ID or create it if it doesn't exist
     module.exports.MinecraftAccount.findOrCreate({uuid: uuid},{name: name}).success(function(clientAccount) {
         clientAccount.updateAttributes({
             name: name
-        }).success(function(updatedAccount) {
-            jQuery.when(self.removeNamesForConflictingAccounts(updatedAccount)).then(function() {
-                deferred.resolve(updatedAccount);
-            });
+        }).success(function() {
+            deferred.resolve(clientAccount);
         }).fail(function() {
             deferred.reject();
         });
-    });
-    return deferred.promise();
-};
-
-/**
- * Unsets the name for the any other account with the same name
- * @param {MinecraftAccount} account the account NOT to unset
- * @returns {Deferred} A promise that resolves when complete
- */
-module.exports.AuthDatabase.prototype.removeNamesForConflictingAccounts = function(account) {
-    var deferred = jQuery.Deferred();
-    module.exports.MinecraftAccount.findAll({
-       where: {
-           id: {
-               ne: account.id
-           },
-           name: {
-               eq: account.name
-           }
-       }
-    }).success(function(accounts) {
-        accounts.forEach(function(loopAccount) {
-            loopAccount.updateAttributes({
-                name: null
-            });
-        });
-        deferred.resolve();
-    }).fail(function() {
-        deferred.reject();
     });
     return deferred.promise();
 };

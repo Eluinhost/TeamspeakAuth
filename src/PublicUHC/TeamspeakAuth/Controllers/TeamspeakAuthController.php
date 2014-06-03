@@ -6,6 +6,8 @@ use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
+use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\ORM\QueryBuilder;
 use PublicUHC\TeamspeakAuth\Entities\Authentication;
 use PublicUHC\TeamspeakAuth\Entities\MinecraftAccount;
 use PublicUHC\TeamspeakAuth\Entities\MinecraftCode;

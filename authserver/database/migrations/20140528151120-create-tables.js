@@ -1,7 +1,6 @@
-var jQuery = require('jquery-deferred');
+var async = require('async');
 
 var setupAuthenticationsTable = function(migration, DataTypes) {
-    var deferred = jQuery.Deferred();
     migration.createTable(
         'authentications',
         {
@@ -28,14 +27,10 @@ var setupAuthenticationsTable = function(migration, DataTypes) {
                 allowNull: false
             }
         }
-    ).then(function() {
-        deferred.resolve();
-    });
-    return deferred.promise();
+    );
 };
 
 var setupMinecraftAccountsTable = function(migration, DataTypes) {
-    var deferred = jQuery.Deferred();
     migration.createTable(
         'minecraftaccounts',
         {
@@ -62,14 +57,10 @@ var setupMinecraftAccountsTable = function(migration, DataTypes) {
                 allowNull: false
             }
         }
-    ).success(function() {
-        deferred.resolve();
-    });
-    return deferred.promise();
+    );
 };
 
 var setupTeamspeakAccountsTable = function(migration, DataTypes) {
-    var deferred = jQuery.Deferred();
     migration.createTable(
         'teamspeakaccounts',
         {
@@ -96,14 +87,10 @@ var setupTeamspeakAccountsTable = function(migration, DataTypes) {
                 allowNull: false
             }
         }
-    ).success(function() {
-        deferred.resolve();
-    });
-    return deferred.promise();
+    );
 };
 
 var setupMinecraftCodesTable = function(migration, DataTypes) {
-    var deferred = jQuery.Deferred();
     migration.createTable(
         'minecraftcodes',
         {
@@ -130,14 +117,10 @@ var setupMinecraftCodesTable = function(migration, DataTypes) {
                 allowNull: false
             }
         }
-    ).success(function() {
-        deferred.resolve();
-    });
-    return deferred.promise();
+    );
 };
 
 var setupTeamspeakCodesTable = function(migration, DataTypes) {
-    var deferred = jQuery.Deferred();
     migration.createTable(
         'teamspeakcodes',
         {
@@ -164,36 +147,36 @@ var setupTeamspeakCodesTable = function(migration, DataTypes) {
                 allowNull: false
             }
         }
-    ).success(function() {
-        deferred.resolve();
-    });
-    return deferred.promise();
+    );
+};
+
+var deleteTables = function(migration) {
+
+    return jobArray;
 };
 
 module.exports = {
     up: function(migration, DataTypes, done) {
         // add altering commands here, calling 'done' when finished
-        jQuery.when(
-            setupAuthenticationsTable(migration, DataTypes),
-            setupMinecraftAccountsTable(migration, DataTypes),
-            setupTeamspeakAccountsTable(migration, DataTypes),
-            setupMinecraftCodesTable(migration, DataTypes),
-            setupTeamspeakCodesTable(migration, DataTypes)
-        ).then(function() {
-            done();
-        });
+        async.series(
+            [
+                setupAuthenticationsTable(migration, DataTypes),
+                setupMinecraftAccountsTable(migration, DataTypes),
+                setupTeamspeakAccountsTable(migration, DataTypes),
+                setupMinecraftCodesTable(migration, DataTypes),
+                setupTeamspeakCodesTable(migration, DataTypes),
+                done()
+            ]
+        );
     },
     down: function(migration, DataTypes, done) {
-        migration.dropTable('authentications').then(function() {
-            migration.dropTable('minecraftaccounts');
-        }).then(function() {
-            migration.dropTable('teamspeakaccounts');
-        }).then(function() {
-            migration.dropTable('minecraftcodes');
-        }).then(function() {
-            migration.dropTable('teamspeakcodes');
-        }).then(function() {
-            done();
-        });
+        async.series(
+            migration.dropTable('authentications'),
+            migration.dropTable('minecraftaccounts'),
+            migration.dropTable('teamspeakaccounts'),
+            migration.dropTable('minecraftcodes'),
+            migration.dropTable('teamspeakcodes'),
+            done()
+        );
     }
 };
