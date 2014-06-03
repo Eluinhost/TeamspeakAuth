@@ -4,6 +4,7 @@ namespace PublicUHC\TeamspeakAuth\Helpers;
 
 use DateTime;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query;
 use Exception;
 use PublicUHC\TeamspeakAuth\Entities\Authentication;
 use PublicUHC\TeamspeakAuth\Entities\MinecraftAccount;
@@ -30,6 +31,30 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
     }
 
     public function verifyClient(TeamspeakAccount $tsAccount, MinecraftAccount $mcAccount) {
+        //unauthenticate any accounts with the same MC name but not the same UUID
+        $mcqb = $this->entityManager->createQueryBuilder();
+        $mcqb->select('mcAccount')
+            ->from('PublicUHC\TeamspeakAuth\Entities\MinecraftAccount', 'mcAccount')
+            ->where(
+                $mcqb->expr()->andX(
+                    $mcqb->expr()->eq('mcAccount.name', ':name'),
+                    $mcqb->expr()->neq('mcAccount.uuid', ':uuid')
+                )
+            )
+            ->setParameter('name', $mcAccount->getName())
+            ->setParameter('uuid', $mcAccount->getUUID());
+
+        $accounts = $mcqb->getQuery()->getResult(Query::HYDRATE_OBJECT);
+
+        /** @var $account MinecraftAccount */
+        foreach($accounts as $account) {
+            /** @var $authentication Authentication */
+            foreach($account->getAuthentications()->getValues() as $authenitcation) {
+                $this->unauthenticate($authenitcation);
+            }
+        }
+
+        //verify the client
         $tsUUID = $tsAccount->getUUID();
 
         $this->setDescriptionForUUID($mcAccount->getName(), $tsUUID);
@@ -253,5 +278,38 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
         }
 
         return $this->setIconForDBId($cldbid, $data);
+    }
+
+    /**
+     * Undoes the authentication supplied
+     * @param Authentication $authentication the authentication to undo
+     */
+    public function unauthenticate(Authentication $authentication)
+    {
+        $tsAccount = $authentication->getTeamspeakAccount();
+        $mcAccount = $authentication->getMinecraftAccount();
+
+        $tsUUID = $tsAccount->getUUID();
+
+        //remove their description
+        $this->setDescriptionForUUID('', $tsUUID);
+
+        //attempt to remove them from the group
+        try {
+            $this->removeUUIDFromGroup($tsUUID, $this->groupID);
+        } catch (TeamSpeak3_Exception $ex) {}
+
+        //remove the permission
+        $this->getServerInstance()->clientPermRemove($this->getClientDBId($tsUUID), 'i_icon_id');
+
+        $tsAccount->getAuthentications()->removeElement($authentication);
+        $mcAccount->getAuthentications()->removeElement($authentication);
+
+        $this->entityManager->remove($authentication);
+        $this->entityManager->remove($mcAccount);
+        $this->entityManager->persist($mcAccount);
+        $this->entityManager->persist($tsAccount);
+
+        $this->entityManager->flush();
     }
 }

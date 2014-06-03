@@ -2,6 +2,7 @@
 
 namespace PublicUHC\TeamspeakAuth\Helpers;
 
+use PublicUHC\TeamspeakAuth\Entities\Authentication;
 use PublicUHC\TeamspeakAuth\Entities\MinecraftAccount;
 use PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount;
 use TeamSpeak3_Node_Client;
@@ -106,4 +107,10 @@ interface TeamspeakHelper {
      * @return true if complete, false on error
      */
     public function setIconForUUID($uuid, $data);
+
+    /**
+     * Undoes the authentication supplied
+     * @param Authentication $authentication the authentication to undo
+     */
+    public function unauthenticate(Authentication $authentication);
 } 
