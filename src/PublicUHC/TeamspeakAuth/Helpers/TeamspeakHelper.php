@@ -51,13 +51,6 @@ interface TeamspeakHelper {
     public function setClientIcon(TeamSpeak3_Node_Client $client, $icon);
 
     /**
-     * Set the description for the given client
-     * @param TeamSpeak3_Node_Client $client the client to modify
-     * @param $description string the description to show
-     */
-    public function setClientDescription(TeamSpeak3_Node_Client $client, $description);
-
-    /**
      * Get the ONLINE client by their UUID
      * @param $uuid string the uuid to look for
      * @return mixed
