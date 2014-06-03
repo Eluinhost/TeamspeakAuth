@@ -59,3 +59,5 @@ Documentation
 [Project folder structure](docs/FOLDERSTRUCTURE.md)
 
 [Configuration](docs/CONFIGURATION.md)
+
+[Serving skins locally](docs/SKINS.md)
