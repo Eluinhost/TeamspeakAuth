@@ -2,6 +2,7 @@
 
 namespace PublicUHC\TeamspeakAuth\Helpers;
 
+use PublicUHC\TeamspeakAuth\Entities\Authentication;
 use PublicUHC\TeamspeakAuth\Entities\MinecraftAccount;
 use PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount;
 use TeamSpeak3_Node_Client;
@@ -111,4 +112,10 @@ interface TeamspeakHelper {
      * @return array An array in the format [['cldbid' => 1, 'description' => 'description 1'],['cldbid' => 2, 'description' => 'description 2']]
      */
     public function listClientDescriptions();
+
+    /**
+     * Undoes the authentication supplied
+     * @param Authentication $authentication the authentication to undo
+     */
+    public function unauthenticate(Authentication $authentication);
 } 
