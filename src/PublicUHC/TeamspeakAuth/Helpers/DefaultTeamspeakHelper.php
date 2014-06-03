@@ -33,13 +33,15 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
         //TODO remove this, we don't want to use an online client object anywhere if possible
         $client = $this->getClientByUUID($tsAccount->getUUID());
 
-        $this->setDescriptionForUUID($mcAccount->getName(), $tsAccount->getUUID());
+        $tsUUID = $tsAccount->getUUID();
+
+        $this->setDescriptionForUUID($mcAccount->getName(), $tsUUID);
 
         //attempt to remove them from the group first
         try {
-            $client->remServerGroup($this->groupID);
+            $this->removeUUIDFromGroup($tsUUID, $this->groupID);
         } catch (\TeamSpeak3_Exception $ex) {}
-        $client->addServerGroup($this->groupID);
+        $this->addUUIDToGroup($tsUUID, $this->groupID);
 
         $authenitcation = new Authentication();
         $authenitcation->setMinecraftAccount($mcAccount)
@@ -187,6 +189,52 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
         $cldbid = $this->getClientDBId($uuid);
         if( $cldbid !== false) {
             $this->setDescriptionForDBId($description, $cldbid);
+        }
+    }
+
+    /**
+     * Add the user with the given database ID to the group with the given ID
+     * @param $cldbid int the database ID of the user
+     * @param $groupID int the ID of the group to add to
+     */
+    public function addDBIdToGroup($cldbid, $groupID)
+    {
+        $this->server->serverGroupClientAdd($groupID, $cldbid);
+    }
+
+    /**
+     * Add the user with the given UUID to the group with the given ID
+     * @param $uuid string the UUID of the user
+     * @param $groupID int the ID of the group to add to
+     */
+    public function addUUIDToGroup($uuid, $groupID)
+    {
+        $cldbid = $this->getClientDBId($uuid);
+        if($cldbid !== false) {
+            $this->addDBIdToGroup($cldbid, $groupID);
+        }
+    }
+
+    /**
+     * Remove the user with the given database ID from the group with the given ID
+     * @param $cldbid int the database ID of the user
+     * @param $groupID int the ID of the group to remove from
+     */
+    public function removeDBIdFromGroup($cldbid, $groupID)
+    {
+        $this->server->serverGroupClientDel($groupID, $cldbid);
+    }
+
+    /**
+     * Remove the user with the given UUID from the group with the given ID
+     * @param $uuid int the UUID of the user
+     * @param $groupID int the ID of the group to remove from
+     */
+    public function removeUUIDFromGroup($uuid, $groupID)
+    {
+        $cldbid = $this->getClientDBId($uuid);
+        if($cldbid !== false) {
+            $this->removeDBIdFromGroup($cldbid, $groupID);
         }
     }
 }

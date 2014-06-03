@@ -77,4 +77,32 @@ interface TeamspeakHelper {
      * @param $uuid string the client's UUID
      */
     public function setDescriptionForUUID($description, $uuid);
+
+    /**
+     * Add the user with the given database ID to the group with the given ID
+     * @param $cldbid int the database ID of the user
+     * @param $groupID int the ID of the group to add to
+     */
+    public function addDBIdToGroup($cldbid, $groupID);
+
+    /**
+     * Add the user with the given UUID to the group with the given ID
+     * @param $uuid string the UUID of the user
+     * @param $groupID int the ID of the group to add to
+     */
+    public function addUUIDToGroup($uuid, $groupID);
+
+    /**
+     * Remove the user with the given database ID from the group with the given ID
+     * @param $cldbid int the database ID of the user
+     * @param $groupID int the ID of the group to remove from
+     */
+    public function removeDBIdFromGroup($cldbid, $groupID);
+
+    /**
+     * Remove the user with the given UUID from the group with the given ID
+     * @param $uuid int the UUID of the user
+     * @param $groupID int the ID of the group to remove from
+     */
+    public function removeUUIDFromGroup($uuid, $groupID);
 } 
