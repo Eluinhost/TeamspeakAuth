@@ -61,3 +61,14 @@ Documentation
 [Configuration](docs/CONFIGURATION.md)
 
 [Serving skins locally](docs/SKINS.md)
+
+Git Branches
+------------
+
+master - holds the latest release
+
+develop - holds the latest development version, branch into releases/* branches when ready for release
+
+releases/1.0.0 releases/1.1.0 e.t.c. - holds the particular release for bugfixes
+
+features/* - branches for developing features, merges back into the develop branch
