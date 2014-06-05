@@ -68,10 +68,12 @@ Documentation
 Git Branches
 ------------
 
-master - holds the latest release
+`master` - holds the latest development version, branch into releases/* branches when ready for next release
 
-develop - holds the latest development version, branch into releases/* branches when ready for release
+`releases/1.0.0` `releases/1.1.0` e.t.c. - holds the particular release branch
 
-releases/1.0.0 releases/1.1.0 e.t.c. - holds the particular release for bugfixes
+`features/*` - branches for developing features, merges back into the master branch
 
-features/* - branches for developing features, merges back into the develop branch
+`hotfixes/*` - hotfix branches that merge into the affected release branch/es and/or master
+
+`bugfixes/*` - bugfix branches that merge into master for the next release
