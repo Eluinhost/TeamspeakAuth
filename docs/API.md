@@ -22,16 +22,16 @@ Return Format - verified:
         "verified":true,
         "authentications":[
             {
-                "createdAt":"Tue, 03 Jun 2014 13:34:18 +0000",
-                "updatedAt":"Tue, 03 Jun 2014 13:34:18 +0000",
+                "createdAt": 1401956864,
+                "updatedAt": 1401956864,
                 "minecraftAccount":{
-                    "createdAt":"Tue, 03 Jun 2014 13:33:45 +0000",
-                    "updatedAt":"Tue, 03 Jun 2014 13:33:45 +0000",
+                    "createdAt": 1401956864,
+                    "updatedAt": 1401956864,
                     "uuid":"6ac803fd132f4540a741cb18ffeed8ce"
                 },
                 "teamspeakAccount":{
-                    "createdAt":"Thu, 29 May 2014 18:08:48 +0000",
-                    "updatedAt":"Tue, 03 Jun 2014 13:32:10 +0000",
+                    "createdAt": 1401956864,
+                    "updatedAt": 1401956864,
                     "uuid":"ewo4M0KT59ifNUKEV\/FHEqoFCI4="
                 }
             }
