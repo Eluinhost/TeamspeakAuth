@@ -48,16 +48,16 @@ class APIController extends ContainerAware {
             $mcAccount = $authentication->getMinecraftAccount();
 
             array_push($authenticationsJson, [
-                'createdAt' => $authentication->getCreatedAt()->format(DateTime::RFC2822),
-                'updatedAt' => $authentication->getUpdatedAt()->format(DateTime::RFC2822),
+                'createdAt' => $authentication->getCreatedAt()->getTimestamp(),
+                'updatedAt' => $authentication->getUpdatedAt()->getTimestamp(),
                 'minecraftAccount' => [
-                    'createdAt' => $mcAccount->getCreatedAt()->format(DateTime::RFC2822),
-                    'updatedAt' => $mcAccount->getUpdatedAt()->format(DateTime::RFC2822),
+                    'createdAt' => $mcAccount->getCreatedAt()->getTimestamp(),
+                    'updatedAt' => $mcAccount->getUpdatedAt()->getTimestamp(),
                     'uuid' => $mcAccount->getUUID()
                 ],
                 'teamspeakAccount' => [
-                    'createdAt' => $tsAccount->getCreatedAt()->format(DateTime::RFC2822),
-                    'updatedAt' => $tsAccount->getUpdatedAt()->format(DateTime::RFC2822),
+                    'createdAt' => $tsAccount->getCreatedAt()->getTimestamp(),
+                    'updatedAt' => $tsAccount->getUpdatedAt()->getTimestamp(),
                     'uuid' => $tsAccount->getUUID()
                 ]
             ]);
