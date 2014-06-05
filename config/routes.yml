@@ -42,3 +42,13 @@ verifyaccount:
 complete:
     path:     /complete/{mc_name}
     defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakAuthController::completeAction', mc_name: ~ }
+
+# API pages
+
+api_verified:
+    path:     /api/verified/{mc_uuid}
+    defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\APIController::checkVerified', checkOnline: false }
+
+api_online:
+    path:     /api/online/{mc_uuid}
+    defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\APIController::checkVerified', checkOnline: true }
