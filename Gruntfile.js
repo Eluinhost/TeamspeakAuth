@@ -22,7 +22,11 @@ module.exports = function(grunt) {
             bower: ['<%= pkg.bower_dir %>'],
             build: ['<%= pkg.web_vendor_dir %>'],
             composer: ['<%= pkg.composer_vendor_dir %>'],
-            cache: ['cache']
+            cache: ['cache'],
+            template_cache: ['cache/templates'],
+            container_cache: ['cache/container'],
+            routing_cache: ['cache/routing'],
+            skins_cache: ['cache/skins']
         },
         availabletasks: {
             tasks: {
