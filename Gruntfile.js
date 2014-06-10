@@ -297,7 +297,7 @@ module.exports = function(grunt) {
                 return;
             }
             grunt.file.write('config/config.yml', YAML.stringify(grunt.config('configYML')));
-            grunt.task.run('clean:container');
+            grunt.task.run('clean:container_cache');
         }
     );
 
