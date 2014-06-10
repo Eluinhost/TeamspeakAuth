@@ -6,7 +6,7 @@ Dependencies
 
 Your server must have the following:
 
-- PHP
+- PHP + PHP GD
 - MySQL
 - Web Server with PHP support
 - NodeJS with NPM
