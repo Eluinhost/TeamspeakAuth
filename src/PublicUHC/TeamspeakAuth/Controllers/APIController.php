@@ -1,8 +1,6 @@
 <?php
 namespace PublicUHC\TeamspeakAuth\Controllers;
 
-
-use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use PublicUHC\TeamspeakAuth\Entities\Authentication;
