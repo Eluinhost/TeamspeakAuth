@@ -44,7 +44,8 @@ Initial release
 - Use the Minecraft UUID instead of username as an identifier for an account
 - If someone auths with a minecraft username that is already in use by another minecraft UUID then the old account and it's authentications are removed and the teamspeak account changes are reset
 - Includes a skin cache for caching/serving skins from minotar
-- API for checking verification/online status of a minecraft account
+- API for checking verification/online status of a minecraft accounts
+- Caching of the website internal to speed up requests
 
 Documentation
 -------------
