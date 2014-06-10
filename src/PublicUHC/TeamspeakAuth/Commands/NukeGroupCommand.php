@@ -12,6 +12,7 @@ class NukeGroupCommand extends Command {
     private $teamspeakHelper;
 
     public function __construct(TeamspeakHelper $teamspeakHelper) {
+        parent::__construct(null);
         $this->teamspeakHelper = $teamspeakHelper;
     }
 
@@ -30,8 +31,6 @@ class NukeGroupCommand extends Command {
     {
         $groupID = $input->getArgument('groupID');
 
-
-
-        $output->writeln($groupID);
+        $output->writeln(json_encode($this->teamspeakHelper->getDBIdsForGroupID($groupID)));
     }
 }
