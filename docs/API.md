@@ -3,52 +3,59 @@ API
 
 The api can be found at the URL /api/
 
-Verified
---------
+Verification/Online checks
+--------------------------
 
-To check if a minecraft account with the supplied UUID is verified check the following:
+To check minecraft accounts by their UUID check the following:
 
-/api/verified/mc_uuid
+/api/verified  - Check if the UUID provided are verified
+/api/online    - Same as verified but also checks if the teamspeak account is online 
 
-Replace mc_uuid with their minecraft UUID (without the - if there are any)
+Expects a POST parameter `uuids` that is an array of UUID strings to check for.
 
-Return Format - non verified:
-
-    {"verified":false}
-
-Return Format - verified:
+### Return Format:
 
     {
-        "verified":true,
-        "authentications":[
-            {
-                "createdAt": 1401956864,
-                "updatedAt": 1401956864,
-                "minecraftAccount":{
-                    "createdAt": 1401956864,
-                    "updatedAt": 1401956864,
-                    "uuid":"6ac803fd132f4540a741cb18ffeed8ce"
-                },
-                "teamspeakAccount":{
-                    "createdAt": 1401956864,
-                    "updatedAt": 1401956864,
-                    "uuid":"ewo4M0KT59ifNUKEV\/FHEqoFCI4="
-                }
-            }
-        ],
+        "uuid1": ... data for uuid1 ...,    
+        "uuid2": ... data for uuid2 ...,    
+        "uuid3": ... data for uuid3 ...,    
+        ... more uuids and their data ...
     }
     
-Online
-------
+### Data Format
 
-This is exactly the same as the verified one except also shows which Teamspeak UUIDs are online right now. If the online status isn't needed then use verified.
+#### Unverified
 
-/api/online/mc_uuid
+    {
+        "00000000-0000-0000-000000000000": false
+    }
+    
+#### Verified
 
-Adds a node 'online' with an array of Teamspeak 3 UUIDs to the root of the JSON. 
-
-If none are online then the array will be empty. 
-
-If not verified then the response is just:
-
-    {"verified":false}
+    {
+        "00000000-0000-0000-000000000000": {
+            "minecraftAccount": {
+                "createdAt": 1401960387,    # UNIX timestamp
+                "updatedAt": 1401960387,    # UNIX timestamp
+                "uuid": "00000000-0000-0000-000000000000",  # Account UUID, same as the requested UUID,
+                "lastName": "ghowden"       # The last name the account was verified with
+            },
+            "authentications": [            # List of authentications made against the minecraft account
+                {
+                    "createdAt": 1401960387,    # UNIX timestamp
+                    "udpatedAt": 1401960387,    # UNIX timestamp
+                    "teamspeakAccount": {       # Assosciated teamspeak account details
+                        "createdAt": 1401960387,    # UNIX timestamp
+                        "updatedAt": 1401960387,    # UNIX timestamp
+                        "lastName": "Eluinhost",    # Last teamspeak name on verification
+                        "uuid": "teamspeakUUID"    # The teamspeak account UUID
+                        "online": true          # Will always show false if using /api/verified
+                    }
+                },
+                {
+                    ... authentication number 2 ...
+                },
+                ... more authentications ...
+            ]
+        }
+    }
