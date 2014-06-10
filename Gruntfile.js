@@ -260,7 +260,7 @@ module.exports = function(grunt) {
     grunt.registerTask(
         'install',
         'Installs composer and bower dependencies and creates distribution files in the web folder',
-        ['composer:install', 'bower-install', 'dist']
+        ['composer:install', 'bower-install', 'dist', 'clean:cache']
     );
 
     grunt.registerTask(
@@ -297,6 +297,7 @@ module.exports = function(grunt) {
                 return;
             }
             grunt.file.write('config/config.yml', YAML.stringify(grunt.config('configYML')));
+            grunt.task.run('clean:container');
         }
     );
 
@@ -317,11 +318,5 @@ module.exports = function(grunt) {
                 });
             }
         }
-    );
-
-    grunt.registerTask(
-        'clear-cache',
-        'Clears the template cache',
-        ['clean:cache']
     );
 };
