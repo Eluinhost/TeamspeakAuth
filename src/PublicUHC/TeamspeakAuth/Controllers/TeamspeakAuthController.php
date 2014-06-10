@@ -230,7 +230,8 @@ class TeamspeakAuthController extends ContainerAware {
                 'updatedAt' => $result->getUpdatedAt()->format(DateTime::RFC2822),
                 'createdAt' => $result->getCreatedAt()->format(DateTime::RFC2822),
                 'ts_name' => $result->getTeamspeakAccount()->getName(),
-                'mc_name' => $result->getMinecraftAccount()->getName()
+                'mc_name' => $result->getMinecraftAccount()->getName(),
+                'image_url' => $this->container->get('router')->generate('avatarhelm', ['username' => $result->getMinecraftAccount()->getName()])
             ]);
         }
 
