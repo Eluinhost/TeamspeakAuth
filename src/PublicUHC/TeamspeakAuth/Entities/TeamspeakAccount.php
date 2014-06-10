@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * @Entity
- * @Table(name="teamspeakaccounts")
+ * @Table(name="TeamspeakAccounts")
  */
 class TeamspeakAccount {
 

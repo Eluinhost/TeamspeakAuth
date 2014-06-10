@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @Entity
- * @Table(name="minecraftcodes")
+ * @Table(name="MinecraftCodes")
  */
 class MinecraftCode {
 

@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping\JoinTable;
 
 /**
  * @Entity
- * @Table(name="minecraftaccounts")
+ * @Table(name="MinecraftAccounts")
  */
 class MinecraftAccount {
 

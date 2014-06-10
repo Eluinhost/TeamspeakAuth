@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @Entity
- * @Table(name="teamspeakcodes")
+ * @Table(name="TeamspeakCodes")
  */
 class TeamspeakCode {
 

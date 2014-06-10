@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @Entity
- * @Table(name="authentications")
+ * @Table(name="Authentications")
  */
 class Authentication {
 
