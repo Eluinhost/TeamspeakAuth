@@ -44,6 +44,8 @@ cURL with the PHP extension - not required but recommended, will use it if avail
 
 Git - useful to update/download the project
 
+NOTE: Make sure your system/nodejs time is set to the same timezone as your PHP timezone to make sure codes are within the right expiry time.
+
 Step 1: Download
 ----------------
 
