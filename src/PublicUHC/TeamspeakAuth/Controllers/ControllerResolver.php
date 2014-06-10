@@ -1,6 +1,6 @@
 <?php
 
-namespace PublicUHC\TeamspeakAuth;
+namespace PublicUHC\TeamspeakAuth\Controllers;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
