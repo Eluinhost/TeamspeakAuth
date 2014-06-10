@@ -327,4 +327,22 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
             return false;
         }
     }
+
+    /**
+     * @param $groupID int the group ID to look for
+     * @return int[] a list of DBIDs in the given group
+     */
+    public function getDBIdsForGroupID($groupID)
+    {
+        try {
+            $returnArray = [];
+            $ids = $this->getServerInstance()->serverGroupClientList($groupID);
+            foreach($ids as $id) {
+                array_push($returnArray, $id['cldbid']);
+            }
+            return $returnArray;
+        } catch (TeamSpeak3_Exception $ex) {
+            return [];
+        }
+    }
 }

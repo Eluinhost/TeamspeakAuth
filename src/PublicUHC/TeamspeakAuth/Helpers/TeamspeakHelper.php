@@ -120,4 +120,10 @@ interface TeamspeakHelper {
      * @return boolean
      */
     public function isUUIDOnline($uuid);
+
+    /**
+     * @param $groupID int the group ID to look for
+     * @return int[] a list of DBIDs in the given group
+     */
+    public function getDBIdsForGroupID($groupID);
 } 
