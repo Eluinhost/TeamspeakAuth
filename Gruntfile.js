@@ -22,7 +22,11 @@ module.exports = function(grunt) {
             bower: ['<%= pkg.bower_dir %>'],
             build: ['<%= pkg.web_vendor_dir %>'],
             composer: ['<%= pkg.composer_vendor_dir %>'],
-            cache: ['cache']
+            cache: ['cache'],
+            template_cache: ['cache/templates'],
+            container_cache: ['cache/container'],
+            routing_cache: ['cache/routing'],
+            skins_cache: ['cache/skins']
         },
         availabletasks: {
             tasks: {
@@ -256,7 +260,7 @@ module.exports = function(grunt) {
     grunt.registerTask(
         'install',
         'Installs composer and bower dependencies and creates distribution files in the web folder',
-        ['composer:install', 'bower-install', 'dist']
+        ['composer:install', 'bower-install', 'dist', 'clean:cache']
     );
 
     grunt.registerTask(
@@ -293,6 +297,7 @@ module.exports = function(grunt) {
                 return;
             }
             grunt.file.write('config/config.yml', YAML.stringify(grunt.config('configYML')));
+            grunt.task.run('clean:container');
         }
     );
 
@@ -313,11 +318,5 @@ module.exports = function(grunt) {
                 });
             }
         }
-    );
-
-    grunt.registerTask(
-        'clear-cache',
-        'Clears the template cache',
-        ['clean:cache']
     );
 };

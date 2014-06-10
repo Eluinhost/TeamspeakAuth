@@ -11,7 +11,7 @@ First you should delete your config.yml to make sure you get any new changes to 
 
 Then run the following: 
 
-`grunt clean` - Clean all the third party libraries/dependencies
+`grunt clean` - Clean all the third party libraries/dependencies as well as the entire cache
 
 `grunt install` - Install the (possibly) newer libraries/dependencies and build the web/vendor folder
 

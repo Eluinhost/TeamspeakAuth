@@ -10,6 +10,8 @@ The folder structure of the project with files of interest only is the following
     |-cache/                     # Main folder for the entire cache, clear it with `grunt clean:cache`
       |-skins/                   # Folder for storing cached skins
       |-templates/               # Folder for storing cached templates
+      |-container/               # Holds the cached container for the site built from /config/config.yml
+      |-routing/                 # Holds the cached routes for the site built from /config/routes.yml
     |-config/                    # Stores conifguration options
       |-config.yml               # The config file, doesn't exist by default, needs to be created with `grunt configure`
       |-config.yml.dist          # The default config file, copy this to config.yml to manually edit

@@ -50,7 +50,7 @@
             list.empty();
             $.each(data, function(index, element) {
                 var label = $('<div/>').text(element.ts_name).html();
-                var name = '<img src="http://minotar.net/helm/' + element.mc_name + '" class="minecraft-image"/> ' + element.mc_name;
+                var name = '<img src="' + element.image_url + '" class="minecraft-image"/> ' + element.mc_name;
                 list.append('<li><label>' + label + '</label></li><li class="minecraft-name">' + name + '</li>');
             });
         });
