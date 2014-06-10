@@ -31,6 +31,8 @@ class NukeGroupCommand extends Command {
     {
         $groupID = $input->getArgument('groupID');
 
+        //TODO remove group, icon + description
+
         $output->writeln(json_encode($this->teamspeakHelper->getDBIdsForGroupID($groupID)));
     }
 }
