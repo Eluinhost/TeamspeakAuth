@@ -46,9 +46,9 @@ complete:
 # API pages
 
 api_verified:
-    path:     /api/verified/{mc_uuid}
+    path:     /api/verified
     defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\APIController::checkVerified', checkOnline: false }
 
 api_online:
-    path:     /api/online/{mc_uuid}
+    path:     /api/online
     defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\APIController::checkVerified', checkOnline: true }
