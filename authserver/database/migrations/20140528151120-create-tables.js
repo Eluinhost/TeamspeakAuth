@@ -3,7 +3,7 @@ var jQuery = require('jquery-deferred');
 var setupAuthenticationsTable = function(migration, DataTypes) {
     var deferred = jQuery.Deferred();
     migration.createTable(
-        'authentications',
+        'Authentications',
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -37,7 +37,7 @@ var setupAuthenticationsTable = function(migration, DataTypes) {
 var setupMinecraftAccountsTable = function(migration, DataTypes) {
     var deferred = jQuery.Deferred();
     migration.createTable(
-        'minecraftaccounts',
+        'MinecraftAccounts',
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -71,7 +71,7 @@ var setupMinecraftAccountsTable = function(migration, DataTypes) {
 var setupTeamspeakAccountsTable = function(migration, DataTypes) {
     var deferred = jQuery.Deferred();
     migration.createTable(
-        'teamspeakaccounts',
+        'Teamspeakaccounts',
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -105,7 +105,7 @@ var setupTeamspeakAccountsTable = function(migration, DataTypes) {
 var setupMinecraftCodesTable = function(migration, DataTypes) {
     var deferred = jQuery.Deferred();
     migration.createTable(
-        'minecraftcodes',
+        'MinecraftCodes',
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -139,7 +139,7 @@ var setupMinecraftCodesTable = function(migration, DataTypes) {
 var setupTeamspeakCodesTable = function(migration, DataTypes) {
     var deferred = jQuery.Deferred();
     migration.createTable(
-        'teamspeakcodes',
+        'TeamspeakCodes',
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -184,14 +184,14 @@ module.exports = {
         });
     },
     down: function(migration, DataTypes, done) {
-        migration.dropTable('authentications').then(function() {
-            migration.dropTable('minecraftaccounts');
+        migration.dropTable('Authentications').then(function() {
+            migration.dropTable('MinecraftAccounts');
         }).then(function() {
-            migration.dropTable('teamspeakaccounts');
+            migration.dropTable('TeamspeakAccounts');
         }).then(function() {
-            migration.dropTable('minecraftcodes');
+            migration.dropTable('MinecraftCodes');
         }).then(function() {
-            migration.dropTable('teamspeakcodes');
+            migration.dropTable('TeamspeakCodes');
         }).then(function() {
             done();
         });
