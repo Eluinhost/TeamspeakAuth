@@ -71,7 +71,7 @@ var setupMinecraftAccountsTable = function(migration, DataTypes) {
 var setupTeamspeakAccountsTable = function(migration, DataTypes) {
     var deferred = jQuery.Deferred();
     migration.createTable(
-        'Teamspeakaccounts',
+        'TeamspeakAccounts',
         {
             id: {
                 type: DataTypes.INTEGER,
