@@ -245,8 +245,7 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
             $transfer = TeamSpeak3::factory("filetransfer://" . $upload["host"] . ":" . $upload["port"]);
             $transfer->upload($upload["ftkey"], $upload["seekpos"], $data);
 
-            //remove the permission and reassign the permission
-            $this->getServerInstance()->clientPermRemove($cldbid, 'i_icon_id');
+            $this->removeIconForDBId($cldbid);
 
             //do some weird shit with the crc for the permission because TS3 doesn't do things like anything sane
             if ($crc > pow(2,31)) {
@@ -343,6 +342,27 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
             return $returnArray;
         } catch (TeamSpeak3_Exception $ex) {
             return [];
+        }
+    }
+
+    /**
+     * Remove the client icon for the user
+     * @param $cldbid int the dbid of the user
+     */
+    public function removeIconForDBId($cldbid)
+    {
+        $this->getServerInstance()->clientPermRemove($cldbid, 'i_icon_id');
+    }
+
+    /**
+     * Remove the client icon for the user
+     * @param $uuid string the uuid of the user
+     */
+    public function removeIconForUUID($uuid)
+    {
+        $cldbid = $this->getClientDBId($uuid);
+        if($cldbid !== false) {
+            $this->removeIconForDBId($cldbid);
         }
     }
 }
