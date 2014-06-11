@@ -138,4 +138,10 @@ interface TeamspeakHelper {
      * @return int[] a list of DBIDs in the given group
      */
     public function getDBIdsForGroupID($groupID);
+
+    /**
+     * @param $cldbid int the client DBId
+     * @return String uuid
+     */
+    public function getUUIDForDBId($cldbid);
 } 

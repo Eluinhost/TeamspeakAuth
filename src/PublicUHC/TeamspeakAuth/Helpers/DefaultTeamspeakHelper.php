@@ -365,4 +365,13 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
             $this->removeIconForDBId($cldbid);
         }
     }
+
+    /**
+     * @param $cldbid int the client DBId
+     * @return String uuid
+     */
+    public function getUUIDForDBId($cldbid)
+    {
+        return ''.$this->getServerInstance()->clientInfoDb($cldbid)['client_unique_identifier'];
+    }
 }
