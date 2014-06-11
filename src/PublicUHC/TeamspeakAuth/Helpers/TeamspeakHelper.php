@@ -109,6 +109,18 @@ interface TeamspeakHelper {
     public function setIconForUUID($uuid, $data);
 
     /**
+     * Remove the client icon for the user
+     * @param $cldbid int the dbid of the user
+     */
+    public function removeIconForDBId($cldbid);
+
+    /**
+     * Remove the client icon for the user
+     * @param $uuid string the uuid of the user
+     */
+    public function removeIconForUUID($uuid);
+
+    /**
      * Undoes the authentication supplied
      * @param Authentication $authentication the authentication to undo
      */
@@ -120,4 +132,16 @@ interface TeamspeakHelper {
      * @return boolean
      */
     public function isUUIDOnline($uuid);
+
+    /**
+     * @param $groupID int the group ID to look for
+     * @return int[] a list of DBIDs in the given group
+     */
+    public function getDBIdsForGroupID($groupID);
+
+    /**
+     * @param $cldbid int the client DBId
+     * @return String uuid
+     */
+    public function getUUIDForDBId($cldbid);
 } 

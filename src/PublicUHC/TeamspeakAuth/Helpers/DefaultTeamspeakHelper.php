@@ -245,8 +245,7 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
             $transfer = TeamSpeak3::factory("filetransfer://" . $upload["host"] . ":" . $upload["port"]);
             $transfer->upload($upload["ftkey"], $upload["seekpos"], $data);
 
-            //remove the permission and reassign the permission
-            $this->getServerInstance()->clientPermRemove($cldbid, 'i_icon_id');
+            $this->removeIconForDBId($cldbid);
 
             //do some weird shit with the crc for the permission because TS3 doesn't do things like anything sane
             if ($crc > pow(2,31)) {
@@ -326,5 +325,53 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
         } catch( TeamSpeak3_Exception $ex ) {
             return false;
         }
+    }
+
+    /**
+     * @param $groupID int the group ID to look for
+     * @return int[] a list of DBIDs in the given group
+     */
+    public function getDBIdsForGroupID($groupID)
+    {
+        try {
+            $returnArray = [];
+            $ids = $this->getServerInstance()->serverGroupClientList($groupID);
+            foreach($ids as $id) {
+                array_push($returnArray, $id['cldbid']);
+            }
+            return $returnArray;
+        } catch (TeamSpeak3_Exception $ex) {
+            return [];
+        }
+    }
+
+    /**
+     * Remove the client icon for the user
+     * @param $cldbid int the dbid of the user
+     */
+    public function removeIconForDBId($cldbid)
+    {
+        $this->getServerInstance()->clientPermRemove($cldbid, 'i_icon_id');
+    }
+
+    /**
+     * Remove the client icon for the user
+     * @param $uuid string the uuid of the user
+     */
+    public function removeIconForUUID($uuid)
+    {
+        $cldbid = $this->getClientDBId($uuid);
+        if($cldbid !== false) {
+            $this->removeIconForDBId($cldbid);
+        }
+    }
+
+    /**
+     * @param $cldbid int the client DBId
+     * @return String uuid
+     */
+    public function getUUIDForDBId($cldbid)
+    {
+        return ''.$this->getServerInstance()->clientInfoDb($cldbid)['client_unique_identifier'];
     }
 }

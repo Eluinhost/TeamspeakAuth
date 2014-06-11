@@ -46,6 +46,7 @@ Initial release
 - Includes a skin cache for caching/serving skins from minotar
 - API for checking verification/online status of a minecraft accounts
 - Caching of the website internal to speed up requests
+- Added console commands for CLI
 
 Documentation
 -------------
@@ -63,6 +64,8 @@ Documentation
 [Configuration](docs/CONFIGURATION.md)
 
 [Serving skins locally](docs/SKINS.md)
+
+[Console Commands](docs/CONSOLE.md)
 
 [API for checking Minecraft account verification/online status](docs/API.md)
 
