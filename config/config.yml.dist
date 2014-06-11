@@ -139,7 +139,7 @@ services:
   #console stuffs
   nuke_group:
     class: PublicUHC\TeamspeakAuth\Commands\NukeGroupCommand
-    arguments: ['@teamspeakhelper']
+    arguments: ['@teamspeakhelper', '@entityManager']
   console_application:
     class: Symfony\Component\Console\Application
     calls:
