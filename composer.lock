@@ -3,53 +3,8 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "66b6a6aadf5c28a946e2ffdd994c5cab",
+    "hash": "5be99414ddb8fc0fdb4ac787e77983b7",
     "packages": [
-        {
-            "name": "Eluinhost/skin-cache",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/eluinhost/skin-cache.git",
-                "reference": "125cb6e0113f24861a9ba1aca9305907281ea833"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/eluinhost/skin-cache/zipball/125cb6e0113f24861a9ba1aca9305907281ea833",
-                "reference": "125cb6e0113f24861a9ba1aca9305907281ea833",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "~4.0",
-                "symfony/http-foundation": ">=2.4",
-                "tedivm/stash": "0.11.*"
-            },
-            "require-dev": {
-                "lstrojny/phpunit-function-mocker": "0.2.0",
-                "phpunit/phpunit": "3.7.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PublicUHC\\SkinCache\\": "src/PublicUHC/SkinCache"
-                }
-            },
-            "license": [
-                "GPLv3"
-            ],
-            "authors": [
-                {
-                    "name": "Eluinhost",
-                    "email": "graham_howden1@yahoo.co.uk"
-                }
-            ],
-            "description": "Serve Minecraft skins locally",
-            "support": {
-                "source": "https://github.com/eluinhost/skin-cache/tree/master",
-                "issues": "https://github.com/eluinhost/skin-cache/issues"
-            },
-            "time": "2014-06-07 08:59:55"
-        },
         {
             "name": "doctrine/annotations",
             "version": "v1.1.2",
@@ -1200,6 +1155,48 @@
                 "yggdrasil"
             ],
             "time": "2014-06-17 08:33:51"
+        },
+        {
+            "name": "publicuhc/skin-cache",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Eluinhost/skin-cache.git",
+                "reference": "4a81415d67e6d62ed46c405522dd1f619570210a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Eluinhost/skin-cache/zipball/4a81415d67e6d62ed46c405522dd1f619570210a",
+                "reference": "4a81415d67e6d62ed46c405522dd1f619570210a",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~4.0",
+                "symfony/http-foundation": ">=2.4",
+                "tedivm/stash": "0.11.*"
+            },
+            "require-dev": {
+                "lstrojny/phpunit-function-mocker": "0.2.0",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PublicUHC\\SkinCache\\": "src/PublicUHC/SkinCache"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPLv3"
+            ],
+            "authors": [
+                {
+                    "name": "Eluinhost",
+                    "email": "graham_howden1@yahoo.co.uk"
+                }
+            ],
+            "description": "Serve Minecraft skins locally",
+            "time": "2014-06-17 15:06:19"
         },
         {
             "name": "react/promise",
@@ -2438,18 +2435,13 @@
 
     ],
     "aliases": [
-        {
-            "alias": "0.1",
-            "alias_normalized": "0.1.0.0",
-            "version": "9999999-dev",
-            "package": "eluinhost/skin-cache"
-        }
+
     ],
     "minimum-stability": "stable",
     "stability-flags": {
         "publicuhc/minecraft-auth": 20,
         "publicuhc/php-yggdrasil": 20,
-        "eluinhost/skin-cache": 20
+        "publicuhc/skin-cache": 20
     },
     "platform": [
 
