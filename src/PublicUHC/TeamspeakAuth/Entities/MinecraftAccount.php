@@ -16,12 +16,12 @@ use Doctrine\ORM\Mapping\OneToMany;
 class MinecraftAccount extends DatabaseObject {
 
     /**
-     * @Column(type="guid")
+     * @Column(type="string", length=32)
      */
     private $uuid;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", length=16)
      */
     private $name;
 

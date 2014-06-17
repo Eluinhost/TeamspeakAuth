@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 class MinecraftCode extends DatabaseObject {
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", length=10)
      */
     private $code;
 

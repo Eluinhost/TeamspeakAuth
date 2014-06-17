@@ -16,12 +16,12 @@ use Doctrine\ORM\Mapping\OneToMany;
 class TeamspeakAccount extends DatabaseObject {
 
     /**
-     * @Column(type="guid")
+     * @Column(type="string", length=28)
      */
     private $uuid;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", length=30)
      */
     private $name;
 

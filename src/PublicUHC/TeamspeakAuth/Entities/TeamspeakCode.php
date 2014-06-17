@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping\ManyToOne;
 class TeamspeakCode extends DatabaseObject {
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", length=10)
      */
     private $code;
 
