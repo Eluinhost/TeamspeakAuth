@@ -39,14 +39,22 @@ class CopyNewConfig {
         //get a list of all the parameters not set in the config file
         $difference = array_diff_key($distYML['parameters'], $configYML['parameters']);
 
+        $new = [];
+
         foreach($difference as $upperLevelKey => $upperLevelValue) {
             if(is_array($upperLevelValue)) {
                 foreach($upperLevelValue as $subLevelKey => $subLevelValue) {
-                    echo "$upperLevelKey.$subLevelKey - defaults $subLevelValue\n";
+                    $answer = $interface->ask("$upperLevelKey.$subLevelKey ($subLevelValue):", $subLevelValue);
+                    $new["$upperLevelKey.$subLevelKey"] = $answer;
                 }
             } else {
-                echo "$upperLevelKey - defaults $upperLevelValue\n";
+                $answer = $interface->ask("$upperLevelKey ($upperLevelValue):", $upperLevelValue);
+                $new[$upperLevelKey] = $answer;
             }
+        }
+
+        foreach($new as $key=>$value) {
+            $interface->write("$key = $value");
         }
 
         //TODO ask for new values e.t.c.
