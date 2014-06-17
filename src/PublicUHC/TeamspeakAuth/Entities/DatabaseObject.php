@@ -32,35 +32,47 @@ class DatabaseObject {
      */
     private $updatedAt;
 
+    /**
+     * @return int the object identifier, should not really be used directly
+     */
     public function getID() {
         return $this->id;
     }
 
     /**
-     * @return DateTime
+     * @return DateTime the date created at
      */
     public function getCreatedAt() {
         return $this->createdAt;
     }
 
+    /**
+     * @param DateTime $at the date created at
+     * @return DatabaseObject
+     */
     public function setCreatedAt(DateTime $at) {
         $this->createdAt = $at;
         return $this;
     }
 
     /**
-     * @return DateTime
+     * @return DateTime the date last updated
      */
     public function getUpdatedAt() {
         return $this->updatedAt;
     }
 
+    /**
+     * @param DateTime $at time last updated
+     * @return DatabaseObject
+     */
     public function setUpdatedAt(DateTime $at) {
         $this->updatedAt = $at;
         return $this;
     }
 
     /**
+     * Updates the updated at time to current timestamp and sets the created at date if not set
      * @PrePersist
      * @PreUpdate
      */
