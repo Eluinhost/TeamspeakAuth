@@ -9,6 +9,7 @@ You can also open the config.yml file and edit it directly:
 
     parameters:
       minutesToLast: 15             # Number of minutes codes are valid for
+      skinCacheTime: 7200           # How long skins are cached from minotar for
       serverAddress: "auth.publicuhc.com or publicuhc.com:35879" # The address to show on the webpage for the auth server
       teamspeak:
         host: localhost             # The address of the teamspeak server
