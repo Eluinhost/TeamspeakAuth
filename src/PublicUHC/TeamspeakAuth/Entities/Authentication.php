@@ -5,25 +5,20 @@ namespace PublicUHC\TeamspeakAuth\Entities;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @Entity
- * @Table(name="Authentications")
+ * @Table
  */
-class Authentication {
-
-    use DatabaseTrait;
+class Authentication extends DatabaseObject {
 
     /**
      * @ManyToOne(targetEntity="PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount", inversedBy="authentications")
-     * @JoinColumn(name="TeamspeakAccountId")
      */
     private $teamspeakAccount;
 
     /**
      * @ManyToOne(targetEntity="PublicUHC\TeamspeakAuth\Entities\MinecraftAccount", inversedBy="authentications")
-     * @JoinColumn(name="MinecraftAccountId")
      */
     private $minecraftAccount;
 

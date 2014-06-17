@@ -33,14 +33,13 @@ Initial release
 
 ### 1.1.0
 
-- Added migrations to update old version databases when updating the project, NOT compatable with 1.0
 - Added authentication history tracking and store accounts=>codes
 - Replaced bootstrap for foundation in the webpages and restyled a bit
 - Added a section to the website for viewing the last 10 authentications
 
 ### 1.2.0
 
-- Fixed a possible error in migrations
+- Replaced NodeJS auth server with one in PHP
 - Use the Minecraft UUID instead of username as an identifier for an account
 - If someone auths with a minecraft username that is already in use by another minecraft UUID then the old account and it's authentications are removed and the teamspeak account changes are reset
 - Includes a skin cache for caching/serving skins from minotar

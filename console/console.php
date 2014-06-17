@@ -2,6 +2,8 @@
 
 use PublicUHC\TeamspeakAuth\Container\ProjectContainer;
 use PublicUHC\TeamspeakAuth\ParameterBagNested;
+use Symfony\Bridge\ProxyManager\LazyProxy\Instantiator\RuntimeInstantiator;
+use Symfony\Bridge\ProxyManager\LazyProxy\PhpDumper\ProxyDumper;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Console\Application;
@@ -21,6 +23,8 @@ if (!$containerConfigCache->isFresh()) {
     $container = new ContainerBuilder(new ParameterBagNested());
     $container->setParameter('global.root', $projectRoot);
 
+    $container->setProxyInstantiator(new RuntimeInstantiator());
+
     $configLocator = new FileLocator($projectRoot . '/config/');
     $diLoader = new YamlFileLoader($container, $configLocator);
     $diLoader->load('config.yml');
@@ -28,6 +32,7 @@ if (!$containerConfigCache->isFresh()) {
     $container->compile();
 
     $dumper = new PhpDumper($container);
+    $dumper->setProxyDumper(new ProxyDumper());
     $containerConfigCache->write(
         $dumper->dump([
             'class' => 'ProjectContainer',

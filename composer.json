@@ -9,13 +9,9 @@
             "email": "graham_howden1@yahoo.co.uk"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/eluinhost/skin-cache"
-        }
-    ],
     "require": {
+        "publicuhc/minecraft-auth": "dev-master",
+        "publicuhc/php-yggdrasil": "dev-master",
         "planetteamspeak/ts3-php-framework": "1.1.23",
         "symfony/http-foundation": "2.5",
         "symfony/routing": "2.5",
@@ -26,7 +22,8 @@
         "symfony/templating": "2.5",
         "symfony/twig-bridge": "2.5",
         "doctrine/orm": "2.4.*",
-        "eluinhost/skin-cache": "dev-master as 0.1"
+        "publicuhc/skin-cache": "dev-master",
+        "symfony/proxy-manager-bridge": "2.5"
     },
     "autoload": {
         "psr-4": {"PublicUHC\\TeamspeakAuth\\": "src/PublicUHC/TeamspeakAuth"}

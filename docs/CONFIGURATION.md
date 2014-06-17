@@ -1,12 +1,15 @@
 Configuration
 =============
 
-Whenever you run `composer update` or `composer install` the old configuration file will be updated if there are any missing nodes. (or will create it if no file found)
+You can create/edit your config.yml file by running the command:
 
-You can open the config.yml file and edit it directly:
+TODO
+
+You can also open the config.yml file and edit it directly:
 
     parameters:
       minutesToLast: 15             # Number of minutes codes are valid for
+      skinCacheTime: 7200           # How long skins are cached from minotar for
       serverAddress: "auth.publicuhc.com or publicuhc.com:35879" # The address to show on the webpage for the auth server
       teamspeak:
         host: localhost             # The address of the teamspeak server
@@ -24,8 +27,8 @@ You can open the config.yml file and edit it directly:
       minecraft:
         host: localhost             # The address to listen on for the fake server
         port: 35879                 # The port to listen on for the fake server
-        motd: "§eAuth Server"       # The MOTD to display on the server list
+        description: "§eAuth Server"    # The MOTD to display on the server list
 
     #  Ignore everything below here unless you know what you are doing, things WILL break otherwise #
     
-If you edit the file manually, either run `grunt clean:container` or delete the folder /cache/container to update the settings (the auth server will require a restart)
+If you edit the file manually either run `grunt clean:container` or delete the folder /cache/container to update the settings
