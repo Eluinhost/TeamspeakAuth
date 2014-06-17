@@ -7,6 +7,25 @@ use Symfony\Component\Yaml\Yaml;
 
 class CopyNewConfig {
 
+    private static $questionmap = [
+        'minutesToLast' => 'How many minutes should codes last for?',
+        'skinCacheTime' => 'How many seconds should skins be cached for?',
+        'serverAddress' => 'What Minecraft server address should the website show for people to connect to?',
+        'teamspeak.host' => 'Teamspeak server address',
+        'teamspeak.port' => 'Teamspeak server port',
+        'teamspeak.username' => 'Teamspeak server query account name',
+        'teamspeak.password' => 'Teamspeak server query password',
+        'teamspeak.group_id' => 'Teamspeak group ID to add users to',
+        'database.host' => 'Database server address',
+        'database.port' => 'Database server port',
+        'database.database' => 'Database database',
+        'database.username' => 'Database account username',
+        'database.password' => 'Database account password',
+        'minecraft.host' => 'Address for Minecraft server to bind to',
+        'minecraft.port' => 'Port for Minecraft server to bind to',
+        'minecraft.description' => 'Description to show on the Minecraft server list'
+    ];
+
     public static function postInstallCommand(Event $event)
     {
         self::updateConfigFile($event->getIO());
@@ -44,11 +63,15 @@ class CopyNewConfig {
         foreach($difference as $upperLevelKey => $upperLevelValue) {
             if(is_array($upperLevelValue)) {
                 foreach($upperLevelValue as $subLevelKey => $subLevelValue) {
-                    $answer = $interface->ask("$upperLevelKey.$subLevelKey ($subLevelValue):", $subLevelValue);
+                    $key = "$upperLevelKey.$subLevelKey";
+                    $question = isset(self::$questionmap[$key]) ? self::$questionmap[$key] : $key;
+                    $answer = $interface->ask($question." ($subLevelValue):", $subLevelValue);
                     $new["$upperLevelKey.$subLevelKey"] = $answer;
                 }
             } else {
-                $answer = $interface->ask("$upperLevelKey ($upperLevelValue):", $upperLevelValue);
+                $key = $upperLevelKey;
+                $question = isset(self::$questionmap[$key]) ? self::$questionmap[$key] : $key;
+                $answer = $interface->ask($question." ($upperLevelValue):", $upperLevelValue);
                 $new[$upperLevelKey] = $answer;
             }
         }
