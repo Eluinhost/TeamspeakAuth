@@ -172,8 +172,6 @@ class TeamspeakAuthController extends ContainerAware {
             $account = $ts3->updateLastClientUsername($client);
 
             $code = new TeamspeakCode();
-            $code->setCreatedAt(new DateTime())
-                 ->setUpdatedAt(new DateTime());
             $account->getCodes()->clear();
             $account->getCodes()->add($code);
             $code->setAccount($account);

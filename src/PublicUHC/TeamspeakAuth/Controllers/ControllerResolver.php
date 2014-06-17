@@ -49,6 +49,6 @@ class ControllerResolver extends \Symfony\Component\HttpKernel\Controller\Contro
             $object->setContainer($this->container);
         }
 
-        return array($object, $method);
+        return [$object, $method];
     }
 } 
