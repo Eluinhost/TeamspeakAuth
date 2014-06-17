@@ -30,5 +30,19 @@
     },
     "autoload": {
         "psr-4": {"PublicUHC\\TeamspeakAuth\\": "src/PublicUHC/TeamspeakAuth"}
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "PublicUHC\\TeamspeakAuth\\CopyNewConfig::postInstallCommand"
+        ],
+        "post-update-cmd": [
+            "PublicUHC\\TeamspeakAuth\\CopyNewConfig::postUpdateCommand"
+        ]
+    },
+    "extra": {
+        "ymlinstall": {
+            "config": "config/config.yml",
+            "dist": "src/config.yml.dist"
+        }
     }
 }
