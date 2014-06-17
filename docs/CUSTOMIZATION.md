@@ -4,7 +4,7 @@ Customization
 Server List Icon
 ----------------
 
-To change the server icon display in the server list inside Minecraft replace the file at authserver/servericon.png. 
+To change the server icon display in the server list inside Minecraft replace the file at web/images/servericon.png. 
 Make sure it fits Minecraft's restrictions on server list images.
 
 Web pages
