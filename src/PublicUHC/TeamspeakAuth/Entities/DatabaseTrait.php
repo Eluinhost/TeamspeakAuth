@@ -2,11 +2,14 @@
 namespace PublicUHC\TeamspeakAuth\Entities;
 
 use DateTime;
-use Doctrine\ORM\Id;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\PrePersist;
+use Doctrine\ORM\Mapping\PreUpdate;
 
 trait DatabaseTrait {
+
     /**
      * @Id
      * @Column(type="integer")
@@ -50,5 +53,18 @@ trait DatabaseTrait {
     public function setUpdatedAt(DateTime $at) {
         $this->updatedAt = $at;
         return $this;
+    }
+
+    /**
+     * @PrePersist
+     * @PreUpdate
+     */
+    public function updatedTimestamps()
+    {
+        $this->setUpdatedAt(new DateTime('now'));
+
+        if ($this->getCreatedAt() == null) {
+            $this->setCreatedAt(new DateTime('now'));
+        }
     }
 } 
