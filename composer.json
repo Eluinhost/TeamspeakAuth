@@ -35,11 +35,5 @@
         "post-update-cmd": [
             "PublicUHC\\TeamspeakAuth\\Composer\\CopyNewConfig::postUpdateCommand"
         ]
-    },
-    "extra": {
-        "ymlinstall": {
-            "config": "config/config.yml",
-            "dist": "src/config.yml.dist"
-        }
     }
 }
