@@ -15,6 +15,8 @@ Then run the following:
 
 `grunt install` - Install the (possibly) newer libraries/dependencies and build the web/vendor folder
 
-`grunt configure` - Build a new config.yml from the config.yml.dist, also gives a prompt to update your database to the latest version
+`grunt configure` - Build a new config.yml from the config.yml.dist
 
-The commands can be shortened to `grunt clean install configure`
+`php console/console.php schema:update` - update your database to the latest version
+
+The commands can be shortened to `grunt clean install configure; php console/console.php schema:update`
