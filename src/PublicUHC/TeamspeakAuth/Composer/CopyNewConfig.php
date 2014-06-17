@@ -1,8 +1,7 @@
 <?php
-namespace PublicUHC\TeamspeakAuth;
+namespace PublicUHC\TeamspeakAuth\Composer;
 
 use Composer\Script\Event;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Yaml\Yaml;
 
 class CopyNewConfig {

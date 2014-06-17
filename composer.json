@@ -33,10 +33,10 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "PublicUHC\\TeamspeakAuth\\CopyNewConfig::postInstallCommand"
+            "PublicUHC\\TeamspeakAuth\\Composer\\CopyNewConfig::postInstallCommand"
         ],
         "post-update-cmd": [
-            "PublicUHC\\TeamspeakAuth\\CopyNewConfig::postUpdateCommand"
+            "PublicUHC\\TeamspeakAuth\\Composer\\CopyNewConfig::postUpdateCommand"
         ]
     },
     "extra": {
