@@ -18,7 +18,7 @@ parameters:
   minecraft:
     host: 0.0.0.0
     port: 35879
-    description: "§eAuth Server"
+    description: "§4▁§e▂§4▃§e▄§4▅§e▆§4▇§e█ §4§l    Auth Server    §e█§4▇§e▆§4▅§e▄§4▃§e▂§4▁ §c▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔"
 
 services:
 
