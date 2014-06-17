@@ -31,4 +31,4 @@ You can also open the config.yml file and edit it directly:
 
     #  Ignore everything below here unless you know what you are doing, things WILL break otherwise #
     
-If you editthe file manually either run `grunt clean:container` or delete the folder /cache/container to update the settings
+If you edit the file manually either run `grunt clean:container` or delete the folder /cache/container to update the settings
