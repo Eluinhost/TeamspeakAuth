@@ -7,15 +7,12 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @Entity
- * @Table(name="MinecraftCodes")
+ * @Table
  */
-class MinecraftCode {
-
-    use DatabaseTrait;
+class MinecraftCode extends DatabaseObject {
 
     /**
      * @Column(type="string")
@@ -24,7 +21,6 @@ class MinecraftCode {
 
     /**
      * @ManyToOne(targetEntity="PublicUHC\TeamspeakAuth\Entities\MinecraftAccount", inversedBy="codes")
-     * @JoinColumn(name="MinecraftAccountId")
      */
     private $account;
 

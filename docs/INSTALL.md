@@ -6,45 +6,19 @@ Dependencies
 
 Your server must have the following:
 
-- PHP + PHP GD
-- MySQL
-- Web Server with PHP support
-- NodeJS with NPM
-- Composer
-- Grunt CLI module installed globally (`npm install grunt-cli -g`)
+* PHP + PHP GD
+* MySQL
+* Web Server with PHP support
 
-The module 'ursa' used by the auth server requires the following also be installed:
+### Development dependencies (if fetching from git instead of pre-built version):
 
-- OpenSSL
-- Python 2.7
+* NodeJS with NPM with Grunt CLI module installed globally (`npm install grunt-cli -g`)
+* Composer
 
-Ursa has the following notes for Windows users:
+### Optional Dependencies (both):
 
-    On Windows, you'll need to install some dependencies first:
-     - [node-gyp](https://github.com/TooTallNate/node-gyp/) (`npm install -g node-gyp`)
-       - [Python 2.7](http://www.python.org/download/releases/2.7.3#download) (not 3.3)
-       - Vistual Studio 2010 or higher (including Express editions)
-         - Windows XP/Vista/7:
-            - Microsoft Visual Studio C++ 2010 ([Express](http://go.microsoft.com/?linkid=9709949) version works well)
-            - For 64-bit builds of node and native modules you will _**also**_ need the [Windows 7 64-bit SDK](http://www.microsoft.com/en-us/download/details.aspx?id=8279)
-            - If you get errors that the 64-bit compilers are not installed you may also need the [compiler update for the Windows SDK 7.1](http://www.microsoft.com/en-us/download/details.aspx?id=4422)
-         - Windows 8:
-            - Microsoft Visual Studio C++ 2012 for Windows Desktop ([Express](http://go.microsoft.com/?linkid=9816758) version works well)
-     - [OpenSSL](http://slproweb.com/products/Win32OpenSSL.html) (normal, not light)
-    in the same bitness as your Node.js installation.
-      - The build script looks for OpenSSL in the default install directory  
-      (`C:\OpenSSL-Win32` or `C:\OpenSSL-Win64`)
-      - If you get `Error: The specified module could not be found.`, copy `libeay32.dll` from the OpenSSL bin directory to this module's bin directory, or to Windows\System3.
-
-Personally installing [Visual Studio Express 2013 for Windows Desktop](http://www.visualstudio.com/downloads/download-visual-studio-vs) and replacing `npm install` with `npm install --msvs_version=2013` ran from the Visual Studio 'Developer Command Prompt' was enough (OpenSSL and Python still required)
-
-Optional Dependencies:
-
-cURL with the PHP extension - not required but recommended, will use it if available
-
-Git - useful to update/download the project
-
-NOTE: Make sure your system/nodejs time is set to the same timezone as your PHP timezone to make sure codes are within the right expiry time.
+* cURL with the PHP extension - not required but recommended, will use it if available to fetch skins
+* Git - useful to update/download the project
 
 Step 1: Download
 ----------------
@@ -53,7 +27,7 @@ Step 1: Download
 
 Clone the project using the following command `git clone https://github.com/Eluinhost/TeamspeakAuth.git`
 
-This will make a folder called 'TeamspeakAuth' in the current directory with the contents of the master branch
+This will make a folder called 'TeamspeakAuth' in the current directory with the contents of the master branch (latest development)
 
 To switch to a release branch first change into the TeamspeakAuth directory and run the following:
 
@@ -61,18 +35,20 @@ To switch to a release branch first change into the TeamspeakAuth directory and 
 
 `git checkout releases/1.1.0` - checks out the particular release, replace 'releases/1.1.0' with the particular version you want
 
-### Using Zip/tar.gz
+### Using a prebuilt zip/tar.gz
 
 Download the zip file and unzip it where you want it to be installed
 
 Step 2: Install
 ---------------
 
+### Using Git version
+
 Change directory into the TeamspeakAuth folder and run the following:
 
 `npm install`
 
-This will install the Node.js dependencies required for the entire project
+This will install the Node.js dependencies required to build the project dependencies
 
 You will then need to run:
 
@@ -80,19 +56,27 @@ You will then need to run:
 
 This will install all the other dependencies used by the project and build the front end css/js/fonts into the web folder
 
-You can then create your config.yml by running:
+### Using prebuilt version
 
-`grunt configure`
+The project is already has all the dependencies built ready
 
-The last option of this command is to run migrations on your database. 
+Step 3: Configure
+-----------------
+
+TODO add a script that doesn't depend on the container that can create/update the config file
+
+You can then set up your database by running:
+
+`php console/console.php schema:update`
+
 Assuming you passed correct parameters during the configure prompts this will then create the database structure in the database supplied
 
 Step 3: Startup the Auth Server
 -------------------------------
 
-You can then start the fake minecraft server by changing into the authserver directory and running:
+You can then start the fake minecraft server by changing by running:
 
-`node AuthServer.js`
+`php console/console.php server:start`
 
 Step 4: Setup your webserver
 ----------------------------
