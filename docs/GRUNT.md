@@ -39,14 +39,6 @@ Runs the following tasks in order
 
 Essentially it downloads PHP and front-end dependencies and then builds the front end into /web/vendor
 
-### Run Migrations
-
-If you have updated to a newer version and want to update your database, you can either start the authserver or run:
-
-`grunt run-migrations`
-
-It will update your database using your config.yml settings to the latest version.
-
 ### Advanded
 
 For other commands such as `dist` (build bower_components). Run `grunt --help`. It will show the full list of available tasks and their descriptions
