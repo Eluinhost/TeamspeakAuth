@@ -1,14 +1,19 @@
 <?php
 namespace PublicUHC\TeamspeakAuth\Entities;
-
 use DateTime;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\MappedSuperclass;
 use Doctrine\ORM\Mapping\PrePersist;
 use Doctrine\ORM\Mapping\PreUpdate;
 
-trait DatabaseTrait {
+/**
+ * @MappedSuperclass
+ * @HasLifecycleCallbacks
+ */
+class DatabaseObject {
 
     /**
      * @Id

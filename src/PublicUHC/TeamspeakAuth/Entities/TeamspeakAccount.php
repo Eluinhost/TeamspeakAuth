@@ -12,11 +12,8 @@ use Doctrine\ORM\Mapping\OneToMany;
 /**
  * @Entity
  * @Table
- * @HasLifecycleCallbacks
  */
-class TeamspeakAccount {
-
-    use DatabaseTrait;
+class TeamspeakAccount extends DatabaseObject {
 
     /**
      * @Column(type="guid")

@@ -3,18 +3,14 @@
 namespace PublicUHC\TeamspeakAuth\Entities;
 
 use Doctrine\ORM\Mapping\Entity;
-use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\ManyToOne;
 
 /**
  * @Entity
  * @Table
- * @HasLifecycleCallbacks
  */
-class Authentication {
-
-    use DatabaseTrait;
+class Authentication extends DatabaseObject {
 
     /**
      * @ManyToOne(targetEntity="PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount", inversedBy="authentications")

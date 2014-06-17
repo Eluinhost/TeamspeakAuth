@@ -12,11 +12,8 @@ use Doctrine\ORM\Mapping\OneToMany;
 /**
  * @Entity
  * @Table
- * @HasLifecycleCallbacks
  */
-class MinecraftAccount {
-
-    use DatabaseTrait;
+class MinecraftAccount extends DatabaseObject {
 
     /**
      * @Column(type="guid")
