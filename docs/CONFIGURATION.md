@@ -1,11 +1,9 @@
 Configuration
 =============
 
-You can create/edit your config.yml file by running the command:
+Whenever you run `composer update` or `composer install` the old configuration file will be updated if there are any missing nodes. (or will create it if no file found)
 
-`grunt configure`
-
-You can also open the config.yml file and edit it directly:
+You can open the config.yml file and edit it directly:
 
     parameters:
       minutesToLast: 15             # Number of minutes codes are valid for
@@ -30,4 +28,4 @@ You can also open the config.yml file and edit it directly:
 
     #  Ignore everything below here unless you know what you are doing, things WILL break otherwise #
     
-If you editthe file manually either run `grunt clean:container` or delete the folder /cache/container to update the settings
+If you edit the file manually, either run `grunt clean:container` or delete the folder /cache/container to update the settings (the auth server will require a restart)
