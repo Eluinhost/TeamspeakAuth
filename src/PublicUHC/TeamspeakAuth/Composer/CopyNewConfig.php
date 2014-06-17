@@ -1,21 +1,23 @@
 <?php
 namespace PublicUHC\TeamspeakAuth\Composer;
 
+use Composer\IO\IOInterface;
+use Composer\Script\Event;
 use Symfony\Component\Yaml\Yaml;
 
 class CopyNewConfig {
 
-    public static function postInstallCommand()
+    public static function postInstallCommand(Event $event)
     {
-        self::updateConfigFile();
+        self::updateConfigFile($event->getIO());
     }
 
-    public static function postUpdateCommand()
+    public static function postUpdateCommand(Event $event)
     {
-        self::updateConfigFile();
+        self::updateConfigFile($event->getIO());
     }
 
-    public static function updateConfigFile()
+    public static function updateConfigFile(IOInterface $interface)
     {
         $configFileLocation = 'config/config.yml';
         $distFileLocation = 'src/config.yml.dist';
