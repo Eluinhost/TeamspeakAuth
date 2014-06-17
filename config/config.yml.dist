@@ -57,9 +57,11 @@ services:
   skincachedriver:
     class: Stash\Driver\FileSystem
     arguments: [{path: '%global.root%/cache/skins'}]
+  errorimagepainter:
+    class: PublicUHC\SkinCache\Painters\TransparentImagePainter
   skinfetcher:
     class: PublicUHC\SkinCache\SkinFetcher
-    arguments: ['@skindownloader', '@skinformatter', '@skincache']
+    arguments: ['@skindownloader', '@skinformatter', '@skincache', '@errorimagepainter']
 
   #routes
   config_locator:
@@ -144,3 +146,7 @@ services:
     class: Symfony\Component\Console\Application
     calls:
       - [add, ['@nuke_group']]
+      - [add, ['@server_start']]
+  server_start:
+    class: PublicUHC\TeamspeakAuth\Commands\ServerStartCommand
+    arguments: ['', '@entityManager']
