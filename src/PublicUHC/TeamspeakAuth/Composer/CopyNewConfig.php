@@ -7,6 +7,16 @@ class CopyNewConfig {
 
     public static function postInstallCommand()
     {
+        self::updateConfigFile();
+    }
+
+    public static function postUpdateCommand()
+    {
+        self::updateConfigFile();
+    }
+
+    public static function updateConfigFile()
+    {
         $configFileLocation = 'config/config.yml';
         $distFileLocation = 'src/config.yml.dist';
 
