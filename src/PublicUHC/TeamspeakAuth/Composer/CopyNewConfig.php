@@ -13,6 +13,7 @@ class CopyNewConfig {
         'serverAddress' => 'What Minecraft server address should the website show for people to connect to?',
         'teamspeak.host' => 'Teamspeak server address',
         'teamspeak.port' => 'Teamspeak server port',
+        'teamspeak.query_port' => 'Teamspeak server query port',
         'teamspeak.username' => 'Teamspeak server query account name',
         'teamspeak.password' => 'Teamspeak server query password',
         'teamspeak.group_id' => 'Teamspeak group ID to add users to',
