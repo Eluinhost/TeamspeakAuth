@@ -11,7 +11,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-available-tasks');
 
     var YAML = require('yamljs');
-    var jQuery = require('jquery-deferred');
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
@@ -32,7 +31,7 @@ module.exports = function(grunt) {
             tasks: {
                 options: {
                     filter: 'include',
-                    tasks: ['default', 'install', 'clean', 'configure', 'run-migrations']
+                    tasks: ['default', 'install', 'clean', 'configure']
                 }
             }
         },
@@ -298,25 +297,6 @@ module.exports = function(grunt) {
             }
             grunt.file.write('config/config.yml', YAML.stringify(grunt.config('configYML')));
             grunt.task.run('clean:container_cache');
-        }
-    );
-
-    grunt.registerTask(
-        'run-migrations',
-        'Runs the database migrations to update the database to the latest version',
-        function() {
-            var done = this.async();
-            if(grunt.config.get('configYMLdatabasewrite') == null || grunt.config.get('configYMLdatabasewrite') == true) {
-                var database = require('./authserver/database/AuthDatabase');
-                var authDatabase = new database.AuthDatabase();
-                jQuery.when(authDatabase.init()).then(function() {
-                    console.log('Migrations complete');
-                    done();
-                }).fail(function() {
-                    console.log('There was an error trying to apply the migrations');
-                    done();
-                });
-            }
         }
     );
 };
