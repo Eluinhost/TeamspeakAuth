@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "5be99414ddb8fc0fdb4ac787e77983b7",
+    "hash": "c9a2f01e553a0e1762259b768a7753b7",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1162,17 +1162,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Eluinhost/skin-cache.git",
-                "reference": "4a81415d67e6d62ed46c405522dd1f619570210a"
+                "reference": "80127122264b51702787da1bfe303070761e7bab"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Eluinhost/skin-cache/zipball/4a81415d67e6d62ed46c405522dd1f619570210a",
-                "reference": "4a81415d67e6d62ed46c405522dd1f619570210a",
+                "url": "https://api.github.com/repos/Eluinhost/skin-cache/zipball/80127122264b51702787da1bfe303070761e7bab",
+                "reference": "80127122264b51702787da1bfe303070761e7bab",
                 "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "~4.0",
-                "symfony/http-foundation": ">=2.4",
+                "symfony/http-foundation": "2.5",
                 "tedivm/stash": "0.11.*"
             },
             "require-dev": {
@@ -1196,7 +1196,13 @@
                 }
             ],
             "description": "Serve Minecraft skins locally",
-            "time": "2014-06-17 15:06:19"
+            "keywords": [
+                "cache",
+                "minecraft",
+                "minotar",
+                "skins"
+            ],
+            "time": "2014-06-17 15:21:50"
         },
         {
             "name": "react/promise",
