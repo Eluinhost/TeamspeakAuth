@@ -27,7 +27,7 @@ You can also open the config.yml file and edit it directly:
       minecraft:
         host: localhost             # The address to listen on for the fake server
         port: 35879                 # The port to listen on for the fake server
-        motd: "§eAuth Server"       # The MOTD to display on the server list
+        description: "§eAuth Server"    # The MOTD to display on the server list
 
     #  Ignore everything below here unless you know what you are doing, things WILL break otherwise #
     
