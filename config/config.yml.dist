@@ -150,7 +150,7 @@ services:
       - [add, ['@server_start']]
   server_start:
     class: PublicUHC\TeamspeakAuth\Commands\ServerStartCommand
-    arguments: ['@auth_server', '@entityManager', '%minecraft.description%']
+    arguments: ['@auth_server', '@entityManager', '%minecraft.description%', '%global.root%/web/images/servericon.png']
 
   #auth server stuff
   auth_server:

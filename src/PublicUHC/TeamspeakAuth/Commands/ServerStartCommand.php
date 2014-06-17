@@ -15,13 +15,15 @@ class ServerStartCommand extends Command {
     private $server;
     private $em;
     private $description;
+    private $faviconLocation;
 
-    public function __construct(AuthServer $server, EntityManager $em, $description)
+    public function __construct(AuthServer $server, EntityManager $em, $description, $faviconLocation)
     {
         parent::__construct(null);
         $this->server = $server;
         $this->em = $em;
         $this->description = $description;
+        $this->faviconLocation = $faviconLocation;
     }
 
     protected function configure()
@@ -42,8 +44,8 @@ class ServerStartCommand extends Command {
 
         $description = $this->description;
 
-        //TODO read the favicon from filesystem and set data URI
-        $favicon = null;
+        $imageData = base64_encode(file_get_contents($this->faviconLocation));
+        $favicon = 'data:image/png;base64,'.$imageData;
 
         $this->server->on('status_request', function(StatusResponsePacket $packet) use ($description, $favicon) {
             $packet->setDescription($description)
