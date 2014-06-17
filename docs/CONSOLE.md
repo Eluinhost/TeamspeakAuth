@@ -18,3 +18,9 @@ Also removes any matching teamspeak UUID authentications.
 `start:server`
 
 Starts up the authentication server
+
+### Update database schema
+
+`schema:update`
+
+Updates the database to the latest schema, run this after any update
