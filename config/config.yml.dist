@@ -148,9 +148,13 @@ services:
     calls:
       - [add, ['@nuke_group']]
       - [add, ['@server_start']]
+      - [add, ['@schema_update']]
   server_start:
     class: PublicUHC\TeamspeakAuth\Commands\ServerStartCommand
     arguments: ['@auth_server', '@entityManager', '%minecraft.description%', '%global.root%/web/images/servericon.png']
+  schema_update:
+    class: PublicUHC\TeamspeakAuth\Commands\UpdateSchemaCommand
+    arguments: ['@entityManager']
 
   #auth server stuff
   auth_server:
