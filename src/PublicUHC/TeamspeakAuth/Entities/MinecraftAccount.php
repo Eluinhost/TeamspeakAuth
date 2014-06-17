@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * @Entity
- * @Table(name="MinecraftAccounts")
+ * @Table
  * @HasLifecycleCallbacks
  */
 class MinecraftAccount {

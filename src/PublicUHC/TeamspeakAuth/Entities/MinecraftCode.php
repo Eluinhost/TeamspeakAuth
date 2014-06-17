@@ -4,14 +4,15 @@ namespace PublicUHC\TeamspeakAuth\Entities;
 
 
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @Entity
- * @Table(name="MinecraftCodes")
+ * @Table
+ * @HasLifecycleCallbacks
  */
 class MinecraftCode {
 
@@ -24,7 +25,6 @@ class MinecraftCode {
 
     /**
      * @ManyToOne(targetEntity="PublicUHC\TeamspeakAuth\Entities\MinecraftAccount", inversedBy="codes")
-     * @JoinColumn(name="MinecraftAccountId")
      */
     private $account;
 

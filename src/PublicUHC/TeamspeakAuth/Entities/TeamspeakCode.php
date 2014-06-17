@@ -4,14 +4,15 @@ namespace PublicUHC\TeamspeakAuth\Entities;
 
 
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @Entity
- * @Table(name="TeamspeakCodes")
+ * @Table
+ * @HasLifecycleCallbacks
  */
 class TeamspeakCode {
 
@@ -24,7 +25,6 @@ class TeamspeakCode {
 
     /**
      * @ManyToOne(targetEntity="PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount", inversedBy="codes")
-     * @JoinColumn(name="TeamspeakAccountId")
      */
     private $account;
 

@@ -4,13 +4,15 @@ namespace PublicUHC\TeamspeakAuth\Entities;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * @Entity
- * @Table(name="TeamspeakAccounts")
+ * @Table
+ * @HasLifecycleCallbacks
  */
 class TeamspeakAccount {
 

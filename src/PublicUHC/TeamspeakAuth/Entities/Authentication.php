@@ -3,13 +3,14 @@
 namespace PublicUHC\TeamspeakAuth\Entities;
 
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\ManyToOne;
-use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @Entity
- * @Table(name="Authentications")
+ * @Table
+ * @HasLifecycleCallbacks
  */
 class Authentication {
 
@@ -17,13 +18,11 @@ class Authentication {
 
     /**
      * @ManyToOne(targetEntity="PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount", inversedBy="authentications")
-     * @JoinColumn(name="TeamspeakAccountId")
      */
     private $teamspeakAccount;
 
     /**
      * @ManyToOne(targetEntity="PublicUHC\TeamspeakAuth\Entities\MinecraftAccount", inversedBy="authentications")
-     * @JoinColumn(name="MinecraftAccountId")
      */
     private $minecraftAccount;
 
