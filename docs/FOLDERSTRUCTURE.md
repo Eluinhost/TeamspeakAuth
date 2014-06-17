@@ -3,8 +3,6 @@ Project Folder Structure
 
 The folder structure of the project with files of interest only is the following:
 
-    |-authserver/                # The main folder of the authentication server
-      |-AuthServer.js            # The main file to run the auth server, run it with `node AuthServer.js`
     |-bower_components/          # Created when install bower assets, third party front end libraries
     |-cache/                     # Main folder for the entire cache, clear it with `grunt clean:cache`
       |-skins/                   # Folder for storing cached skins
