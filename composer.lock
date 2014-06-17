@@ -1096,12 +1096,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Eluinhost/php-yggdrasil.git",
-                "reference": "f45ddf6a4930dc5d6020fc20d2498d1655694ef6"
+                "reference": "a502d063c331ac024e96d465c3fb2c0f665649c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Eluinhost/php-yggdrasil/zipball/f45ddf6a4930dc5d6020fc20d2498d1655694ef6",
-                "reference": "f45ddf6a4930dc5d6020fc20d2498d1655694ef6",
+                "url": "https://api.github.com/repos/Eluinhost/php-yggdrasil/zipball/a502d063c331ac024e96d465c3fb2c0f665649c5",
+                "reference": "a502d063c331ac024e96d465c3fb2c0f665649c5",
                 "shasum": ""
             },
             "require": {
@@ -1135,7 +1135,7 @@
                 "minecraft",
                 "yggdrasil"
             ],
-            "time": "2014-06-16 21:27:27"
+            "time": "2014-06-17 08:33:51"
         },
         {
             "name": "react/promise",
