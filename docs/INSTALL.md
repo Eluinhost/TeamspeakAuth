@@ -84,15 +84,18 @@ You can then create your config.yml by running:
 
 `grunt configure`
 
-The last option of this command is to run migrations on your database. 
+You can then set up your database by running:
+
+`php console/console.php schema:update`
+
 Assuming you passed correct parameters during the configure prompts this will then create the database structure in the database supplied
 
 Step 3: Startup the Auth Server
 -------------------------------
 
-You can then start the fake minecraft server by changing into the authserver directory and running:
+You can then start the fake minecraft server by changing by running:
 
-`node AuthServer.js`
+`php console/console.php server:start`
 
 Step 4: Setup your webserver
 ----------------------------
