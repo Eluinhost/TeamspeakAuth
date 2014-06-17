@@ -26,14 +26,17 @@ services:
   minecrafthelper:
     class: PublicUHC\TeamspeakAuth\Helpers\DefaultMinecraftHelper
     arguments: ['@skinfetcher']
+    lazy: true
   teamspeakhelper:
     class: PublicUHC\TeamspeakAuth\Helpers\DefaultTeamspeakHelper
     arguments: ['@teamspeakserver', '@entityManager', '%teamspeak.group_id%', '@minecrafthelper']
+    lazy: true
   teamspeakserver:
     class: TeamSpeak3_Node_Server
     factory_class: TeamSpeak3
     factory_method: factory
     arguments: ['serverquery://%teamspeak.username%:%teamspeak.password%@%teamspeak.host%:%teamspeak.query_port%/?server_port=%teamspeak.port%']
+    lazy: true
   annotationmetadata:
     class: Doctrine\Common\Cache\CacheProvider
     factory_class: Doctrine\ORM\Tools\Setup
@@ -44,9 +47,10 @@ services:
     factory_class: Doctrine\ORM\EntityManager
     factory_method: create
     arguments: [{driver: 'pdo_mysql', user: '%database.username%', password: '%database.password%', dbname: '%database.database%'}, '@annotationmetadata']
+    lazy: true
   skindownloader:
-      class: PublicUHC\SkinCache\Downloaders\MinotarLikeDownloader
-      arguments: ['@skinclient', 30]
+    class: PublicUHC\SkinCache\Downloaders\MinotarLikeDownloader
+    arguments: ['@skinclient', 30]
   skinclient:
     class: GuzzleHttp\Client
     arguments: [{base_url: 'https://minotar.net'}]
@@ -63,6 +67,7 @@ services:
   skinfetcher:
     class: PublicUHC\SkinCache\SkinFetcher
     arguments: ['@skindownloader', '@skinformatter', '@skincache', '@errorimagepainter', '%skinCacheTime%']
+    lazy: true
 
   #routes
   config_locator:
@@ -108,6 +113,7 @@ services:
   framework:
     class: PublicUHC\TeamspeakAuth\Kernel\ProjectFramework
     arguments: ['@event_dispatcher', '@service_container', '@controller_resolver']
+    lazy: true
 
   #templating - request scoped
   template_loader:
@@ -138,6 +144,7 @@ services:
   templating:
     class: Symfony\Bridge\Twig\TwigEngine
     arguments: ['@template_environment', '@template_name_parser']
+    lazy: true
 
   #console stuffs
   nuke_group:
@@ -149,6 +156,7 @@ services:
       - [add, ['@nuke_group']]
       - [add, ['@server_start']]
       - [add, ['@schema_update']]
+    lazy: true
   server_start:
     class: PublicUHC\TeamspeakAuth\Commands\ServerStartCommand
     arguments: ['@auth_server', '@entityManager', '%minecraft.description%', '%global.root%/web/images/servericon.png']
@@ -160,3 +168,4 @@ services:
   auth_server:
     class: PublicUHC\MinecraftAuth\AuthServer\AuthServer
     arguments: ['%minecraft.port%', '%minecraft.host%']
+    lazy: true
