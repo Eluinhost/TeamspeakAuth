@@ -13,12 +13,12 @@ The folder structure of the project with files of interest only is the following
       |-container/               # Holds the cached container for the site built from /config/config.yml
       |-routing/                 # Holds the cached routes for the site built from /config/routes.yml
     |-config/                    # Stores conifguration options
-      |-config.yml               # The config file, doesn't exist by default, needs to be created with `grunt configure`
-      |-config.yml.dist          # The default config file, copy this to config.yml to manually edit
+      |-config.yml               # The config file, doesn't exist by default, is created on composer update/install
       |-routes.yml               # Stores the routes the website uses for URLs
     |-docs/                      # All these documentation files
     |-node_modules/              # Created when npm install is ran, third party node.js libraries
     |-src/                       # Stores the project's PHP code for the website to run from
+      |-config.yml.dist          # The default config file, this file is the template compiser uses to create the config.yml
     |-templates/                 # Stores the twig templates for the website. Any changes here need `grunt clean:cache` to take effect
     |-vendor/                    # Created when composer install is ran, third party PHP libraries for the website
     |-web/                       # The main folder to point the webserver at, stores assets/front PHP file
