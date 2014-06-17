@@ -1,15 +1,21 @@
 How to Update
 =============
 
+### Git based version
+
 To update your project run `git pull` to get the latest version of the branch you are on (for bugfixes if you are on a release branch).
  
 To switch to another release branch run `git fetch` followed by `git checkout releases/1.1.0` replacing 'releases/1.1.0` with the release branch you want to use
 
-If you are not using git, you will have to download the new version zip/tar.gz to another folder as overwriting may not be safe
+### Prebuilt versions
 
-First you should delete your config.yml to make sure you get any new changes to the file.
+You will have to download the new version zip/tar.gz to another folder as overwriting may not be safe to do.
 
-Then run the following: 
+### Both
+
+Run the following: 
+
+TODO replace grunt commands with php scripts to remove nodejs dependency
 
 `grunt clean` - Clean all the third party libraries/dependencies as well as the entire cache
 
