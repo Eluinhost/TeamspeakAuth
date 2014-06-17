@@ -80,9 +80,7 @@ You will then need to run:
 
 This will install all the other dependencies used by the project and build the front end css/js/fonts into the web folder
 
-You can then create your config.yml by running:
-
-`grunt configure`
+Your config.yml will now be created and can be edited at /config/config.yml
 
 The last option of this command is to run migrations on your database. 
 Assuming you passed correct parameters during the configure prompts this will then create the database structure in the database supplied
