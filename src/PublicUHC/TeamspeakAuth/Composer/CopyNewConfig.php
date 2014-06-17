@@ -1,19 +1,16 @@
 <?php
 namespace PublicUHC\TeamspeakAuth\Composer;
 
-use Composer\Script\Event;
 use Symfony\Component\Yaml\Yaml;
 
 class CopyNewConfig {
 
-    public static function postInstallCommand(Event $event)
+    public static function postInstallCommand()
     {
-        $extras = $event->getComposer()->getPackage()->getExtra();
+        $configFileLocation = 'config/config.yml';
+        $distFileLocation = 'src/config.yml.dist';
 
-        $configFileLocation = $extras['ymlinstall']['config'];
-        $distFileLocation = $extras['ymlinstall']['dist'];
-
-        //make the file if it doesn't exist
+        //make the config file if it doesn't exist
         if(!is_file($configFileLocation)) {
             touch($configFileLocation);
         }
@@ -22,12 +19,32 @@ class CopyNewConfig {
         $configYML = Yaml::parse($configFileLocation, true);
         $distYML = Yaml::parse($distFileLocation, true);
 
-        //TODO ask for each parameter that doesn't exist and only copy those that don't exist
-        $configYML['parameters'] = $distYML['parameters'];
+        //set the parameters array if it doesn't exist
+        if(!isset($configYML['parameters'])) {
+            $configYML['parameters'] = [];
+        }
+
+        //get a list of all the parameters not set in the config file
+        $difference = array_diff_key($distYML['parameters'], $configYML['parameters']);
+
+        foreach($difference as $upperLevelKey => $upperLevelValue) {
+            if(is_array($upperLevelValue)) {
+                foreach($upperLevelValue as $subLevelKey => $subLevelValue) {
+                    echo "$upperLevelKey.$subLevelKey - defaults $subLevelValue\n";
+                }
+            } else {
+                echo "$upperLevelKey - defaults $upperLevelValue\n";
+            }
+        }
+
+        //TODO ask for new values e.t.c.
+
+        //TODO set the configYML parameters
 
         //copy the services across directly
         $configYML['services'] = $distYML['services'];
 
-        file_put_contents($configFileLocation, Yaml::dump($configYML, 3, 2));
+        //write the new config file
+        //file_put_contents($configFileLocation, Yaml::dump($configYML, 3, 2));
     }
 } 
