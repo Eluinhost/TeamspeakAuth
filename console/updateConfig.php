@@ -12,6 +12,8 @@ CopyNewConfig::updateConfigFile(
     new ConsoleIO(
         new ArgvInput(),
         new ConsoleOutput(),
-        new HelperSet()
+        new HelperSet([
+            new \Composer\Command\Helper\DialogHelper()
+        ])
     )
 );
