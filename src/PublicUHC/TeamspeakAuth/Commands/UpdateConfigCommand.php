@@ -16,12 +16,15 @@ class UpdateConfigCommand extends Command {
             'question' => 'How many minutes should codes last for?',
             'type' => 'integer'
         ],
+        'siteName' => [
+            'question' => 'Site name for website'
+        ],
         'skinCacheTime' => [
             'question' => 'How many seconds should skins be cached for?',
             'type' => 'integer'
         ],
         'serverAddress' => [
-            'question' => 'What Minecraft server address should the website show for people to connect to?'
+            'question' => 'What Minecraft server address(es) should the website show for people to connect to?'
         ],
         'teamspeak.host' => [
             'question' => 'Teamspeak server address'
