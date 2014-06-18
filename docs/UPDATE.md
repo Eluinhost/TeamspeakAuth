@@ -19,10 +19,9 @@ TODO replace grunt commands with php scripts to remove nodejs dependency
 
 `grunt clean` - Clean all the third party libraries/dependencies as well as the entire cache
 
+TODO grunt install runs the config:update script on composer install
 `grunt install` - Install the (possibly) newer libraries/dependencies and build the web/vendor folder
 
-`grunt configure` - Build a new config.yml from the config.yml.dist
+`php console/console.php config:update` - Build a new config.yml from the config.yml.dist
 
 `php console/console.php schema:update` - update your database to the latest version
-
-The commands can be shortened to `grunt clean install configure; php console/console.php schema:update`

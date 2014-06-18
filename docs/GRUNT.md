@@ -25,10 +25,6 @@ There are a few command you can use with grunt to make using the project easier.
 
 `grunt clean:routing_cache` - Cleans the project routes. Use this if you make any changes to the routes.yml file
 
-### Configure
-
-`grunt configure` - Runs the configuration script to create/edit your config.yml with prompts
-
 ### Install
 
 `grunt install`
