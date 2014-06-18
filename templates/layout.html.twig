@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% block page_title %}Teamspeak Authentication{% endblock %}</title>
+    <title>{% block page_title %}{{ siteName }}{% endblock %}</title>
 
     {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{{ asset('css/TeamspeakAuth.min.css', 'vendor') }}">
@@ -11,7 +11,7 @@
 <body>
 <div class="site-header text-center">
     <img src="{{ asset('images/servericon.png') }}" alt="Server Icon"/>
-    <h1>SITE NAME</h1>
+    <h1>{{ siteName }}</h1>
 </div>
 <div class="row">
     <div class="small-10 small-offset-1 columns">

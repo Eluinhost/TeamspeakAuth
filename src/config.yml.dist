@@ -1,6 +1,7 @@
 parameters:
   minutesToLast: 15
   skinCacheTime: 7200
+  siteName: Teamspeak Auth
   serverAddress: "auth.example.com or example.com:35879"
   teamspeak.host: ts.example.com
   teamspeak.port: 9987
@@ -136,6 +137,7 @@ services:
     calls:
       - [addExtension, ['@routing_extension']]
       - [addExtension, ['@assets_extension']]
+      - [addGlobal, ['siteName', '%siteName%']]
   template_name_parser:
     class: Symfony\Component\Templating\TemplateNameParser
   templating:
