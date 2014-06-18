@@ -21,7 +21,7 @@ class NukeGroupCommand extends Command {
 
     protected function configure()
     {
-        $this->setName('nuke:group')
+        $this->setName('group:nuke')
             ->setDescription('Nuke the group with the given ID')
             ->addArgument(
                 'groupID',
