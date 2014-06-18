@@ -7,7 +7,7 @@ parameters:
   teamspeak.username: serveradmin
   teamspeak.password: ""
   teamspeak.query_port: 10011
-  teampseak.group_id: 222
+  teamspeak.group_id: 222
   database.host: localhost
   database.port: 3306
   database.database: authentication
