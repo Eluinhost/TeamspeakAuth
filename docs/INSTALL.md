@@ -48,19 +48,21 @@ Change directory into the TeamspeakAuth folder and run the following:
 
 `npm install`
 
-This will install the Node.js dependencies required to build the project dependencies
+This will install the Node.js dependencies required to build the project front-end
 
 You will then need to run:
 
 `grunt install`
 
-This will install all the other dependencies used by the project and build the front end css/js/fonts into the web folder
+This will install and build the front end css/js/fonts into the web folder
 
-It will also generate your config.yml and as your for values so you can skip step 3.
+Finally `composer install` will install the PHP dependencies
+
+It will also generate your config.yml and ask your for values so you can skip step 3.
 
 ### Using prebuilt version
 
-The project is already has all the dependencies built ready
+The project already has all the dependencies built.
 
 Step 3: config.yml
 -----------------
@@ -69,7 +71,7 @@ You can setup your config.yml file by running:
 
 `php console/console.php config:update`
 
-You may also need to clear the cache folder for settings to take effect
+You may also need to clear the cache folder for settings to take effect (TODO auto clear container)
 
 Step 4. Database
 ----------------
