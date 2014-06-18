@@ -122,7 +122,7 @@ module.exports = function(grunt) {
     grunt.registerTask(
         'install',
         'Installs the bower dependencies and creates distribution files in the web folder',
-        ['bower-install', 'dist', 'clean:cache']
+        ['bower-install', 'dist']
     );
 
     grunt.registerTask(

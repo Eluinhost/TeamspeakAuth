@@ -13,8 +13,6 @@ There are a few command you can use with grunt to make using the project easier.
 
 `grunt clean:build` - Cleans the web/vendor folder - the compressed front end dependencies built from bower_components
 
-`grunt clean:composer` - Cleans the vendor directory of all PHP dependencies
-
 `grunt clean:cache` - Cleans the cache folder of all of the cached skins/templates/container/routing
 
 `grunt clean:template_cache` - Cleans the template cache, use this if you make changes to the templates
@@ -31,9 +29,9 @@ There are a few command you can use with grunt to make using the project easier.
 
 Runs the following tasks in order 
 
-`grunt composer:install`, `grunt bower-install`, `grunt dist`, `grunt clean:cache`
+`grunt bower-install`, `grunt dist`, `grunt clean:cache`
 
-Essentially it downloads PHP and front-end dependencies and then builds the front end into /web/vendor
+Essentially it downloads front-end dependencies and then builds the front end into /web/vendor
 
 ### Advanded
 

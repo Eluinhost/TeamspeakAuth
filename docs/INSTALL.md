@@ -58,8 +58,6 @@ This will install and build the front end css/js/fonts into the web folder
 
 Finally `composer install` will install the PHP dependencies
 
-It will also generate your config.yml and ask your for values so you can skip step 3.
-
 ### Using prebuilt version
 
 The project already has all the dependencies built.
