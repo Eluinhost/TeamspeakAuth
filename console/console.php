@@ -1,5 +1,7 @@
 <?php
 
+use PublicUHC\TeamspeakAuth\Commands\NukeGroupCommand;
+use PublicUHC\TeamspeakAuth\Commands\ServerStartCommand;
 use PublicUHC\TeamspeakAuth\Container\ProjectContainer;
 use PublicUHC\TeamspeakAuth\ParameterBagNested;
 use Symfony\Bridge\ProxyManager\LazyProxy\Instantiator\RuntimeInstantiator;
@@ -17,34 +19,48 @@ $isDebug = false;
 $projectRoot = dirname(dirname(__FILE__));
 
 $containerFile = $projectRoot . '/cache/container/ProjectContainer.php';
-$containerConfigCache = new ConfigCache($containerFile, $isDebug);
 
-if (!$containerConfigCache->isFresh()) {
-    $container = new ContainerBuilder(new ParameterBagNested());
-    $container->setParameter('global.root', $projectRoot);
+$projectContainer = null;
 
-    $container->setProxyInstantiator(new RuntimeInstantiator());
+try {
+    $containerConfigCache = new ConfigCache($containerFile, $isDebug);
 
-    $configLocator = new FileLocator($projectRoot . '/config/');
-    $diLoader = new YamlFileLoader($container, $configLocator);
-    $diLoader->load('config.yml');
+    if (!$containerConfigCache->isFresh()) {
+        $container = new ContainerBuilder();
+        $container->setParameter('global.root', $projectRoot);
 
-    $container->compile();
+        $container->setProxyInstantiator(new RuntimeInstantiator());
 
-    $dumper = new PhpDumper($container);
-    $dumper->setProxyDumper(new ProxyDumper());
-    $containerConfigCache->write(
-        $dumper->dump([
-            'class' => 'ProjectContainer',
-            'namespace' => 'PublicUHC\TeamspeakAuth\Container'
-        ]),
-        $container->getResources()
-    );
+        $configLocator = new FileLocator($projectRoot . '/config/');
+        $diLoader = new YamlFileLoader($container, $configLocator);
+        $diLoader->load('config.yml');
+
+        $container->compile();
+
+        $dumper = new PhpDumper($container);
+        $dumper->setProxyDumper(new ProxyDumper());
+        $containerConfigCache->write(
+            $dumper->dump([
+                'class' => 'ProjectContainer',
+                'namespace' => 'PublicUHC\TeamspeakAuth\Container'
+            ]),
+            $container->getResources()
+        );
+    }
+
+    require_once $containerFile;
+
+    $projectContainer = new ProjectContainer();
+} catch (Exception $ex) {
+    echo $ex->getMessage()."\n";
+    echo "Exception building project container, only configuration command will be available\n";
 }
 
-require_once $containerFile;
+if($projectContainer != null) {
+    $application = $projectContainer->get('console_application');
+} else {
+    $application = new Application();
+    //TODO add config command
+}
 
-$container = new ProjectContainer();
-
-$application = $container->get('console_application');
 $application->run();
