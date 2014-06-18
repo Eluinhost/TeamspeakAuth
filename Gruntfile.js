@@ -6,7 +6,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-composer');
     grunt.loadNpmTasks('grunt-available-tasks');
 
     grunt.initConfig({
@@ -17,7 +16,6 @@ module.exports = function(grunt) {
         clean: {
             bower: ['<%= pkg.bower_dir %>'],
             build: ['<%= pkg.web_vendor_dir %>'],
-            composer: ['<%= pkg.composer_vendor_dir %>'],
             cache: ['cache'],
             template_cache: ['cache/templates'],
             container_cache: ['cache/container'],
@@ -123,8 +121,8 @@ module.exports = function(grunt) {
 
     grunt.registerTask(
         'install',
-        'Installs composer and bower dependencies and creates distribution files in the web folder',
-        ['composer:install', 'bower-install', 'dist', 'clean:cache']
+        'Installs the bower dependencies and creates distribution files in the web folder',
+        ['bower-install', 'dist', 'clean:cache']
     );
 
     grunt.registerTask(
