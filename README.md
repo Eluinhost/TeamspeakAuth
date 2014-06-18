@@ -37,9 +37,9 @@ Initial release
 - Replaced bootstrap for foundation in the webpages and restyled a bit
 - Added a section to the website for viewing the last 10 authentications
 
-### 1.2.0
+### 2.0.0
 
-- Replaced NodeJS auth server with one in PHP
+- Replaced NodeJS auth server with one in PHP (no more NodeJS running dependency)
 - Use the Minecraft UUID instead of username as an identifier for an account
 - If someone auths with a minecraft username that is already in use by another minecraft UUID then the old account and it's authentications are removed and the teamspeak account changes are reset
 - Includes a skin cache for caching/serving skins from minotar
