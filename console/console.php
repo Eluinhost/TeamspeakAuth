@@ -1,6 +1,7 @@
 <?php
 
 use PublicUHC\TeamspeakAuth\Commands\CleanContainerCommand;
+use PublicUHC\TeamspeakAuth\Commands\CleanRoutingCommand;
 use PublicUHC\TeamspeakAuth\Commands\UpdateConfigCommand;
 use PublicUHC\TeamspeakAuth\Container\ProjectContainer;
 use Symfony\Bridge\ProxyManager\LazyProxy\Instantiator\RuntimeInstantiator;
@@ -64,6 +65,7 @@ if($application == null) {
 //load commands without DI needs
 
 $application->add(new UpdateConfigCommand());
-$application->add(new CleanContainerCommand());
+$application->add(new CleanContainerCommand($projectRoot));
+$application->add(new CleanRoutingCommand($projectRoot));
 
 $application->run();

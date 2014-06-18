@@ -37,3 +37,9 @@ WARNING: If you have edited anything in the services node in your config.yml it 
 `clean:container`
 
 Removes the container cache. This is required after any manual change to the config.yml file. (requires a restart to the auth server if it is running)
+
+### Clean the routing cache
+
+`clean:router`
+
+Removes the routing cache. This is required after any change to the routing.yml
