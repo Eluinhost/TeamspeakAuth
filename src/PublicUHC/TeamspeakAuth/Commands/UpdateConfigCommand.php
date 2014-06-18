@@ -4,6 +4,7 @@ namespace PublicUHC\TeamspeakAuth\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
@@ -147,7 +148,8 @@ class UpdateConfigCommand extends Command {
         //write the new config file
         file_put_contents($configFileLocation, Yaml::dump($configYML, 3, 2));
 
-        //TODO clear container cache (and build it again?)
+        $command = $this->getApplication()->find('clean:container');
+        $command->run($input, $output);
 
         $output->writeln('<info>Config file up to date!</info>');
     }

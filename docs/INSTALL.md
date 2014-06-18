@@ -6,7 +6,7 @@ Dependencies
 
 Your server must have the following:
 
-* PHP + PHP GD
+* PHP + PHP GD + mcrypt extension
 * MySQL
 * Web Server with PHP support
 
@@ -69,7 +69,7 @@ You can setup your config.yml file by running:
 
 `php console/console.php config:update`
 
-You may also need to clear the cache folder for settings to take effect if you edit the file manually:
+You may also need to clear the cache folder for settings to take effect (only if you edit the file manually):
 
 `php console/console.php clean:container`
 

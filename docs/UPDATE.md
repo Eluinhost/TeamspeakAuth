@@ -13,11 +13,13 @@ Follow the install instructions again
 
 ### Prebuilt versions
 
-You will have to download the new version zip/tar.gz to another folder as overwriting may not be safe to do.
+You may have to download the new version zip/tar.gz to another folder and install again as just overwriting may not be safe to do.
 
 ### Both
 
-Run the following: 
+You will need to at least run the following 2 commands: 
+
+`php console/console.php clean` - Removes the entire application cache
 
 `php console/console.php config:update` - Build a new config.yml from the config.yml.dist
 
