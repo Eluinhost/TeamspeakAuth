@@ -2,23 +2,20 @@ parameters:
   minutesToLast: 15
   skinCacheTime: 7200
   serverAddress: "auth.example.com or example.com:35879"
-  teamspeak:
-    host: ts.example.com
-    port: 9987
-    username: serveradmin
-    password: ""
-    query_port: 10011
-    group_id: 222
-  database:
-    host: localhost
-    port: 3306
-    database: authentication
-    username: ""
-    password: ""
-  minecraft:
-    host: 0.0.0.0
-    port: 35879
-    description: "§eAuth Server"
+  teamspeak.host: ts.example.com
+  teamspeak.port: 9987
+  teamspeak.username: serveradmin
+  teamspeak.password: ""
+  teamspeak.query_port: 10011
+  teamspeak.group_id: 222
+  database.host: localhost
+  database.port: 3306
+  database.database: authentication
+  database.username: ""
+  database.password: ""
+  minecraft.host: 0.0.0.0
+  minecraft.port: 35879
+  minecraft.description: "§4▁§e▂§4▃§e▄§4▅§e▆§4▇§e█ §4§l    Auth Server    §e█§4▇§e▆§4▅§e▄§4▃§e▂§4▁ §c▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔"
 
 services:
 
@@ -156,6 +153,7 @@ services:
       - [add, ['@nuke_group']]
       - [add, ['@server_start']]
       - [add, ['@schema_update']]
+      - [add, ['@update_config']]
     lazy: true
   server_start:
     class: PublicUHC\TeamspeakAuth\Commands\ServerStartCommand
@@ -163,6 +161,8 @@ services:
   schema_update:
     class: PublicUHC\TeamspeakAuth\Commands\UpdateSchemaCommand
     arguments: ['@entityManager']
+  update_config:
+    class: PublicUHC\TeamspeakAuth\Commands\UpdateConfigCommand
 
   #auth server stuff
   auth_server:

@@ -23,7 +23,8 @@
         "symfony/twig-bridge": "2.5",
         "doctrine/orm": "2.4.*",
         "publicuhc/skin-cache": "dev-master",
-        "symfony/proxy-manager-bridge": "2.5"
+        "symfony/proxy-manager-bridge": "2.5",
+        "composer/composer": "dev-master"
     },
     "autoload": {
         "psr-4": {"PublicUHC\\TeamspeakAuth\\": "src/PublicUHC/TeamspeakAuth"}

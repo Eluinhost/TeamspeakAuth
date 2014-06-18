@@ -67,9 +67,7 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
 
         $authenitcation = new Authentication();
         $authenitcation->setMinecraftAccount($mcAccount)
-                       ->setTeamspeakAccount($tsAccount)
-                       ->setCreatedAt(new DateTime())
-                       ->setUpdatedAt(new DateTime());
+                       ->setTeamspeakAccount($tsAccount);
 
         $this->entityManager->persist($authenitcation);
         $tsAccount->getCodes()->clear();
@@ -126,12 +124,10 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
 
         if(null == $account) {
             $account = new TeamspeakAccount();
-            $account->setCreatedAt(new DateTime())
-                    ->setUUID($uuid);
+            $account->setUUID($uuid);
         }
 
-        $account->setName($client['client_nickname'])
-                ->setUpdatedAt(new DateTime());
+        $account->setName($client['client_nickname']);
 
         $this->entityManager->persist($account);
         $this->entityManager->flush();

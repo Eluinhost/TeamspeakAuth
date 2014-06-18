@@ -16,12 +16,12 @@ use Doctrine\ORM\Mapping\OneToMany;
 class TeamspeakAccount extends DatabaseObject {
 
     /**
-     * @Column(type="guid")
+     * @Column(type="string", length=28)
      */
     private $uuid;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", length=30)
      */
     private $name;
 
@@ -42,28 +42,48 @@ class TeamspeakAccount extends DatabaseObject {
         $this->authentications = new ArrayCollection();
     }
 
+    /**
+     * @return ArrayCollection the list of authentications made against this account
+     */
     public function getAuthentications() {
         return $this->authentications;
     }
 
+    /**
+     * @return String the Teamspeak UUID of the account
+     */
     public function getUUID() {
         return $this->uuid;
     }
 
+    /**
+     * @param $uuid String the Teamspeak UUID of the account
+     * @return TeamspeakAccount
+     */
     public function setUUID($uuid) {
         $this->uuid = $uuid;
         return $this;
     }
 
+    /**
+     * @return String the name of the user when verified
+     */
     public function getName() {
         return $this->name;
     }
 
+    /**
+     * @param $name String the name of the user when verified
+     * @return TeamspeakAccount
+     */
     public function setName($name) {
         $this->name = $name;
         return $this;
     }
 
+    /**
+     * @return ArrayCollection a list of associated teamspeak codes (should only ever be one)
+     */
     public function getCodes() {
         return $this->codes;
     }

@@ -48,22 +48,31 @@ Change directory into the TeamspeakAuth folder and run the following:
 
 `npm install`
 
-This will install the Node.js dependencies required to build the project dependencies
+This will install the Node.js dependencies required to build the project front-end
 
 You will then need to run:
 
 `grunt install`
 
-This will install all the other dependencies used by the project and build the front end css/js/fonts into the web folder
+This will install and build the front end css/js/fonts into the web folder
+
+Finally `composer install` will install the PHP dependencies
 
 ### Using prebuilt version
 
-The project is already has all the dependencies built ready
+The project already has all the dependencies built.
 
-Step 3: Configure
+Step 3: config.yml
 -----------------
 
-TODO add a script that doesn't depend on the container that can create/update the config file
+You can setup your config.yml file by running:
+
+`php console/console.php config:update`
+
+You may also need to clear the cache folder for settings to take effect (TODO auto clear container)
+
+Step 4. Database
+----------------
 
 You can then set up your database by running:
 
@@ -71,14 +80,14 @@ You can then set up your database by running:
 
 Assuming you passed correct parameters during the configure prompts this will then create the database structure in the database supplied
 
-Step 3: Startup the Auth Server
+Step 5: Startup the Auth Server
 -------------------------------
 
 You can then start the fake minecraft server by changing by running:
 
 `php console/console.php server:start`
 
-Step 4: Setup your webserver
+Step 6: Setup your webserver
 ----------------------------
 
 You will need to point your webserver root to the web folder of the project. 

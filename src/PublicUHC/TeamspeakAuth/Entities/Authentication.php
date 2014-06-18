@@ -23,24 +23,32 @@ class Authentication extends DatabaseObject {
     private $minecraftAccount;
 
     /**
-     * @return TeamspeakAccount
+     * @return TeamspeakAccount the teamspeak account associated with this authentication
      */
     public function getTeamspeakAccount() {
         return $this->teamspeakAccount;
     }
 
+    /**
+     * @param TeamspeakAccount $account the teamspeak account to associate with this authentication
+     * @return Authentication
+     */
     public function setTeamspeakAccount(TeamspeakAccount $account) {
         $this->teamspeakAccount = $account;
         return $this;
     }
 
     /**
-     * @return MinecraftAccount
+     * @return MinecraftAccount the Minecraft account associated with this authentication
      */
     public function getMinecraftAccount() {
         return $this->minecraftAccount;
     }
 
+    /**
+     * @param MinecraftAccount $account the Minecraft account to associate with this authentication
+     * @return $this
+     */
     public function setMinecraftAccount(MinecraftAccount $account) {
         $this->minecraftAccount = $account;
         return $this;

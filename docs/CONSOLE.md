@@ -1,7 +1,7 @@
 Console Commands
 ----------------
 
-To run a command run the console.php file with the command you want to run as the arguments
+To run a command run the console.php file with the command you want to run as the arguments. e.g.
 
     php console.php start:server
 
@@ -24,3 +24,10 @@ Starts up the authentication server
 `schema:update`
 
 Updates the database to the latest schema, run this after any update
+
+### Update the config parmaeters
+
+`config:update`
+
+Updates/creates your config.yml asking you for any parameters that are missing. 
+WARNING: If you have edited anything in the services node in your config.yml it will be overwritten, make a backup first
