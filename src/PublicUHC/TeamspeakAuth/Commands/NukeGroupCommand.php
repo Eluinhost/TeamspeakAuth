@@ -37,12 +37,12 @@ class NukeGroupCommand extends Command {
         $dbIDs = $this->teamspeakHelper->getDBIdsForGroupID($groupID);
 
         if(count($dbIDs) == 0) {
-            $output->writeln("No users in the group supplied");
+            $output->writeln('<error>No users in the group supplied</error>');
             return;
         }
 
-        $output->writeln("Removing " . count($dbIDs) . " users with the IDs:");
-        $output->writeln(json_encode($dbIDs));
+        $output->writeln('<info>Removing ' . count($dbIDs) . ' users with the IDs:</info>');
+        $output->writeln('<info>'.json_encode($dbIDs).'</info>');
 
         $qb = $this->em->createQueryBuilder();
 
@@ -61,7 +61,7 @@ class NukeGroupCommand extends Command {
             $qb->setParameter('uuid', $uuid);
 
             $results = $qb->getQuery()->getResult();
-            $output->writeln($dbID . ": (" . $uuid . ") - removing " . count($results) . " authentications");
+            $output->writeln("<info>$dbID: ($uuid) - removing " . count($results) . " authentications</info>");
 
             foreach($results as $result) {
                 $this->em->remove($result);
@@ -69,6 +69,6 @@ class NukeGroupCommand extends Command {
             $this->em->flush();
         }
 
-        $output->writeln("Removed all users");
+        $output->writeln("<comment>Removed all users</comment>");
     }
 }

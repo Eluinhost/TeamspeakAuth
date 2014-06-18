@@ -38,11 +38,9 @@ class ServerStartCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln("Starting server... You can stop the server with Ctrl+C.");
+        $output->writeln("<info>Starting server... You can stop the server with Ctrl+C.</info>");
 
         $this->server->on('login_success', function($username, $uuid, DisconnectPacket $packet) use ($output) {
-            $output->write("USER LOGIN: $username / $uuid\n");
-
             $qb = $this->em->createQueryBuilder();
             $qb->select('account')
                 ->from('PublicUHC\TeamspeakAuth\Entities\MinecraftAccount', 'account')
@@ -74,7 +72,7 @@ class ServerStartCommand extends Command {
             //also stops memory leaking due to references being kept
             $this->em->detach($account);
             $this->em->detach($code);
-
+            $output->writeln("<comment>USERNAME: $username UUID: $uuid CODE: {$code->getCode()}</comment>");
             $packet->setReason('Your code is '.$code->getCode());
         });
 

@@ -23,17 +23,12 @@ class UpdateSchemaCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->write('Updating database schema...');
-
-        $helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
-            'db' => new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($this->em->getConnection()),
-            'em' => new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($this->em)
-        ));
+        $output->writeln('<info>Updating database schema...</info>');
 
         $tool = new SchemaTool($this->em);
 
         $tool->updateSchema($this->em->getMetadataFactory()->getAllMetadata());
 
-        $output->write('Update complete');
+        $output->writeln('<comment>Update complete</comment>');
     }
 } 

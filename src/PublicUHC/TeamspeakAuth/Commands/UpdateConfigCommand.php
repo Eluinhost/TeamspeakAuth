@@ -114,7 +114,7 @@ class UpdateConfigCommand extends Command {
             if(!isset($questionDetails['type']))
                 $questionDetails['type'] = 'string';
 
-            $question = new Question("{$questionDetails['question']} ($value):", $value);
+            $question = new Question("<question>{$questionDetails['question']} ($value):</question>", $value);
 
             switch($questionDetails['type']) {
                 case 'password':
@@ -129,6 +129,9 @@ class UpdateConfigCommand extends Command {
             }
 
             $answer = $questionHelper->ask($input, $output, $question);
+            if(!$question->isHidden()) {
+                $output->writeln("<info> $answer");
+            }
             $new[$key] = $answer;
         }
 
@@ -143,6 +146,6 @@ class UpdateConfigCommand extends Command {
 
         //TODO clear container cache (and build it again?)
 
-        $output->writeln('Config file up to date!');
+        $output->writeln('<info>Config file up to date!</info>');
     }
 } 
