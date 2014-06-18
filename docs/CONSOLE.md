@@ -43,3 +43,9 @@ Removes the container cache. This is required after any manual change to the con
 `clean:router`
 
 Removes the routing cache. This is required after any change to the routing.yml
+
+### Clean the templating cache
+
+`clean:templates`
+
+Removes the template cache. This is required after any change to files in the templates folder

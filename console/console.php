@@ -2,6 +2,7 @@
 
 use PublicUHC\TeamspeakAuth\Commands\CleanContainerCommand;
 use PublicUHC\TeamspeakAuth\Commands\CleanRoutingCommand;
+use PublicUHC\TeamspeakAuth\Commands\CleanTemplatesCommand;
 use PublicUHC\TeamspeakAuth\Commands\UpdateConfigCommand;
 use PublicUHC\TeamspeakAuth\Container\ProjectContainer;
 use Symfony\Bridge\ProxyManager\LazyProxy\Instantiator\RuntimeInstantiator;
@@ -67,5 +68,6 @@ if($application == null) {
 $application->add(new UpdateConfigCommand());
 $application->add(new CleanContainerCommand($projectRoot));
 $application->add(new CleanRoutingCommand($projectRoot));
+$application->add(new CleanTemplatesCommand($projectRoot));
 
 $application->run();

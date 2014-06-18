@@ -17,7 +17,6 @@ module.exports = function(grunt) {
             bower: ['<%= pkg.bower_dir %>'],
             build: ['<%= pkg.web_vendor_dir %>'],
             cache: ['cache'],
-            template_cache: ['cache/templates'],
             skins_cache: ['cache/skins']
         },
         availabletasks: {
