@@ -18,7 +18,7 @@ $projectRoot = dirname(dirname(__FILE__));
 
 $containerFile = $projectRoot . '/cache/container/ProjectContainer.php';
 
-$projectContainer = null;
+$application = null;
 
 try {
     $containerConfigCache = new ConfigCache($containerFile, $isDebug);
@@ -49,14 +49,14 @@ try {
     require_once $containerFile;
 
     $projectContainer = new ProjectContainer();
+
+    $application = $projectContainer->get('console_application');
 } catch (Exception $ex) {
     echo $ex->getMessage()."\n";
     echo "Exception building project container, only configuration command will be available\n";
 }
 
-if($projectContainer != null) {
-    $application = $projectContainer->get('console_application');
-} else {
+if($application == null) {
     $application = new Application();
     $application->add(new UpdateConfigCommand());
 }
