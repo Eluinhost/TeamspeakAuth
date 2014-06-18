@@ -46,6 +46,7 @@ Initial release
 - API for checking verification/online status of a minecraft accounts
 - Caching of the website internal to speed up requests
 - Added console commands for CLI
+- New database structure shared by the auth server and website
 
 Documentation
 -------------
