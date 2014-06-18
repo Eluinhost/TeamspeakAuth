@@ -31,10 +31,10 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "PublicUHC\\TeamspeakAuth\\Composer\\CopyNewConfig::postInstallCommand"
+            "php console/console.php config:update"
         ],
         "post-update-cmd": [
-            "PublicUHC\\TeamspeakAuth\\Composer\\CopyNewConfig::postUpdateCommand"
+            "php console/console.php config:update"
         ]
     }
 }
