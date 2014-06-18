@@ -19,8 +19,6 @@ There are a few command you can use with grunt to make using the project easier.
 
 `grunt clean:skins_cache` - Cleans the cache of all skins
 
-`grunt clean:container_cache` - Cleans the project container. Use this if you make any changes to the config.yml file
-
 `grunt clean:routing_cache` - Cleans the project routes. Use this if you make any changes to the routes.yml file
 
 ### Install

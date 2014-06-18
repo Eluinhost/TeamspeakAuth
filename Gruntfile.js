@@ -18,7 +18,6 @@ module.exports = function(grunt) {
             build: ['<%= pkg.web_vendor_dir %>'],
             cache: ['cache'],
             template_cache: ['cache/templates'],
-            container_cache: ['cache/container'],
             routing_cache: ['cache/routing'],
             skins_cache: ['cache/skins']
         },

@@ -31,3 +31,9 @@ Updates the database to the latest schema, run this after any update
 
 Updates/creates your config.yml asking you for any parameters that are missing. 
 WARNING: If you have edited anything in the services node in your config.yml it will be overwritten, make a backup first
+
+### Clean the container cache
+
+`clean:container`
+
+Removes the container cache. This is required after any manual change to the config.yml file. (requires a restart to the auth server if it is running)

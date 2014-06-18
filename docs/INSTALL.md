@@ -69,7 +69,9 @@ You can setup your config.yml file by running:
 
 `php console/console.php config:update`
 
-You may also need to clear the cache folder for settings to take effect (TODO auto clear container)
+You may also need to clear the cache folder for settings to take effect if you edit the file manually:
+
+`php console/console.php clean:container`
 
 Step 4. Database
 ----------------

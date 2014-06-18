@@ -32,6 +32,6 @@ You can also open the config.yml file and edit it directly:
     
 If you edit the file manually either run:
 
-TODO container clean command
+`php console/console.php clean:container`
  
 or delete the folder `/cache/container` to clean the cache and get the new settings (you will need to restart the auth server if it is running)
