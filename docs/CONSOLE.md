@@ -55,3 +55,9 @@ Removes the template cache. This is required after any change to files in the te
 `clean:skins`
 
 Removes the skin/transparents skin cache
+
+### Clean all caches
+
+`clean`
+
+Removes all of the above caches

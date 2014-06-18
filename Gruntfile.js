@@ -15,8 +15,7 @@ module.exports = function(grunt) {
         font_dir: '<%= pkg.web_vendor_dir %>/fonts',
         clean: {
             bower: ['<%= pkg.bower_dir %>'],
-            build: ['<%= pkg.web_vendor_dir %>'],
-            cache: ['cache']
+            build: ['<%= pkg.web_vendor_dir %>']
         },
         availabletasks: {
             tasks: {

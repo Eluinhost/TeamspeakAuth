@@ -7,7 +7,7 @@ To update your project run `git pull` to get the latest version of the branch yo
  
 To switch to another release branch run `git fetch` followed by `git checkout releases/1.1.0` replacing 'releases/1.1.0` with the release branch you want to use
 
-`grunt clean` - Clean all the third party libraries/dependencies as well as the entire cache
+`grunt clean` - Clean all the third party libraries/dependencies
 
 Follow the install instructions again
 

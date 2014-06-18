@@ -13,8 +13,6 @@ There are a few command you can use with grunt to make using the project easier.
 
 `grunt clean:build` - Cleans the web/vendor folder - the compressed front end dependencies built from bower_components
 
-`grunt clean:cache` - Cleans the cache folder of all of the cached skins/templates/container/routing
-
 ### Install
 
 `grunt install`

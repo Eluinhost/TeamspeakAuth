@@ -1,5 +1,6 @@
 <?php
 
+use PublicUHC\TeamspeakAuth\Commands\CleanCacheCommand;
 use PublicUHC\TeamspeakAuth\Commands\CleanContainerCommand;
 use PublicUHC\TeamspeakAuth\Commands\CleanRoutingCommand;
 use PublicUHC\TeamspeakAuth\Commands\CleanSkinsCommand;
@@ -71,5 +72,6 @@ $application->add(new CleanContainerCommand($projectRoot));
 $application->add(new CleanRoutingCommand($projectRoot));
 $application->add(new CleanTemplatesCommand($projectRoot));
 $application->add(new CleanSkinsCommand($projectRoot));
+$application->add(new CleanCacheCommand($projectRoot));
 
 $application->run();
