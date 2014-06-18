@@ -28,13 +28,5 @@
     },
     "autoload": {
         "psr-4": {"PublicUHC\\TeamspeakAuth\\": "src/PublicUHC/TeamspeakAuth"}
-    },
-    "scripts": {
-        "post-install-cmd": [
-            "php console/console.php config:update"
-        ],
-        "post-update-cmd": [
-            "php console/console.php config:update"
-        ]
     }
 }
