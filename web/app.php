@@ -21,7 +21,7 @@ $containerFile = $projectRoot . '/cache/container/ProjectContainer.php';
 $containerConfigCache = new ConfigCache($containerFile, $isDebug);
 
 if (!$containerConfigCache->isFresh()) {
-    $container = new ContainerBuilder(new ParameterBagNested());
+    $container = new ContainerBuilder();
     $container->setParameter('global.root', $projectRoot);
 
     $container->setProxyInstantiator(new RuntimeInstantiator());
