@@ -69,3 +69,9 @@ ul.off-canvas-list li.minecraft-name {
 .text-warning {
     color: #8a6d3b;
 }
+
+.site-header img {
+    margin-left: auto;
+    display: block;
+    margin-right: auto;
+}
