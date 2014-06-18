@@ -153,6 +153,7 @@ services:
       - [add, ['@nuke_group']]
       - [add, ['@server_start']]
       - [add, ['@schema_update']]
+      - [add, ['@update_config']]
     lazy: true
   server_start:
     class: PublicUHC\TeamspeakAuth\Commands\ServerStartCommand
@@ -160,6 +161,8 @@ services:
   schema_update:
     class: PublicUHC\TeamspeakAuth\Commands\UpdateSchemaCommand
     arguments: ['@entityManager']
+  update_config:
+    class: PublicUHC\TeamspeakAuth\Commands\UpdateConfigCommand
 
   #auth server stuff
   auth_server:

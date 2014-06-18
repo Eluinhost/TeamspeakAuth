@@ -1,9 +1,7 @@
 <?php
 
-use PublicUHC\TeamspeakAuth\Commands\NukeGroupCommand;
-use PublicUHC\TeamspeakAuth\Commands\ServerStartCommand;
+use PublicUHC\TeamspeakAuth\Commands\UpdateConfigCommand;
 use PublicUHC\TeamspeakAuth\Container\ProjectContainer;
-use PublicUHC\TeamspeakAuth\ParameterBagNested;
 use Symfony\Bridge\ProxyManager\LazyProxy\Instantiator\RuntimeInstantiator;
 use Symfony\Bridge\ProxyManager\LazyProxy\PhpDumper\ProxyDumper;
 use Symfony\Component\Config\ConfigCache;
@@ -60,7 +58,7 @@ if($projectContainer != null) {
     $application = $projectContainer->get('console_application');
 } else {
     $application = new Application();
-    //TODO add config command
+    $application->add(new UpdateConfigCommand());
 }
 
 $application->run();
