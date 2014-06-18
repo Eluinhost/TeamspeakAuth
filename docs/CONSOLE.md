@@ -7,7 +7,7 @@ To run a command run the console.php file with the command you want to run as th
 
 ### Nuke Group
 
-`nuke:group <groupID>` 
+`group:nuke <groupID>` 
 
 Removes the description, icon and server group from all users in the given group.
 
