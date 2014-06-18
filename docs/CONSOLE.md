@@ -49,3 +49,9 @@ Removes the routing cache. This is required after any change to the routing.yml
 `clean:templates`
 
 Removes the template cache. This is required after any change to files in the templates folder
+
+### Clean the skin cache
+
+`clean:skins`
+
+Removes the skin/transparents skin cache

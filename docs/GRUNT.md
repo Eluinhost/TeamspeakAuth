@@ -15,8 +15,6 @@ There are a few command you can use with grunt to make using the project easier.
 
 `grunt clean:cache` - Cleans the cache folder of all of the cached skins/templates/container/routing
 
-`grunt clean:skins_cache` - Cleans the cache of all skins
-
 ### Install
 
 `grunt install`

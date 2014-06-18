@@ -2,6 +2,7 @@
 
 use PublicUHC\TeamspeakAuth\Commands\CleanContainerCommand;
 use PublicUHC\TeamspeakAuth\Commands\CleanRoutingCommand;
+use PublicUHC\TeamspeakAuth\Commands\CleanSkinsCommand;
 use PublicUHC\TeamspeakAuth\Commands\CleanTemplatesCommand;
 use PublicUHC\TeamspeakAuth\Commands\UpdateConfigCommand;
 use PublicUHC\TeamspeakAuth\Container\ProjectContainer;
@@ -69,5 +70,6 @@ $application->add(new UpdateConfigCommand());
 $application->add(new CleanContainerCommand($projectRoot));
 $application->add(new CleanRoutingCommand($projectRoot));
 $application->add(new CleanTemplatesCommand($projectRoot));
+$application->add(new CleanSkinsCommand($projectRoot));
 
 $application->run();
