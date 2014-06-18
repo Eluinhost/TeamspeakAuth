@@ -8,19 +8,18 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-available-tasks');
 
+    var web_dir = 'web/vendor';
+    var build_dir = 'build';
+
+    var bower_dir = 'bower_components';
+
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        js_dir: '<%= pkg.web_vendor_dir %>/js',
-        css_dir: '<%= pkg.web_vendor_dir %>/css',
-        font_dir: '<%= pkg.web_vendor_dir %>/fonts',
+        web_dir: web_dir,
         clean: {
-            bower: ['<%= pkg.bower_dir %>'],
-            build: ['<%= pkg.web_vendor_dir %>'],
-            cache: ['cache'],
-            template_cache: ['cache/templates'],
-            container_cache: ['cache/container'],
-            routing_cache: ['cache/routing'],
-            skins_cache: ['cache/skins']
+            bower: [bower_dir],
+            build: [build_dir],
+            web: [web_dir]
         },
         availabletasks: {
             tasks: {
@@ -32,10 +31,8 @@ module.exports = function(grunt) {
         },
         copy: {
             fonts: {
-                src: [
-                    '<%= pkg.bower_dir %>/fontawesome/fonts/*'
-                ],
-                dest: '<%= font_dir %>',
+                src: [ bower_dir + '/fontawesome/fonts/*'],
+                dest: web_dir + '/fonts',
                 flatten: true,
                 expand: true,
                 nonull: true
@@ -44,24 +41,24 @@ module.exports = function(grunt) {
         concat: {
             js: {
                 src: [
-                    '<%= pkg.bower_dir %>/modernizr/modernizr.js',
-                    '<%= pkg.bower_dir %>/jquery/dist/jquery.js',
-                    '<%= pkg.bower_dir %>/fastclick/lib/fastclick.js',
-                    '<%= pkg.bower_dir %>/foundation/js/foundation/foundation.js',
-                    '<%= pkg.bower_dir %>/foundation/js/foundation/foundation.offcanvas.js',
-                    '<%= pkg.bower_dir %>/foundation/js/foundation/foundation.alert.js'
+                    bower_dir + '/modernizr/modernizr.js',
+                    bower_dir + '/jquery/dist/jquery.js',
+                    bower_dir + '/fastclick/lib/fastclick.js',
+                    bower_dir + '/foundation/js/foundation/foundation.js',
+                    bower_dir + '/foundation/js/foundation/foundation.offcanvas.js',
+                    bower_dir + '/foundation/js/foundation/foundation.alert.js'
                 ],
-                dest: '<%= js_dir %>/<%= pkg.name %>.js',
+                dest: build_dir + '/js/<%= pkg.name %>.js',
                 options: {
                     separator: ';'
                 }
             },
             css: {
                 src: [
-                    '<%= pkg.bower_dir %>/fontawesome/css/font-awesome.css',
-                    '<%= pkg.bower_dir %>/foundation/css/foundation.css'
+                    bower_dir + '/fontawesome/css/font-awesome.css',
+                    bower_dir + '/foundation/css/foundation.css'
                 ],
-                dest: '<%= css_dir %>/<%= pkg.name %>.css'
+                dest: build_dir + '/css/<%= pkg.name %>.css'
             }
         },
         uglify: {
@@ -75,16 +72,16 @@ module.exports = function(grunt) {
             },
             js: {
                 files: {
-                    '<%= js_dir %>/<%= pkg.name %>.min.js': ['<%= concat.js.dest %>']
+                    '<%= web_dir %>/js/<%= pkg.name %>.min.js': ['<%= concat.js.dest %>']
                 }
             }
         },
         cssmin: {
             minify: {
                 expand: true,
-                cwd: '<%= css_dir %>',
+                cwd: build_dir + '/css',
                 src: ['*.css', '!*.min.css'],
-                dest: '<%= css_dir %>',
+                dest: web_dir + '/css',
                 ext: '.min.css'
             }
         }
@@ -92,36 +89,36 @@ module.exports = function(grunt) {
 
     grunt.registerTask(
         'dist-js',
-        'Creates the distribution js in the web folder from bower dependencies',
-        ['concat:js', 'uglify:js']
+        'Compiles all the Javascript into one file and minifies it to the web folder',
+        ['clean:build', 'concat:js', 'uglify:js', 'clean:build']
     );
 
     grunt.registerTask(
         'dist-css',
-        'Creates the distribution css in the web folder from bower dependencies',
-        ['concat:css', 'cssmin:minify']);
+        'Compiles all the CSS into one file and minifies it to the web folder',
+        ['clean:build', 'concat:css', 'cssmin:minify', 'clean:build']);
 
     grunt.registerTask(
         'dist-fonts',
-        'Creates the distribution fonts in the web folder from bower dependencies',
+        'Copies all the fonts to the web folder',
         ['copy:fonts']
     );
 
     grunt.registerTask(
         'bower-install',
-        'Cleans the bower dependencies and then installs them',
+        'Cleans the bower dependencies and then re-installs them',
         ['clean:bower', 'bower-install-simple']
     );
 
     grunt.registerTask(
         'dist',
-        'Creates the distribution files in the web folder from the bower dependencies',
-        ['clean:build', 'dist-js', 'dist-css', 'dist-fonts']
+        'Recreates the distribution files in the web folder from the bower dependencies',
+        ['clean:web', 'dist-js', 'dist-css', 'dist-fonts']
     );
 
     grunt.registerTask(
         'install',
-        'Installs the bower dependencies and creates distribution files in the web folder',
+        'Reinstalls the bower dependencies and recreates distribution files in the web folder',
         ['bower-install', 'dist']
     );
 

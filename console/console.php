@@ -1,5 +1,10 @@
 <?php
 
+use PublicUHC\TeamspeakAuth\Commands\CleanCacheCommand;
+use PublicUHC\TeamspeakAuth\Commands\CleanContainerCommand;
+use PublicUHC\TeamspeakAuth\Commands\CleanRoutingCommand;
+use PublicUHC\TeamspeakAuth\Commands\CleanSkinsCommand;
+use PublicUHC\TeamspeakAuth\Commands\CleanTemplatesCommand;
 use PublicUHC\TeamspeakAuth\Commands\UpdateConfigCommand;
 use PublicUHC\TeamspeakAuth\Container\ProjectContainer;
 use Symfony\Bridge\ProxyManager\LazyProxy\Instantiator\RuntimeInstantiator;
@@ -58,7 +63,15 @@ try {
 
 if($application == null) {
     $application = new Application();
-    $application->add(new UpdateConfigCommand());
 }
+
+//load commands without DI needs
+
+$application->add(new UpdateConfigCommand());
+$application->add(new CleanContainerCommand($projectRoot));
+$application->add(new CleanRoutingCommand($projectRoot));
+$application->add(new CleanTemplatesCommand($projectRoot));
+$application->add(new CleanSkinsCommand($projectRoot));
+$application->add(new CleanCacheCommand($projectRoot));
 
 $application->run();

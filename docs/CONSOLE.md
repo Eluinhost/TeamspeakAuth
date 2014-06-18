@@ -31,3 +31,33 @@ Updates the database to the latest schema, run this after any update
 
 Updates/creates your config.yml asking you for any parameters that are missing. 
 WARNING: If you have edited anything in the services node in your config.yml it will be overwritten, make a backup first
+
+### Clean the container cache
+
+`clean:container`
+
+Removes the container cache. This is required after any manual change to the config.yml file. (requires a restart to the auth server if it is running)
+
+### Clean the routing cache
+
+`clean:router`
+
+Removes the routing cache. This is required after any change to the routing.yml
+
+### Clean the templating cache
+
+`clean:templates`
+
+Removes the template cache. This is required after any change to files in the templates folder
+
+### Clean the skin cache
+
+`clean:skins`
+
+Removes the skin/transparents skin cache
+
+### Clean all caches
+
+`clean`
+
+Removes all of the above caches
