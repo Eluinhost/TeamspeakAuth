@@ -23,6 +23,12 @@ abstract class CleanCommand extends Command {
         $base_folder = $this->base_path . $this->getFolder();
 
         $output->writeln("<info>Removing files at $base_folder</info>");
+
+        if(!is_dir($base_folder)) {
+            $output->writeln("<info>$base_folder directory doesn't exist, skipping...</info>");
+            return;
+        }
+
         $directoryIterator = new RecursiveDirectoryIterator($base_folder, FilesystemIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator($directoryIterator, RecursiveIteratorIterator::CHILD_FIRST);
         foreach($iterator as $path) {
