@@ -1201,12 +1201,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Eluinhost/minecraft-auth.git",
-                "reference": "3e699c0f3ad4e91329b3322988de48c2591286bc"
+                "reference": "ae39c933cbfa0b27c02749abbec7ad4ed0afb0c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Eluinhost/minecraft-auth/zipball/3e699c0f3ad4e91329b3322988de48c2591286bc",
-                "reference": "3e699c0f3ad4e91329b3322988de48c2591286bc",
+                "url": "https://api.github.com/repos/Eluinhost/minecraft-auth/zipball/ae39c933cbfa0b27c02749abbec7ad4ed0afb0c1",
+                "reference": "ae39c933cbfa0b27c02749abbec7ad4ed0afb0c1",
                 "shasum": ""
             },
             "require": {
@@ -1245,7 +1245,7 @@
                 "minecraft server",
                 "yggdrasil"
             ],
-            "time": "2014-06-17 08:49:20"
+            "time": "2014-06-19 09:30:52"
         },
         {
             "name": "publicuhc/php-yggdrasil",
