@@ -144,4 +144,9 @@ interface TeamspeakHelper {
      * @return String uuid
      */
     public function getUUIDForDBId($cldbid);
+
+    /**
+     * @return int[] a list of all DBIds
+     */
+    public function getAllDBIds();
 } 

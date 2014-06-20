@@ -6,6 +6,7 @@ use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use Exception;
+use int;
 use PublicUHC\TeamspeakAuth\Entities\Authentication;
 use PublicUHC\TeamspeakAuth\Entities\MinecraftAccount;
 use PublicUHC\TeamspeakAuth\Entities\TeamspeakAccount;
@@ -369,5 +370,22 @@ class DefaultTeamspeakHelper implements TeamspeakHelper {
     public function getUUIDForDBId($cldbid)
     {
         return ''.$this->getServerInstance()->clientInfoDb($cldbid)['client_unique_identifier'];
+    }
+
+    /**
+     * @return int[] a list of all DBIds
+     */
+    public function getAllDBIds()
+    {
+        try {
+            $returnArray = [];
+            $ids = $this->server->clientListDb(0, 2100000);
+            foreach($ids as $id) {
+                array_push($returnArray, $id['cldbid']);
+            }
+            return $returnArray;
+        } catch (TeamSpeak3_Exception $ex) {
+            return [];
+        }
     }
 }

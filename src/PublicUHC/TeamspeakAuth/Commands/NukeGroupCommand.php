@@ -34,7 +34,11 @@ class NukeGroupCommand extends Command {
     {
         $groupID = $input->getArgument('groupID');
 
-        $dbIDs = $this->teamspeakHelper->getDBIdsForGroupID($groupID);
+        if($groupID == "*") {
+            $dbIDs = $this->teamspeakHelper->getAllDBIds();
+        } else {
+            $dbIDs = $this->teamspeakHelper->getDBIdsForGroupID($groupID);
+        }
 
         if(count($dbIDs) == 0) {
             $output->writeln('<error>No users in the group supplied</error>');
