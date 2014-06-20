@@ -2,6 +2,7 @@
 namespace PublicUHC\TeamspeakAuth\Commands;
 
 use Doctrine\ORM\EntityManager;
+use MtHaml\Exception;
 use PublicUHC\TeamspeakAuth\Helpers\TeamspeakHelper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -56,10 +57,13 @@ class NukeGroupCommand extends Command {
             ->where('tsAccount.uuid = :uuid');
 
         foreach($dbIDs as $dbID) {
-            $this->teamspeakHelper->removeDBIdFromGroup($dbID, $groupID);
+            try {
+                $this->teamspeakHelper->removeDBIdFromGroup($dbID, $groupID);
+            }catch(Exception $ex){}
             $this->teamspeakHelper->setDescriptionForDBId('', $dbID);
-            $this->teamspeakHelper->removeIconForDBId($dbID);
-
+            try {
+                $this->teamspeakHelper->removeIconForDBId($dbID);
+            }catch (Exception $ex){}
             $uuid = $this->teamspeakHelper->getUUIDForDBId($dbID);
 
             $qb->setParameter('uuid', $uuid);
