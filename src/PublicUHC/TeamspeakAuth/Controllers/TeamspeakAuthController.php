@@ -254,7 +254,7 @@ class TeamspeakAuthController extends ContainerAware {
         }
 
         $templating = $this->container->get('templating');
-        return new Response($templating->render('accountverification.html.twig',
+        return new Response($templating->render('accountverification.html.haml',
             [
                 'ts_uuid' => $uuid,
                 'serverAddress' => $this->container->getParameter('serverAddress')
