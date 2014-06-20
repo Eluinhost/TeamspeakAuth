@@ -1,9 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
-    "hash": "71ba566a0eb44b3b12d5b97ed32b959a",
+    "hash": "993769e31af5fcd796166aa80688b1e8",
     "packages": [
         {
             "name": "composer/composer",
@@ -1197,23 +1198,23 @@
         },
         {
             "name": "publicuhc/minecraft-auth",
-            "version": "dev-master",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Eluinhost/minecraft-auth.git",
-                "reference": "ae39c933cbfa0b27c02749abbec7ad4ed0afb0c1"
+                "reference": "0c30feaccb3a79a14a8fc3bff44d362a2cff9f99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Eluinhost/minecraft-auth/zipball/ae39c933cbfa0b27c02749abbec7ad4ed0afb0c1",
-                "reference": "ae39c933cbfa0b27c02749abbec7ad4ed0afb0c1",
+                "url": "https://api.github.com/repos/Eluinhost/minecraft-auth/zipball/0c30feaccb3a79a14a8fc3bff44d362a2cff9f99",
+                "reference": "0c30feaccb3a79a14a8fc3bff44d362a2cff9f99",
                 "shasum": ""
             },
             "require": {
                 "ext-mcrypt": "*",
                 "marc-mabe/php-enum": "1.2.*",
                 "phpseclib/phpseclib": "0.3.*",
-                "publicuhc/php-yggdrasil": "dev-master",
+                "publicuhc/php-yggdrasil": "1.0.*",
                 "react/react": "0.4.*"
             },
             "require-dev": {
@@ -1245,20 +1246,20 @@
                 "minecraft server",
                 "yggdrasil"
             ],
-            "time": "2014-06-19 09:30:52"
+            "time": "2014-06-20 13:59:36"
         },
         {
             "name": "publicuhc/php-yggdrasil",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Eluinhost/php-yggdrasil.git",
-                "reference": "a502d063c331ac024e96d465c3fb2c0f665649c5"
+                "reference": "1287ce731736d4a4fc440227290c72dc6cbb8022"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Eluinhost/php-yggdrasil/zipball/a502d063c331ac024e96d465c3fb2c0f665649c5",
-                "reference": "a502d063c331ac024e96d465c3fb2c0f665649c5",
+                "url": "https://api.github.com/repos/Eluinhost/php-yggdrasil/zipball/1287ce731736d4a4fc440227290c72dc6cbb8022",
+                "reference": "1287ce731736d4a4fc440227290c72dc6cbb8022",
                 "shasum": ""
             },
             "require": {
@@ -1292,7 +1293,7 @@
                 "minecraft",
                 "yggdrasil"
             ],
-            "time": "2014-06-17 08:33:51"
+            "time": "2014-06-20 13:51:12"
         },
         {
             "name": "publicuhc/skin-cache",
@@ -2728,8 +2729,6 @@
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "publicuhc/minecraft-auth": 20,
-        "publicuhc/php-yggdrasil": 20,
         "publicuhc/skin-cache": 20,
         "composer/composer": 20
     },
