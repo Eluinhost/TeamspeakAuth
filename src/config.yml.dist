@@ -113,10 +113,16 @@ services:
     arguments: ['@event_dispatcher', '@service_container', '@controller_resolver']
     lazy: true
 
-  #templating - request scoped
+  #templating
   template_loader:
     class: Twig_Loader_Filesystem
     arguments: ['%global.root%/templates']
+  haml_environment:
+    class: MtHaml\Environment
+    arguments: ['twig', {enable_escaper: false}]
+  haml_template_loader:
+    class: MtHaml\Support\Twig\Loader
+    arguments: ['@haml', '@template_loader']
   routing_extension:
     class: Symfony\Bridge\Twig\Extension\RoutingExtension
     arguments: ['@router']
@@ -131,12 +137,16 @@ services:
   assets_extension:
     class: PublicUHC\TeamspeakAuth\Extensions\AssetExtension
     arguments: ['@assets_helper']
+  haml_extension:
+    class: MtHaml\Support\Twig\Extension
+    arguments: ['@haml_environment']
   template_environment:
     class: Twig_Environment
-    arguments: ['@template_loader', {cache: '%global.root%/cache/templates'}]
+    arguments: ['@haml_template_loader', {cache: '%global.root%/cache/templates'}]
     calls:
       - [addExtension, ['@routing_extension']]
       - [addExtension, ['@assets_extension']]
+      - [addExtension, ['@haml_extension']]
       - [addGlobal, ['siteName', '%siteName%']]
   template_name_parser:
     class: Symfony\Component\Templating\TemplateNameParser
