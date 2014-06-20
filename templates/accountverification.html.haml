@@ -36,7 +36,7 @@
         $('.error_area').empty();
         e.preventDefault();
         $.get(
-          "{{ path('authcheck') }}",
+          "#{path('authcheck')}",
           {
             'ts_uuid':$('#ts_uuid').val(),
             'ts_code':$('#ts_code').val(),
@@ -44,7 +44,7 @@
             'mc_code':$('#mc_code').val()
           }
         ).done(function(data) {
-          window.location = '{{ path('complete') }}/' + $('#mc_name').val();
+          window.location = '#{path('complete')}/' + $('#mc_name').val();
         }).fail(function(xhr) {
           var error = 'Unknown Error';
           if(typeof xhr.responseJSON === 'undefined'){
