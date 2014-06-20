@@ -16,11 +16,11 @@ class ExceptionController extends ContainerAware {
     }
 
     public function on500CodeException(FlattenException $exception) {
-        return new Response($this->container->get('templating')->render('500.html.twig'));
+        return new Response($this->container->get('templating')->render('500.html.haml'));
     }
 
     public function on404CodeException(FlattenException $exception) {
-        return new Response($this->container->get('templating')->render('404.html.twig'));
+        return new Response($this->container->get('templating')->render('404.html.haml'));
     }
 
 } 

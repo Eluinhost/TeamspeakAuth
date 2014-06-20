@@ -1,0 +1,29 @@
+- extends "layout.html.haml"
+
+- block page_title
+  #{siteName} - Home
+
+- block content
+  %p Teamspeak authentication allows you to be sure of who you are talking to.
+  %p A verified user will have the following:
+  %p.center-justified
+    %i.fa.fa-check-square-o /
+    Their Minecraft username will be shown in their description
+  %p.center-justified
+    %i.fa.fa-check-square-o /
+    A special 'verified' group
+  %p.center-justified
+    %i.fa.fa-check-square-o /
+    An icon of their Minecraft skin's face
+  %hr /
+  %p
+    Example:
+    %img{:src=>"#{asset('images/fairy.png')}"}
+  %p.text-warning
+    %em
+      %i.fa.fa-exclamation-triangle /
+      Minecraft faces are based on Minotar. To update them you will need to reverify
+  %hr /
+  %p
+    %a#request_codes.button{:role=>"button", :href=>"#{path('teamspeakrequest')}"}
+      Start verification here

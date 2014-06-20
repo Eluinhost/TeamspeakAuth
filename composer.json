@@ -23,7 +23,8 @@
         "doctrine/orm": "2.4.*",
         "publicuhc/skin-cache": "dev-master",
         "symfony/proxy-manager-bridge": "2.5",
-        "composer/composer": "dev-master"
+        "composer/composer": "dev-master",
+        "mthaml/mthaml": "1.4.*"
     },
     "autoload": {
         "psr-4": {"PublicUHC\\TeamspeakAuth\\": "src/PublicUHC/TeamspeakAuth"}

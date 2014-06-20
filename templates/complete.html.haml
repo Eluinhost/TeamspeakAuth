@@ -1,0 +1,13 @@
+- extends "layout.html.haml"
+
+- block page_title
+  #{siteName} - Complete!
+
+- block content
+  .small-10.small-offset-1.columns
+    .row
+      %h2 All done!
+      %p Your teamspeak identity is now verified for the following account:
+      %p
+        %img{:src=>"#{path('avatarhelm', {'username': mc_name, 'size': 30})}"}
+        %em #{mc_name}
