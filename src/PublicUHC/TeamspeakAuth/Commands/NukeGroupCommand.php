@@ -2,7 +2,7 @@
 namespace PublicUHC\TeamspeakAuth\Commands;
 
 use Doctrine\ORM\EntityManager;
-use MtHaml\Exception;
+use Exception;
 use PublicUHC\TeamspeakAuth\Helpers\TeamspeakHelper;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
