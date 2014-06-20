@@ -240,12 +240,12 @@ class TeamspeakAuthController extends ContainerAware {
 
     public function indexAction() {
         $templating = $this->container->get('templating');
-        return new Response($templating->render('index.html.twig'));
+        return new Response($templating->render('index.html.haml'));
     }
 
     public function teamspeakRequestPageAction() {
         $templating = $this->container->get('templating');
-        return new Response($templating->render('teamspeakrequest.html.twig'));
+        return new Response($templating->render('teamspeakrequest.html.haml'));
     }
 
     public function verifyAccountPageAction($uuid) {
@@ -268,7 +268,7 @@ class TeamspeakAuthController extends ContainerAware {
         }
 
         $templating = $this->container->get('templating');
-        return new Response($templating->render('complete.html.twig',
+        return new Response($templating->render('complete.html.haml',
             [
                 'mc_name' => $mc_name
             ]
