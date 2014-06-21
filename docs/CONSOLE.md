@@ -13,6 +13,8 @@ Removes the description, icon and server group from all users in the given group
 
 Also removes any matching teamspeak UUID authentications.
 
+If <groupID> is * then all users will have their icons and descriptions removed
+
 ### Start Server
 
 `start:server`
