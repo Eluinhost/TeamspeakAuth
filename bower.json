@@ -10,6 +10,6 @@
     "dependencies": {
         "fontawesome": "4.1.0",
         "foundation": "5.2.3",
-        "angular-latest": "1.2.*"
+        "angular": "~1.2.18"
     }
 }
