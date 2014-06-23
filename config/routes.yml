@@ -7,10 +7,6 @@ teamspeakcode:
     path:     /teamspeakcode
     defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakAuthController::requestTeamspeakAction' }
 
-latestauths:
-    path:     /latest
-    defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakAuthController::latestAuthsAction' }
-
 avatarhelm:
     path:     /skins/helm/{username}/{size}
     defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\SkinController::helmAction', size: 16 }

@@ -206,38 +206,6 @@ class TeamspeakAuthController extends ContainerAware {
         }
     }
 
-    public function latestAuthsAction(Request $request) {
-        $response = new JsonResponse();
-
-        /** @var $entityManager EntityManager */
-        $entityManager = $this->container->get('entityManager');
-
-        $qb = $entityManager->createQueryBuilder();
-
-        $qb->select('authentication')
-            ->from('PublicUHC\TeamspeakAuth\Entities\Authentication', 'authentication')
-            ->orderBy('authentication.updatedAt', 'DESC')
-            ->setMaxResults(10);
-
-        $returnArray = [];
-
-        $results = $qb->getQuery()->getResult(Query::HYDRATE_OBJECT);
-        /** @var $result Authentication */
-        foreach($results as $result) {
-            array_push($returnArray, [
-                'updatedAt' => $result->getUpdatedAt()->format(DateTime::RFC2822),
-                'createdAt' => $result->getCreatedAt()->format(DateTime::RFC2822),
-                'ts_name' => $result->getTeamspeakAccount()->getName(),
-                'mc_name' => $result->getMinecraftAccount()->getName(),
-                'image_url' => $this->container->get('router')->generate('avatarhelm', ['username' => $result->getMinecraftAccount()->getName()])
-            ]);
-        }
-
-        $response->setData($returnArray);
-
-        return $response;
-    }
-
     public function indexAction() {
         $templating = $this->container->get('templating');
         return new Response($templating->render('app.html.haml'));
