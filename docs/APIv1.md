@@ -29,7 +29,13 @@ Sends a code to the given teamspeak username.
 
 Get a list of authentications, latest first
 
-`GET /authentications/latest/{limit}/{offset}
+`GET /authentications`
+
+Examples:
+
+`/authentications?limit=15&offset=30` - lists 15 starting at index 30
+
+`/authentications` - uses defaults 10 and 0
 
 #### Parameters
 

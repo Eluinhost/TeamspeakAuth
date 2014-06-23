@@ -60,17 +60,14 @@ api_v1_teamspeak_code:
     methods: [GET]
     requirements: { username: .* }
 
-api_v1_latest_authentications:
-    path:     /api/v1/authentications/latest/{limit}/{offset}
+api_v1_authentications_list:
+    path:   /api/v1/authentications
     defaults:
         _controller: 'PublicUHC\TeamspeakAuth\Controllers\AuthenticationController::authenticationsAction'
         _format: json
         limit: 10
         offset: 0
     methods: [GET]
-    requirements:
-        limit: \d+
-        offset: \d+
 
 api_v1_authenticate:
     path:     /api/v1/authentications

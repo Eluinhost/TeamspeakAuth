@@ -109,6 +109,11 @@ class AuthenticationController extends ContainerAware {
     }
 
     public function authenticationsAction($limit, $offset) {
+        /** @var $request Request */
+        $request = $this->container->get('request');
+        $limit = $request->query->getInt('limit', $limit);
+        $offset = $request->query->getInt('offset', $offset);
+
         if($limit > 50)
             throw new BadRequestHttpException('Only 50 authentications may be fetched per request');
 
