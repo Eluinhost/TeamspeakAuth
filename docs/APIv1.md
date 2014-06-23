@@ -60,3 +60,20 @@ Get a list of authentications, latest first
             ... another authentication ...
         }
     ]
+    
+### Authenticate
+
+Create a new authentication for the given accounts, does the whole 'teamspeak verification' thing
+
+`POST /authentications`
+
+#### Parameters
+
+`mc_uuid` - Minecraft UUID
+`mc_code` - The code for the Minecraft Account
+`ts_uuid` - The Teamspeak UUID
+`ts_code` - The code for the Teamspeak Account
+
+#### Returns
+
+    {}

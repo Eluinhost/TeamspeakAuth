@@ -49,6 +49,11 @@ api_online:
     path:     /api/online
     defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\APIController::checkVerified', checkOnline: true }
 
+
+##############
+# API Routes #
+##############
+
 api_v1_teamspeak_code:
     path:     /api/v1/teamspeakCodes/{username}
     defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakCodeController::requestTeamspeakCodeAction', _format: json }
@@ -66,6 +71,13 @@ api_v1_latest_authentications:
     requirements:
         limit: \d+
         offset: \d+
+
+api_v1_authenticate:
+    path:     /api/v1/authentications
+    defaults:
+        _controller: 'PublicUHC\TeamspeakAuth\Controllers\AuthenticationController::authenticateAction'
+        _format: json
+    methods: [POST]
 
 # catchall to use JSON error for all routes at /api/.*
 api_catchall:
