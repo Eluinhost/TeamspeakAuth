@@ -30,10 +30,10 @@
                   %span{"ng-repeat"=>"auth in latest"}
                     %li
                       %label
-                        %div {{ auth.ts_name }}
+                        %div {{ auth.teamspeakAccount.lastName }}
                     %li.minecraft-name
-                      %img.minecraft-image{"ng-src"=>"{{ auth.image_url }}"}
-                      {{ auth.mc_name }}
+                      %img.minecraft-image{"ng-src"=>"{{ auth.minecraftAccount.skin }}"}
+                      {{ auth.minecraftAccount.lastName }}
               %a.exit-off-canvas /
 
 - block javascripts
