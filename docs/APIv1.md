@@ -83,3 +83,77 @@ Create a new authentication for the given accounts, does the whole 'teamspeak ve
 #### Returns
 
     {}
+    
+### Check accounts for authentications
+
+Check accounts for any authentications made against them
+
+`GET /api/v1/authentications/{account_type}/{verify_type}/{uuid}`
+
+#### Parameters
+
+`{account_type}` - `minecraft` OR `teamspeak`, the type of account to check
+`{verify_type}` - `verify` OR `online`, `online` will fill out the 'online' fields of the teamspeak account, `verify` will always show false
+`{uuid}` - The UUID of the account to check
+
+#### Returns
+
+##### Minecraft account UUID search
+
+    {
+        "00000000-0000-0000-000000000000": {
+            "minecraftAccount": {
+                "createdAt": 1401960387,    # UNIX timestamp
+                "updatedAt": 1401960387,    # UNIX timestamp
+                "uuid": "00000000-0000-0000-000000000000",  # Account UUID, same as the requested UUID,
+                "lastName": "ghowden"       # The last name the account was verified with
+            },
+            "authentications": [            # List of authentications made against the minecraft account
+                {
+                    "createdAt": 1401960387,    # UNIX timestamp
+                    "udpatedAt": 1401960387,    # UNIX timestamp
+                    "teamspeakAccount": {       # Assosciated teamspeak account details
+                        "createdAt": 1401960387,    # UNIX timestamp
+                        "updatedAt": 1401960387,    # UNIX timestamp
+                        "lastName": "Eluinhost",    # Last teamspeak name on verification
+                        "uuid": "teamspeakUUID"    # The teamspeak account UUID
+                        "online": true          # Will always show false if using /api/verified
+                    }
+                },
+                {
+                    ... authentication number 2 ...
+                },
+                ... more authentications ...
+            ]
+        }
+    }
+
+##### Teamspeak account UUID search
+
+    {
+        "teamspeakUUID": { # teamspeakUUID will be the requested UUID
+            "teamspeakAccount": {
+                "createdAt": 1401960387,    # UNIX timestamp
+                "updatedAt": 1401960387,    # UNIX timestamp
+                "lastName": "Eluinhost",    # Last teamspeak name on verification
+                "uuid": "teamspeakUUID"    # The teamspeak account UUID requested
+                "online": true          # Will always show false if using verified type, true of false if using online
+            },
+            "authentications": [            # List of authentications made against the teamspeak account
+                {
+                    "createdAt": 1401960387,    # UNIX timestamp
+                    "udpatedAt": 1401960387,    # UNIX timestamp
+                    "minecraftAccount": {       # Assosciated minecraft account details
+                        "createdAt": 1401960387,    # UNIX timestamp
+                        "updatedAt": 1401960387,    # UNIX timestamp
+                        "uuid": "00000000-0000-0000-000000000000",  # Minecraft account UUID
+                        "lastName": "ghowden"       # The last name the account was verified with
+                    }
+                },
+                {
+                    ... authentication number 2 ...
+                },
+                ... more authentications ...
+            ]
+        }
+    }

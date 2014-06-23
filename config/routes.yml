@@ -50,15 +50,25 @@ api_online:
     defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\APIController::checkVerified', checkOnline: true }
 
 
-##############
-# API Routes #
-##############
+#################
+# API Routes v1 #
+#################
 
 api_v1_teamspeak_code:
     path:     /api/v1/teamspeakCodes/{username}
     defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakCodeController::requestTeamspeakCodeAction', _format: json }
     methods: [GET]
     requirements: { username: .* }
+
+api_v1_authenticate_check:
+    path:     /api/v1/authentications/{account_type}/{verify_type}/{uuid}
+    defaults:
+        _controller: 'PublicUHC\TeamspeakAuth\Controllers\AuthenticationController::authenticateCheck'
+    methods: [GET]
+    requirements:
+        uuid: .+
+        account_type: minecraft|teamspeak
+        verify_type: verify|online
 
 api_v1_authentications_list:
     path:   /api/v1/authentications
