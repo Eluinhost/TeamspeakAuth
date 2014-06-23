@@ -240,7 +240,7 @@ class TeamspeakAuthController extends ContainerAware {
 
     public function indexAction() {
         $templating = $this->container->get('templating');
-        return new Response($templating->render('index.html.haml'));
+        return new Response($templating->render('app.html.haml'));
     }
 
     public function teamspeakRequestPageAction() {
