@@ -41,14 +41,13 @@ module.exports = function(grunt) {
         concat: {
             js: {
                 src: [
-                    bower_dir + '/requirejs/require.js',
+                    //bower_dir + '/requirejs/require.js',
                     bower_dir + '/angular/angular.js',
+                    bower_dir + '/angular-resource/angular-resource.js',
+                    bower_dir + '/angular-foundation/mm-foundation-tpls.min.js',
                     bower_dir + '/modernizr/modernizr.js',
                     bower_dir + '/jquery/dist/jquery.js',
-                    bower_dir + '/fastclick/lib/fastclick.js',
-                    bower_dir + '/foundation/js/foundation/foundation.js',
-                    bower_dir + '/foundation/js/foundation/foundation.offcanvas.js',
-                    bower_dir + '/foundation/js/foundation/foundation.alert.js'
+                    bower_dir + '/fastclick/lib/fastclick.js'
                 ],
                 dest: build_dir + '/js/<%= pkg.name %>.js',
                 options: {

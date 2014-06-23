@@ -11,6 +11,8 @@
         "fontawesome": "4.1.0",
         "foundation": "5.2.3",
         "angular": "~1.2.18",
-        "requirejs": "~2.1.14"
+        "angular-resource": "~1.2.18",
+        "requirejs": "~2.1.14",
+        "angular-foundation": "0.2.2"
     }
 }
