@@ -41,6 +41,7 @@ module.exports = function(grunt) {
         concat: {
             js: {
                 src: [
+                    bower_dir + '/requirejs/require.js',
                     bower_dir + '/angular/angular.js',
                     bower_dir + '/modernizr/modernizr.js',
                     bower_dir + '/jquery/dist/jquery.js',
