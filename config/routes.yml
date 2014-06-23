@@ -52,3 +52,16 @@ api_verified:
 api_online:
     path:     /api/online
     defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\APIController::checkVerified', checkOnline: true }
+
+api_v1_teamspeak_code:
+    path:     /api/v1/teamspeakCodes/{username}
+    defaults: { _controller: 'PublicUHC\TeamspeakAuth\Controllers\TeamspeakCodeController::requestTeamspeakCodeAction', _format: json }
+    methods: [GET]
+    requirements: { username: .* }
+
+# catchall to use JSON error for all routes at /api/.*
+api_catchall:
+    path:     /api/{anything}
+    defaults: { _format: json }
+    requirements:
+        anything: .*
