@@ -1,0 +1,1 @@
+var teamspeakAuthApp = angular.module('teamspeakAuthApp', ['teamspeakAuthControllers', 'teamspeakAuthServices', 'mm.foundation']);
