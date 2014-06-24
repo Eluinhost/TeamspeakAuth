@@ -66,6 +66,10 @@ class UpdateConfigCommand extends Command {
             'question' => 'Database account password',
             'type' => 'password'
         ],
+        'database.keepAlive' => [
+            'question' => 'How long between keep alive queries for the database when running the Auth Server?',
+            'type' => 'integer'
+        ],
         'minecraft.host' => [
             'question' => 'Address for Minecraft server to bind to',
         ],
