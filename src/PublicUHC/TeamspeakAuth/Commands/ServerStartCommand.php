@@ -10,6 +10,7 @@ use PublicUHC\MinecraftAuth\Protocol\Packets\DisconnectPacket;
 use PublicUHC\MinecraftAuth\Protocol\Packets\StatusResponsePacket;
 use PublicUHC\TeamspeakAuth\Entities\MinecraftAccount;
 use PublicUHC\TeamspeakAuth\Entities\MinecraftCode;
+use React\EventLoop\LoopInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -18,14 +19,18 @@ class ServerStartCommand extends Command {
 
     private $server;
     private $em;
+    private $loop;
+    private $keepAlive;
     private $description;
     private $faviconLocation;
 
-    public function __construct(AuthServer $server, EntityManager $em, $description, $faviconLocation)
+    public function __construct(AuthServer $server, EntityManager $em, LoopInterface $loop, $keepAlive, $description, $faviconLocation)
     {
         parent::__construct(null);
         $this->server = $server;
         $this->em = $em;
+        $this->loop = $loop;
+        $this->keepAlive = $keepAlive;
         $this->description = $description;
         $this->faviconLocation = $faviconLocation;
     }
@@ -39,6 +44,12 @@ class ServerStartCommand extends Command {
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln("<info>Starting server... You can stop the server with Ctrl+C.</info>");
+
+        //setup a loop to keep the connection alive
+        $this->loop->addPeriodicTimer($this->keepAlive, function() {
+            $this->em->getConnection()->executeQuery('DO 1');
+        });
+
 
         $this->server->on('login_success', function($username, $uuid, DisconnectPacket $packet) use ($output) {
             $qb = $this->em->createQueryBuilder();

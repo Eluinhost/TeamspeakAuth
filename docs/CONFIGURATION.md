@@ -24,6 +24,7 @@ You can also open the config.yml file and edit it directly:
       database.database: authentication
       database.username: ""
       database.password: ""
+      database.keepAlive: 300
       minecraft.host: 0.0.0.0
       minecraft.port: 35879
       minecraft.description: "§4▁§e▂§4▃§e▄§4▅§e▆§4▇§e█ §4§l    Auth Server    §e█§4▇§e▆§4▅§e▄§4▃§e▂§4▁ §c▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔"

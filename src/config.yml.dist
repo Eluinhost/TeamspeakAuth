@@ -14,6 +14,7 @@ parameters:
   database.database: authentication
   database.username: ""
   database.password: ""
+  database.keepAlive: 300
   minecraft.host: 0.0.0.0
   minecraft.port: 35879
   minecraft.description: "§4▁§e▂§4▃§e▄§4▅§e▆§4▇§e█ §4§l    Auth Server    §e█§4▇§e▆§4▅§e▄§4▃§e▂§4▁ §c▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔"
@@ -168,13 +169,17 @@ services:
     lazy: true
   server_start:
     class: PublicUHC\TeamspeakAuth\Commands\ServerStartCommand
-    arguments: ['@auth_server', '@entityManager', '%minecraft.description%', '%global.root%/web/images/servericon.png']
+    arguments: ['@auth_server', '@entityManager', '@server_loop', '%database.keepAlive%', '%minecraft.description%', '%global.root%/web/images/servericon.png']
   schema_update:
     class: PublicUHC\TeamspeakAuth\Commands\UpdateSchemaCommand
     arguments: ['@entityManager']
 
   #auth server stuff
+  server_loop:
+    class: React\EventLoop\LoopInterface
+    factory_class: React\EventLoop\Factory
+    factory_method: create
   auth_server:
     class: PublicUHC\MinecraftAuth\AuthServer\AuthServer
-    arguments: ['%minecraft.port%', '%minecraft.host%']
+    arguments: ['%minecraft.port%', '%minecraft.host%', '@server_loop']
     lazy: true
