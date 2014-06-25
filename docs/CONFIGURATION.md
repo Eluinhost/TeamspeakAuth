@@ -1,13 +1,23 @@
 Configuration
 =============
 
-You can create/edit your config.yml file by running the command:
+All configuration is done via the file `config/parameters.yml`.
 
-    php console/console.php config:update
+When running in debug (via app_dev.php) any changes to config files will apply on next page load.
+
+In production (via the usual app.php) changes will require you to clear the cache first.
+
+You can clear the production cache by running the command:
+
+`php console\console.php clean:container --env=prod`
+
+You can fill in any missing options in your parameters.yml file by running the command:
+
+    php console/console.php parameters:update
     
-It will update/create your config file and ask you for any missing parameters
+It will update/create your parameters file and ask you for any missing
 
-You can also open the config.yml file and edit it directly:
+You can also open the parameters.yml file and edit it directly:
 
     parameters:
       minutesToLast: 15
@@ -28,12 +38,7 @@ You can also open the config.yml file and edit it directly:
       minecraft.host: 0.0.0.0
       minecraft.port: 35879
       minecraft.description: "§4▁§e▂§4▃§e▄§4▅§e▆§4▇§e█ §4§l    Auth Server    §e█§4▇§e▆§4▅§e▄§4▃§e▂§4▁ §c▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔"
-
-    #  Ignore everything below here unless you know what you are doing, things WILL break otherwise #
     
-If you edit the file manually either run:
+If you edit the file manually either run the command above or delete the folder `/cache/<env>` to clean the cache and get the new settings (you will need to restart the auth server if it is running)
 
-`php console/console.php clean:container`
- 
-or delete the folder `/cache/container` to clean the cache and get the new settings (you will need to restart the auth server if it is running)
-Using config:update automatically cleans the container
+Using parameters:update automatically cleans the container (for the enviroment selected)

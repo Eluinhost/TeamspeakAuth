@@ -4,6 +4,8 @@ Console Commands
 To run a command run the console.php file with the command you want to run as the arguments. e.g.
 
     php console.php start:server
+    
+To specify an environment to use (for example with clean:container) add `--env=<environment>` where <environment> is the environment to use (prod or dev)
 
 ### Nuke Group
 
@@ -27,20 +29,18 @@ Starts up the authentication server
 
 Updates the database to the latest schema, run this after any update
 
-### Update the config parmaeters
+### Update the parameters
 
-`config:update`
+`parameters:update`
 
-Updates/creates your config.yml asking you for any parameters that are missing and then cleans the container so they take effect.
+Updates/creates your parameters.yml asking you for any parameters that are missing and then cleans the current environment container so they take effect.
 You will need to restart the auth server if it is running to get the changes.
-
-WARNING: If you have edited anything in the services node within your config.yml it will be overwritten, make a backup first
 
 ### Clean the container cache
 
 `clean:container`
 
-Removes the container cache. This is required after any manual change to the config.yml file. (requires a restart to the auth server if it is running)
+Removes the current environments container cache. This is required after any manual change to the config.yml file for the prod environment, dev is automatic. (requires a restart to the auth server if it is running)
 
 ### Clean the routing cache
 
@@ -64,4 +64,4 @@ Removes the skin/transparents skin cache
 
 `clean`
 
-Removes all of the above caches
+Removes all caches

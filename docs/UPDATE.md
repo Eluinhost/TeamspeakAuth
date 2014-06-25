@@ -21,6 +21,6 @@ You will need to at least run the following 2 commands:
 
 `php console/console.php clean` - Removes the entire application cache
 
-`php console/console.php config:update` - Build a new config.yml from the config.yml.dist
+`php console/console.php parameters:update` - Build a new config.yml from the config.yml.dist
 
 `php console/console.php schema:update` - update your database to the latest version
