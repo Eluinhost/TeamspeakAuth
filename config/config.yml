@@ -102,8 +102,8 @@ services:
       - [addSubscriberService, ['listener.router', 'Symfony\Component\HttpKernel\EventListener\RouterListener']]
       - [addSubscriberService, ['listener.response', 'Symfony\Component\HttpKernel\EventListener\ResponseListener']]
       - [addSubscriberService, ['listener.exception', 'Symfony\Component\HttpKernel\EventListener\ExceptionListener']]
-  framework:
-    class: PublicUHC\TeamspeakAuth\Kernel\ProjectFramework
+  http_kernel:
+    class: Symfony\Component\HttpKernel\DependencyInjection\ContainerAwareHttpKernel
     arguments: ['@event_dispatcher', '@service_container', '@controller_resolver']
     lazy: true
 
