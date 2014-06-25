@@ -3,10 +3,18 @@ namespace PublicUHC\TeamspeakAuth\Commands;
 
 class CleanContainerCommand extends CleanCommand {
 
+    private $env;
+
+    public function __construct($base_path, $environment)
+    {
+        parent::__construct($base_path);
+        $this->env = $environment;
+    }
+
     protected function configure()
     {
         $this->setName('clean:container')
-            ->setDescription('Cleans the cached container (to be ran after config changes)');
+            ->setDescription('Cleans the current environments cached container');
     }
 
     /**
@@ -14,6 +22,6 @@ class CleanContainerCommand extends CleanCommand {
      */
     protected function getFolder()
     {
-        return '/cache/container';
+        return '/cache/' . $this->env;
     }
 }

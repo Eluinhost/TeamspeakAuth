@@ -172,7 +172,7 @@ services:
     arguments: ['%kernel.root_dir%']
   clean_container:
     class: PublicUHC\TeamspeakAuth\Commands\CleanContainerCommand
-    arguments: ['%kernel.root_dir%']
+    arguments: ['%kernel.root_dir%', '%kernel.environment%']
   clean_routing:
     class: PublicUHC\TeamspeakAuth\Commands\CleanRoutingCommand
     arguments: ['%kernel.root_dir%']
