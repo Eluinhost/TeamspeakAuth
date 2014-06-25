@@ -4,7 +4,6 @@ namespace PublicUHC\TeamspeakAuth\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\QuestionHelper;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
@@ -84,14 +83,14 @@ class UpdateConfigCommand extends Command {
 
     protected function configure()
     {
-        $this->setName('config:update')
-            ->setDescription('Update your config file to latest version');
+        $this->setName('parameters:update')
+            ->setDescription('Update your parameters file to latest version');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $configFileLocation = 'config/config.yml';
-        $distFileLocation = 'src/config.yml.dist';
+        $configFileLocation = 'config/parameters.yml';
+        $distFileLocation = 'src/parameters.yml.dist';
 
         /** @var $questionHelper QuestionHelper */
         $questionHelper = $this->getHelperSet()->get('question');
