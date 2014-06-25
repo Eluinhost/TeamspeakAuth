@@ -14,5 +14,5 @@
   .row
     .small-12.columns
       %input.form-control#ts_code{:type=>"text", :placeholder=>"Teamspeak Code"}
-  %input.form-control#ts_uuid{:type=>"hidden", :value=>"#{ts_uuid}"}
+  %input.form-control#ts_uuid{:type=>"hidden", :value=>"{{ ts_uuid }}"}
   %a.button#verify_codes{:role=>"button"} Verify Code

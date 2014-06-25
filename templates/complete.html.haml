@@ -3,5 +3,5 @@
     %h2 All done!
     %p Your teamspeak identity is now verified for the following account:
     %p
-      %img{:src=>"#{path('avatarhelm', {'username': mc_name, 'size': 30})}"}
-      %em #{mc_name}
+      %img{"ng-src"=>"{{ image_url }}"}
+      %em {{ mc_name }}
