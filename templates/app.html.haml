@@ -14,27 +14,15 @@
     .row.outer-wrapper
       .small-10.small-offset-1.columns
         .row.page-wrapper.text-center
-          .off-canvas-wrap{"data-offcanvas"=>"true"}
-            .inner-wrap
-              %section.main-section
-                - block content
-                  Missing Content!
-              .latest-footer
-                %a.left-off-canvas-toggle{:href=>"#"} Latest Authentications
-              .copyright-footer
-                &copy;Eluinhost 2014.
-                %a{:href=>"https://github.com/Eluinhost/TeamspeakAuth"}
-                  %em Source Code
-              %aside.left-off-canvas-menu{"ng-controller"=>"LatestAuthsCtrl"}
-                %ul.off-canvas-list
-                  %span{"ng-repeat"=>"auth in latest"}
-                    %li
-                      %label
-                        %div {{ auth.teamspeakAccount.lastName }}
-                    %li.minecraft-name
-                      %img.minecraft-image{"ng-src"=>"{{ auth.minecraftAccount.skin }}"}
-                      {{ auth.minecraftAccount.lastName }}
-              %a.exit-off-canvas /
+          %section.main-section
+            - block content
+              Missing Content!
+          .copyright-footer
+            &copy;Eluinhost 2014.
+            %a{:href=>"https://github.com/Eluinhost/TeamspeakAuth"}
+              %em Source Code
+    %script#teamspeakrequest.html.haml{:type=>"text/ng-template"}
+      - include "teamspeakrequest.html.haml"
 
 - block javascripts
   %script{:src=>"#{asset('js/TeamspeakAuth.min.js', 'vendor')}"}
