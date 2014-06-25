@@ -6,6 +6,12 @@ parameters:
   - server_start
   - schema_update
   - nuke_group
+  - clean_cache
+  - clean_container
+  - clean_routing
+  - clean_skins
+  - clean_templates
+  - update_config
 
 services:
   #site services
@@ -144,9 +150,6 @@ services:
     lazy: true
 
   #console stuffs
-  nuke_group:
-    class: PublicUHC\TeamspeakAuth\Commands\NukeGroupCommand
-    arguments: ['@teamspeakhelper', '@entityManager']
   console_application:
     class: Symfony\Component\Console\Application
     calls:
@@ -154,12 +157,33 @@ services:
       - [add, ['@server_start']]
       - [add, ['@schema_update']]
     lazy: true
+  #commands
+  nuke_group:
+    class: PublicUHC\TeamspeakAuth\Commands\NukeGroupCommand
+    arguments: ['@teamspeakhelper', '@entityManager']
   server_start:
     class: PublicUHC\TeamspeakAuth\Commands\ServerStartCommand
     arguments: ['@auth_server', '@entityManager', '@server_loop', '%database.keepAlive%', '%minecraft.description%', '%kernel.root_dir%/web/images/servericon.png']
   schema_update:
     class: PublicUHC\TeamspeakAuth\Commands\UpdateSchemaCommand
     arguments: ['@entityManager']
+  clean_cache:
+    class: PublicUHC\TeamspeakAuth\Commands\CleanCacheCommand
+    arguments: ['%kernel.root_dir%']
+  clean_container:
+    class: PublicUHC\TeamspeakAuth\Commands\CleanContainerCommand
+    arguments: ['%kernel.root_dir%']
+  clean_routing:
+    class: PublicUHC\TeamspeakAuth\Commands\CleanRoutingCommand
+    arguments: ['%kernel.root_dir%']
+  clean_skins:
+    class: PublicUHC\TeamspeakAuth\Commands\CleanSkinsCommand
+    arguments: ['%kernel.root_dir%']
+  clean_templates:
+    class: PublicUHC\TeamspeakAuth\Commands\CleanTemplatesCommand
+    arguments: ['%kernel.root_dir%']
+  update_config:
+    class: PublicUHC\TeamspeakAuth\Commands\UpdateConfigCommand
 
   #auth server stuff
   server_loop:
