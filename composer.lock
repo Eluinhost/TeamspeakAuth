@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ad8d72c9394b96486e0930176fe6f625",
+    "hash": "e8cc2eb2931d7458eb8b8d6036c0a496",
     "packages": [
         {
             "name": "composer/composer",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "ac497feabaa0d247c441178b7b4aaa4c61b07399"
+                "reference": "28c65b5425f7f8722c260e3787b74c1ea6b37e3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/ac497feabaa0d247c441178b7b4aaa4c61b07399",
-                "reference": "ac497feabaa0d247c441178b7b4aaa4c61b07399",
+                "url": "https://api.github.com/repos/composer/composer/zipball/28c65b5425f7f8722c260e3787b74c1ea6b37e3b",
+                "reference": "28c65b5425f7f8722c260e3787b74c1ea6b37e3b",
                 "shasum": ""
             },
             "require": {
@@ -74,7 +74,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2014-06-10 14:13:12"
+            "time": "2014-06-22 18:24:28"
         },
         {
             "name": "doctrine/annotations",
@@ -1552,6 +1552,58 @@
                 "validator"
             ],
             "time": "2013-11-04 15:41:11"
+        },
+        {
+            "name": "symfony/class-loader",
+            "version": "v2.5.0",
+            "target-dir": "Symfony/Component/ClassLoader",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/ClassLoader.git",
+                "reference": "09e38e4d228c1f7f997f3dc7068d9d2fba9a10b0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/ClassLoader/zipball/09e38e4d228c1f7f997f3dc7068d9d2fba9a10b0",
+                "reference": "09e38e4d228c1f7f997f3dc7068d9d2fba9a10b0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "symfony/finder": "~2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\ClassLoader\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony ClassLoader Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-04-16 10:36:34"
         },
         {
             "name": "symfony/config",
