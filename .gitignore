@@ -2,7 +2,7 @@
 #################
 composer.phar
 /vendor
-/config/config.yml
+/config/parameters.yml
 npm-debug.log
 /bower_components
 /build
