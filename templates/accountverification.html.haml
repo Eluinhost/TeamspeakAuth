@@ -1,58 +1,18 @@
-- extends "layout.html.haml"
+.small-10.small-offset-1.columns
+  %h2 Verify your Minecraft Account
+  %p Connect to the server #{serverAddress} in Minecraft 1.7.6+
+  %p You should then get kicked with a code, enter both your username and code below: (case sensitive)
+  %p You will also need to enter the code you received from teamspeak in the previous step in the final box
+  %hr/
+  .error_area
 
-- block page_title
-  #{siteName} - Verfify Minecraft Account
-
-- block content
-  .small-10.small-offset-1.columns
-    %h2 Verify your Minecraft Account
-    %p Connect to the server #{serverAddress} in Minecraft 1.7.6+
-    %p You should then get kicked with a code, enter both your username and code below: (case sensitive)
-    %p You will also need to enter the code you received from teamspeak in the previous step in the final box
-    %hr/
-    .error_area
-
-    .row.collapse
-      .small-6.columns
-        %input.form-control#mc_name{:type=>"text", :placeholder=>"Minecraft Nickname", :autofocus=>true}
-      .small-6.columns
-        %input.form-control#mc_code{:type=>"text", :placeholder=>"Minecraft Code"}
-    .row
-      .small-12.columns
-        %input.form-control#ts_code{:type=>"text", :placeholder=>"Teamspeak Code"}
-    %input.form-control#ts_uuid{:type=>"hidden", :value=>"#{ts_uuid}"}
-    %a.button#verify_codes{:role=>"button"} Verify Code
-
-- block javascripts
-  #{parent()}
-  :javascript
-    $(document).ready(function(){
-      $(document).keypress(function(e){
-        if (e.which == 13){
-          $("#verify_codes").click();
-        }
-      });
-      $('#verify_codes').click(function(e){
-        $('.error_area').empty();
-        e.preventDefault();
-        $.get(
-          "#{path('authcheck')}",
-          {
-            'ts_uuid':$('#ts_uuid').val(),
-            'ts_code':$('#ts_code').val(),
-            'mc_uuid':$('#mc_name').val(),
-            'mc_code':$('#mc_code').val()
-          }
-        ).done(function(data) {
-          window.location = '#{path('complete')}/' + $('#mc_name').val();
-        }).fail(function(xhr) {
-          var error = 'Unknown Error';
-          if(typeof xhr.responseJSON === 'undefined'){
-            error = 'Unexpected response from server'
-          } else {
-            error = xhr.responseJSON.error
-          }
-          $('.error_area').append('<div data-alert class="alert-box alert round">' + error + '</div>');
-        });
-      });
-    });
+  .row.collapse
+    .small-6.columns
+      %input.form-control#mc_name{:type=>"text", :placeholder=>"Minecraft Nickname", :autofocus=>true}
+    .small-6.columns
+      %input.form-control#mc_code{:type=>"text", :placeholder=>"Minecraft Code"}
+  .row
+    .small-12.columns
+      %input.form-control#ts_code{:type=>"text", :placeholder=>"Teamspeak Code"}
+  %input.form-control#ts_uuid{:type=>"hidden", :value=>"#{ts_uuid}"}
+  %a.button#verify_codes{:role=>"button"} Verify Code

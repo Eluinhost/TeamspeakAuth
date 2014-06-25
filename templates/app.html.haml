@@ -21,8 +21,14 @@
             &copy;Eluinhost 2014.
             %a{:href=>"https://github.com/Eluinhost/TeamspeakAuth"}
               %em Source Code
+    %script{:id=>"index.html", :type=>"text/ng-template"}
+      - include "index.html.haml"
     %script{:id=>"teamspeakrequest.html", :type=>"text/ng-template"}
       - include "teamspeakrequest.html.haml"
+    %script{:id=>"accountverification.html", :type=>"text/ng-template"}
+      - include "accountverification.html.haml"
+    %script{:id=>"complete.html", :type=>"text/ng-template"}
+      - include "complete.html.haml"
 
 - block javascripts
   %script{:src=>"#{asset('js/TeamspeakAuth.min.js', 'vendor')}"}
