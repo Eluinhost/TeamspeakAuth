@@ -1,45 +1,12 @@
-- extends "layout.html.haml"
-
-- block page_title
-  #{siteName} - Request Teamspeak Code
-
-- block content
-  .small-10.small-offset-1.columns
-    %h2 Request a Teamspeak Code</h2>
-    %p Enter your current nickname inside Teamspeak below and hit 'Request Code'.
-    %p You should then get a message inside Teamspeak containing a code. Keep this code for later on.
-    %hr /
-    .error_area /
-    .row.collapse
-      .small-10.columns
-        %input#ts_name.form-control{:type=>"text", :placeholder=>"Teamspeak Nickname", :autofocus=>true}
-      .small-2.columns
-        %a#request_codes.button.postfix{:href=>"#"}
-          Request Code
-
-- block javascripts
-  #{parent()}
-  :javascript
-    $(document).ready(function(){
-        $(document).keypress(function(e){
-            if (e.which == 13){
-                $("#request_codes").click();
-            }
-        });
-        $('#request_codes').click(function(e){
-            $('.error_area').empty();
-            e.preventDefault();
-            $.get("#{path('teamspeakcode')}", {'ts_name': $('#ts_name').val()}).done(function(data){
-                var uuid = data.UUID;
-                window.location = '#{path('verifyaccount')}/' + uuid;
-            }).fail(function(xhr){
-                var error = 'Unknown Error';
-                if(typeof xhr.responseJSON === 'undefined'){
-                    error = 'Unexpected response from server';
-                } else {
-                    error = xhr.responseJSON.error;
-                }
-                $('.error_area').append('<div data-alert class="alert-box alert round">' + error + '</div>');
-            });
-        });
-    });
+.small-10.small-offset-1.columns
+  %h2 Request a Teamspeak Code
+  %p Enter your current nickname inside Teamspeak below and hit 'Request Code'.
+  %p You should then get a message inside Teamspeak containing a code. Keep this code for later on.
+  %hr /
+  .error_area /
+  .row.collapse
+    .small-10.columns
+      %input#ts_name.form-control{:type=>"text", :placeholder=>"Teamspeak Nickname", :autofocus=>true}
+    .small-2.columns
+      %a#request_codes.button.postfix{:href=>"#"}
+        Request Code
