@@ -1,14 +1,12 @@
 <?php
 
-use PublicUHC\TeamspeakAuth\Kernel\ProjectFramework;
 use Symfony\Component\HttpFoundation\Request;
 
-$loader = require __DIR__ . '/../vendor/autoload.php';
+$loader = require_once __DIR__.'/../var/bootstrap.php.cache';
 
-$request = Request::createFromGlobals();
-$projectRoot = dirname(dirname(__FILE__));
+require_once __DIR__.'/../app/AppKernel.php';
 
-$kernel = new ProjectFramework('prod', false);
+$kernel = new AppKernel('prod', false);
 $kernel->loadClassCache();
 
 $request = Request::createFromGlobals();

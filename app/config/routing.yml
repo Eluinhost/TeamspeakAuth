@@ -1,0 +1,5 @@
+public_uhc_teamspeak_auth:
+    resource: "@PublicUHCTeamspeakAuthBundle/Controller/"
+    type:     annotation
+    prefix:   /
+

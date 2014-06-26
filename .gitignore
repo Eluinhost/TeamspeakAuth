@@ -1,21 +1,27 @@
 # Project Files #
 #################
-composer.phar
+/web/bundles/
 /vendor
-/config/parameters.yml
+/app/config/parameters.yml
 npm-debug.log
 /bower_components
 /build
 /node_modules
 /web/vendor
-/cache
+/cache/*
+/logs/*
+!cache/.gitkeep
+!logs/.gitkeep
+/bin/*
+!bin/console
+!bin/symfony_requirements
+/var/bootstrap.php.cache
 
 # IDE files #
 #############
 *.iml
 /.idea
 /out
-/bin
 
 # OS generated files #
 ######################

@@ -1,0 +1,79 @@
+parameters:
+  minecraft_helper.class: PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\DefaultMinecraftHelper
+  teamspeak_helper.class: PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\DefaultTeamspeakHelper
+  teamspeak.group_id: 222
+  minotar_base_url: https://minotar.net
+  skin_fetcher.timeout: 30
+  skin_cache.timeout: 3600
+  teamspeak.username: serveradmin
+  teamspeak.password: ""
+  teamspeak.host: 127.0.0.1
+  teamspeak.query_port: 10011
+  teamspeak.server_port: 9987
+  auth_server.database_keepalive: 300
+  auth_server.description: '§4▁§e▂§4▃§e▄§4▅§e▆§4▇§e█ §4§l    Auth Server    §e█§4▇§e▆§4▅§e▄§4▃§e▂§4▁ §c▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔'
+  minecraft.port: 35879
+  minecraft.host: 0.0.0.0
+
+services:
+    minecraft_helper:
+        class: '%minecraft_helper.class%'
+        arguments: ['@skin_fetcher']
+        lazy: true
+
+    ## teamspeak server
+    teamspeak_helper:
+        class: '%teamspeak_helper.class%'
+        arguments: ['@teamspeak_server', '@doctrine.orm.entity_manager', '%teamspeak.group_id%', '@minecraft_helper']
+        lazy: true
+    teamspeak_server:
+        class: TeamSpeak3_Node_Server
+        factory_class: TeamSpeak3
+        factory_method: factory
+        arguments: ['serverquery://%teamspeak.username%:%teamspeak.password%@%teamspeak.host%:%teamspeak.query_port%/?server_port=%teamspeak.server_port%']
+        lazy: true
+
+    ## skin fetching
+    skin_downloader:
+        class: PublicUHC\SkinCache\Downloaders\MinotarLikeDownloader
+        arguments: ['@skin_client', '%skin_fetcher.timeout%']
+    skin_client:
+        class: GuzzleHttp\Client
+        arguments: [{base_url: '%minotar_base_url%'}]
+    skin_formatter:
+        class: PublicUHC\SkinCache\Formatters\HttpResponseFormatter
+    skin_cache:
+        class: Stash\Pool
+        arguments: ['@skin_cache_driver']
+    skin_cache_driver:
+        class: Stash\Driver\FileSystem
+        arguments: [{path: '%kernel.cache_dir%/%kernel.environment%/skins'}]
+    error_image_painter:
+        class: PublicUHC\SkinCache\Painters\TransparentImagePainter
+    skin_fetcher:
+        class: PublicUHC\SkinCache\SkinFetcher
+        arguments: ['@skin_downloader', '@skin_formatter', '@skin_cache', '@error_image_painter', '%skin_cache.timeout%']
+        lazy: true
+
+    ## commands
+    server_start:
+        class: PublicUHC\Bundle\TeamspeakAuthBundle\Command\ServerStartCommand
+        arguments:
+        - '@auth_server'
+        - '@doctrine.orm.entity_manager'
+        - '@server_loop'
+        - '%auth_server.database_keepalive%'
+        - '%auth_server.description%'
+        - '%kernel.root_dir%/../web/images/servericon.png'
+        tags:
+        -  { name: console.command }
+
+    ## server
+    server_loop:
+        class: React\EventLoop\LoopInterface
+        factory_class: React\EventLoop\Factory
+        factory_method: create
+    auth_server:
+        class: PublicUHC\MinecraftAuth\AuthServer\AuthServer
+        arguments: ['%minecraft.port%', '%minecraft.host%', '@server_loop']
+        lazy: true

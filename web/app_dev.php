@@ -1,9 +1,10 @@
 <?php
 
-use PublicUHC\TeamspeakAuth\Kernel\ProjectFramework;
-use Symfony\Component\Debug\Debug;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Debug\Debug;
 
+// This check prevents access to debug front controllers that are deployed by accident to production servers.
+// Feel free to remove this, extend it, or make something more sophisticated.
 if (isset($_SERVER['HTTP_CLIENT_IP'])
     || isset($_SERVER['HTTP_X_FORWARDED_FOR'])
     || !(in_array(@$_SERVER['REMOTE_ADDR'], array('127.0.0.1', 'fe80::1', '::1')) || php_sapi_name() === 'cli-server')
@@ -12,17 +13,13 @@ if (isset($_SERVER['HTTP_CLIENT_IP'])
     exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
 }
 
-$loader = require __DIR__ . '/../vendor/autoload.php';
-
+$loader = require_once __DIR__.'/../var/bootstrap.php.cache';
 Debug::enable();
 
-$request = Request::createFromGlobals();
-$isDebug = false;
-$projectRoot = dirname(dirname(__FILE__));
+require_once __DIR__.'/../app/AppKernel.php';
 
-$kernel = new ProjectFramework('dev', true);
+$kernel = new AppKernel('dev', true);
 $kernel->loadClassCache();
-
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();
