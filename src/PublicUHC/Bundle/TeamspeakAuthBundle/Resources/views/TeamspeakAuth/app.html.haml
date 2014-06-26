@@ -32,6 +32,10 @@
 
 - block javascripts
   %script{:src=>"#{asset('vendor/js/TeamspeakAuth.min.js')}"}
+  %script{:src=>"#{asset('bundles/fosjsrouting/js/router.js')}"}
+  %script{:src=>"#{path('fos_js_routing_js', {'callback': 'fos.Router.setData'})}"}
+  %script{:src=>"#{asset('bundles/cypressangularngrouting/ng-router.js')}"}
+  %script{:src=>"#{path('fos_js_routing_js', {'callback': 'cypress.NgRouter.setData'})}"}
   %script{:src=>"#{asset('js/services.js')}"}
   %script{:src=>"#{asset('js/controllers.js')}"}
   %script{:src=>"#{asset('js/app.js')}"}

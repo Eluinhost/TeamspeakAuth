@@ -63,3 +63,6 @@ doctrine:
         auto_mapping: true
 
 mt_haml:
+
+fos_js_routing:
+    routes_to_expose: [ .* ]

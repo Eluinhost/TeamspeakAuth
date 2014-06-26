@@ -16,6 +16,8 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new MtHamlBundle\MtHamlBundle(),
             new PublicUHC\Bundle\TeamspeakAuthBundle\PublicUHCTeamspeakAuthBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new Cypress\AngularNgRoutingBundle\CypressAngularNgRoutingBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
