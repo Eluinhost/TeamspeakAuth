@@ -1,0 +1,8 @@
+PublicUHC\Bundle\TeamspeakAuthBundle\Entity\Authentication:
+    exclusion_policy: ALL
+    read_only: true
+    properties:
+        minecraftAccount:
+            expose: true
+        teamspeakAccount:
+            expose: true

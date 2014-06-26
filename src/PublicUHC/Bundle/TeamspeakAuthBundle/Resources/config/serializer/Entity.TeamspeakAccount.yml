@@ -1,0 +1,8 @@
+PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount:
+    exclusion_policy: ALL
+    read_only: true
+    properties:
+        uuid:
+            expose: true
+        name:
+            expose: true

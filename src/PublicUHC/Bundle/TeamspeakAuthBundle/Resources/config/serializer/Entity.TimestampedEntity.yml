@@ -1,0 +1,12 @@
+PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TimestampedEntity:
+    exclusion_policy: ALL
+    read_only: true
+    properties:
+        id:
+            expose: true
+        createdAt:
+            expose: true
+            type: DateTime<'c'> #ISO 8601
+        updatedAt:
+            expose: true
+            type: DateTime<'c'> #ISO 8601
