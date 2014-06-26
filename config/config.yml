@@ -63,19 +63,31 @@ services:
 
   #routes
   config_locator:
-    class: Symfony\Component\Config\FileLocator
-    arguments: ['%kernel.root_dir%/config']
-  routing_loader:
+    class: Symfony\Component\HttpKernel\Config\FileLocator
+    arguments: ['@kernel', '%kernel.root_dir%/config']
+  yaml_config_loader:
     class: Symfony\Component\Routing\Loader\YamlFileLoader
     arguments: ['@config_locator']
+  xml_config_loader:
+    class: Symfony\Component\Routing\Loader\XmlFileLoader
+    arguments: ['@config_locator']
+  config_resolver:
+    class: Symfony\Component\Config\Loader\LoaderResolver
+    arguments: [['@yaml_config_loader', '@xml_config_loader']]
+  routing_loader:
+    class: Symfony\Component\Config\Loader\DelegatingLoader
+    arguments: ['@config_resolver']
   router:
     class: Symfony\Component\Routing\Router
     arguments: ['@routing_loader', 'routes.yml', {cache_dir: '%kernel.root_dir%/cache/routing'}]
     calls:
       - [setContext, ['@request_context']]
   controller_resolver:
-    class: PublicUHC\TeamspeakAuth\Controllers\ControllerResolver
-    arguments: ['@service_container']
+    class: Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver
+    arguments: ['@service_container', '@controller_name_parser']
+  controller_name_parser:
+    class: Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser
+    arguments: ['@kernel']
 
   #request based
   request:
@@ -106,6 +118,9 @@ services:
     class: Symfony\Component\HttpKernel\DependencyInjection\ContainerAwareHttpKernel
     arguments: ['@event_dispatcher', '@service_container', '@controller_resolver']
     lazy: true
+  kernel:
+    class: PublicUHC\TeamspeakAuth\Kernel\ProjectFramework
+    synthetic: true
 
   #templating
   template_loader:
