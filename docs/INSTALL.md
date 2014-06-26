@@ -65,20 +65,18 @@ The project already has all the dependencies built.
 Step 3: config.yml
 -----------------
 
-You can setup your config.yml file by running:
-
-`php console/console.php config:update`
+You can edit your configuration by editing `app/config/parameters.yml` or copying `app/config/parameters.yml.dist` to `app/config/parameters.yml` if it doesn't exist.
 
 You may also need to clear the cache folder for settings to take effect (only if you edit the file manually):
 
-`php console/console.php clean:container`
+`php bin/console cache:clean --env=prod`
 
 Step 4. Database
 ----------------
 
 You can then set up your database by running:
 
-`php console/console.php schema:update`
+`php bin/console schema:update`
 
 Assuming you passed correct parameters during the configure prompts this will then create the database structure in the database supplied
 
@@ -87,7 +85,7 @@ Step 5: Startup the Auth Server
 
 You can then start the fake minecraft server by changing by running:
 
-`php console/console.php server:start`
+`php bin/console authserver:start`
 
 Step 6: Setup your webserver
 ----------------------------
