@@ -32,5 +32,7 @@ monolog:
 assetic:
     use_controller: %use_assetic_controller%
 
-#swiftmailer:
-#    delivery_address: me@example.com
+jms_serializer:
+    visitors:
+        json:
+            options: 128 # json_encode options bitmask, JSON_PRETTY_PRINT
