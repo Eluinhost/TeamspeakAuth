@@ -31,7 +31,7 @@ Updates the database to the latest schema, run this after any update
 
 ### Clean the cache
 
-`cache:clean --env=<env>`
+`cache:clear --env=<env>`
 
 Removes the current environments container cache. This is required after any manual change to the parameters.yml file for the prod environment, dev is automatic. (requires a restart to the auth server if it is running)
 

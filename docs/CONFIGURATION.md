@@ -9,7 +9,7 @@ In production (via the usual app.php) changes will require you to clear the cach
 
 You can clear the production cache by running the command:
 
-`php bin\console cache:clean --env=prod`
+`php bin\console cache:clear --env=prod`
 
 You can open the parameters.yml file and edit it directly: (if it doesn't exist, copy it from parameters.yml.dist
 

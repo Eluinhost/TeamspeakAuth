@@ -69,7 +69,7 @@ You can edit your configuration by editing `app/config/parameters.yml` or copyin
 
 You may also need to clear the cache folder for settings to take effect (only if you edit the file manually):
 
-`php bin/console cache:clean --env=prod`
+`php bin/console cache:clear --env=prod`
 
 Step 4. Database
 ----------------
