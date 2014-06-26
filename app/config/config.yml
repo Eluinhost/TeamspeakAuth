@@ -66,3 +66,21 @@ mt_haml:
 
 fos_js_routing:
     routes_to_expose: [ .* ]
+
+fos_rest:
+    format_listener:
+        rules:
+            - priorities: [json, xml]
+            - fallback_format: json
+    view:
+        formats:
+            jsonp: false
+            json: true
+            xml: true
+            rss: false
+            html: false
+
+jms_serializer:
+    handlers:
+        datetime:
+            default_format: "U" # Unix time

@@ -28,7 +28,9 @@
         "planetteamspeak/ts3-php-framework": "1.1.23",
         "publicuhc/skin-cache": "dev-master",
         "mthaml/mthaml-bundle": "1.2.*",
-        "cypresslab/angular-ng-routing-bundle": "0.1.5"
+        "cypresslab/angular-ng-routing-bundle": "0.1.5",
+        "friendsofsymfony/rest-bundle": "1.4",
+        "jms/serializer-bundle": "0.13.*"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

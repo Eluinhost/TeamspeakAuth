@@ -18,6 +18,8 @@ class AppKernel extends Kernel
             new PublicUHC\Bundle\TeamspeakAuthBundle\PublicUHCTeamspeakAuthBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Cypress\AngularNgRoutingBundle\CypressAngularNgRoutingBundle(),
+            new \JMS\SerializerBundle\JMSSerializerBundle(),
+            new \FOS\RestBundle\FOSRestBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
