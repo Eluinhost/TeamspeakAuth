@@ -6,8 +6,6 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
 use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\View\View;
-use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\Authentication;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftAccount;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftCode;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount;

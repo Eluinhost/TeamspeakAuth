@@ -7,13 +7,13 @@ Succesful requests will return status code 200 with any relevant data.
 
 Invalid requests will return a non-200 status codes and data in the format:
 
-{"ERROR": "Error Message"}
+{"error":{"code":400,"message":"Bad Request","error":"Invalid Teamspeak code supplied"}}
 
 ### Request a code for a teamspeak account
 
 Sends a new teamspeak code to the given Teamspeak username and returns the user's UUID
 
-`GET /teamspeakCode/{username}`
+`GET /api/v1/teamspeakCode/{username}`
 
 #### Parameters
 
@@ -29,7 +29,7 @@ Sends a code to the given teamspeak username.
 
 Get a list of authentications, latest first
 
-`GET /authentications`
+`GET /api/v1/authentications`
 
 Examples:
 
@@ -46,20 +46,21 @@ Examples:
 
     [
         {
-            "updatedAt":1403187148,  # Unix timestamp
-            "createdAt":1403187148,  # Unix timestamp
-            "teamspeakAccount": {
-                "createdAt":1403187038,  # Unix timestamp
-                "updatedAt":1403187040,  # Unix timestamp
-                "uuid":"ewo4M0KT59ifNUKEV\/FHEqoFCI1=",  # Teamspeak UUID
-                "lastName":"2313"  # Teamspeak Username when authenticated
+            "id": 2,                 # ID of this authentication
+            "updated_at": "2014-06-19T14:12:28+00:00",  # ISO 8601 DateTime string
+            "created_at": "2014-06-19T14:12:28+00:00",  # ISO 8601 DateTime string
+            "teamspeak_account": {
+                "id": 1,                 # ID of the teamspeak account
+                "updated_at": "2014-06-19T14:12:28+00:00",  # ISO 8601 DateTime string
+                "created_at": "2014-06-19T14:12:28+00:00",  # ISO 8601 DateTime string
+                "uuid": "ewo4M0KT59ifNUKEV\/FHEqoFCI1=",     # Teamspeak UUID
+                "name": "2313"  # Teamspeak Username when authenticated
             },
-            "minecraftAccount": {
-                "createdAt":1403169784,  # Unix timestamp
-                "updatedAt":1403169908,  # Unix timestamp
-                "uuid":"22222222222222222222222222222222",  # Minecraft UUID
-                "lastName":"ghowden",  # Minecraft username when authenticated
-                "skin":"\/skins\/helm\/ghowden"  # local URL for helmet
+            "minecraft_account": {
+                "updated_at": "2014-06-19T14:12:28+00:00",  # ISO 8601 DateTime string
+                "created_at": "2014-06-19T14:12:28+00:00",  # ISO 8601 DateTime string
+                "uuid": "22222222222222222222222222222222",  # Minecraft UUID
+                "name": "ghowden",  # Minecraft username when authenticated
             }
         },
         {
@@ -71,7 +72,7 @@ Examples:
 
 Create a new authentication for the given accounts, does the whole 'teamspeak verification' thing
 
-`POST /authentications`
+`POST /api/v1/authentications`
 
 #### Parameters
 
