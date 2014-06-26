@@ -1,3 +1,7 @@
+authentications:
+    type:     rest
+    resource: PublicUHC\Bundle\TeamspeakAuthBundle\Controller\AuthenticationController
+
 public_uhc_teamspeak_auth:
     resource: "@PublicUHCTeamspeakAuthBundle/Controller/"
     type:     annotation

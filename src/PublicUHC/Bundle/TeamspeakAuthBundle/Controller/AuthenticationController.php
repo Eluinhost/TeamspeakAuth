@@ -5,31 +5,27 @@ use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
+use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\View\View;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\Authentication;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftAccount;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftCode;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakCode;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\TeamspeakHelper;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\Routing\Annotation\Route;
+use FOS\RestBundle\Controller\Annotations\Post;
+use FOS\RestBundle\Controller\Annotations\Get;
 use TeamSpeak3_Exception;
 
-class AuthenticationController extends Controller {
+class AuthenticationController extends FOSRestController {
 
     /**
-     * @Route("/api/v1/authentications", name="api_v1_authenticate", defaults={"_format" = "json"})
-     * @Method({"POST"})
-     *
-     * @param Request $request
-     * @return JsonResponse
-     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     * @Post("/api/v1/authentications", name="api_v1_authentications", defaults={"_format" = "json"})
      */
-    public function api_v1_authenticateAction(Request $request) {
+    public function api_v1_authenticationsAction(Request $request) {
         $ts_uuid = $request->request->get('ts_uuid');
         $ts_code = $request->request->get('ts_code');
         $mc_uuid = $request->request->get('mc_uuid');
@@ -119,13 +115,9 @@ class AuthenticationController extends Controller {
     }
 
     /**
-     * @Route("/api/v1/authentications", name="api_v1_authentications_list", defaults={"_format" = "json", "limit"=10, "offset"=0})
-     * @Method({"GET"})
+     * @Get("/api/v1/authentications", name="api_v1_authentications_list", defaults={"_format" = "json", "limit"=10, "offset"=0})
      *
-     * @param $limit
-     * @param $offset
-     * @return JsonResponse
-     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     * TODO remove parameters and add as query objects
      */
     public function api_v1_authentications_listAction($limit, $offset) {
         /** @var $request Request */
@@ -149,36 +141,7 @@ class AuthenticationController extends Controller {
 
         $results = $qb->getQuery()->getResult(Query::HYDRATE_OBJECT);
 
-        $returnArray = [];
-        /** @var $result Authentication */
-        foreach($results as $result) {
-            $tsAccount = $result->getTeamspeakAccount();
-            $mcAccount = $result->getMinecraftAccount();
-            array_push($returnArray,
-                [
-                    'updatedAt' => $result->getUpdatedAt()->getTimestamp(),
-                    'createdAt' => $result->getCreatedAt()->getTimestamp(),
-                    'teamspeakAccount' => [
-                        'createdAt' => $tsAccount->getCreatedAt()->getTimestamp(),
-                        'updatedAt' => $tsAccount->getUpdatedAt()->getTimestamp(),
-                        'uuid' => $tsAccount->getUUID(),
-                        'lastName' => $tsAccount->getName()
-                    ],
-                    'minecraftAccount' => [
-                        'createdAt' => $mcAccount->getCreatedAt()->getTimestamp(),
-                        'updatedAt' => $mcAccount->getUpdatedAt()->getTimestamp(),
-                        'uuid'      => $mcAccount->getUUID(),
-                        'lastName'  => $mcAccount->getName(),
-                        'skin' =>
-                            $this->get('router')->generate(
-                                'skin_helm',
-                                ['username' => $mcAccount->getName()]
-                            )
-                    ]
-                ]
-            );
-        }
-
-        return new JsonResponse($returnArray);
+        $view = $this->view($results, 200);
+        return $this->handleView($view);
     }
 } 
