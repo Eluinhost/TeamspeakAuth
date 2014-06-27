@@ -190,7 +190,8 @@ class AuthenticationController extends FOSRestController {
      *          "requirement"="json|xml",
      *          "description"="Format of response, if empty will be JSON"
      *      }
-     * }
+     * },
+     * output="PublicUHC\Bundle\TeamspeakAuthBundle\Entity\Authentication"
      * )
      * @QueryParam(name="limit", description="Amount to return", requirements="\d+", default="10")
      * @QueryParam(name="offset", description="Offset to use", requirements="\d+", default="0")
