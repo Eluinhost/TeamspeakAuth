@@ -76,7 +76,7 @@ Step 4. Database
 
 You can then set up your database by running:
 
-`php bin/console schema:update`
+`php bin/console doctrine:schema:update`
 
 Assuming you passed correct parameters during the configure prompts this will then create the database structure in the database supplied
 

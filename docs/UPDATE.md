@@ -21,4 +21,4 @@ You will need to at least run the following 2 commands:
 
 `php bin/console cache:clear --env=prod` - Removes the production application cache
 
-`php bin/console schema:update` - update your database to the latest version
+`php bin/console doctrine:schema:update` - update your database to the latest version
