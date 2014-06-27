@@ -29,6 +29,58 @@ use TeamSpeak3_Exception;
 class AuthenticationController extends FOSRestController {
 
     /**
+     * @Get("/v1/teamspeak_account.{_format}", name="api_v1_teamspeak_account_list")
+     *
+     * @QueryParam(name="verified", description="Only return accounts with authentications", default=false)
+     * @QueryParam(name="online", description="Only return accounts with an online teamspeak account", default=false)
+     * @QueryParam(name="uuids", description="Search by user UUID", array=true, nullable=true)
+     *
+     * @ApiDoc(
+     * description="Output an array of teamspeak accounts",
+     * tags={"api"},
+     * requirements={
+     *      {
+     *          "name"="_format",
+     *          "dataType"="String",
+     *          "requirement"="json|xml",
+     *          "description"="Format of response, if empty will be JSON"
+     *      }
+     * },
+     * output="PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount"
+     * )
+     */
+    public function api_v1_checkTeamspeakAccountAction(array $uuids, $online, $verified)
+    {
+        //TODO
+    }
+
+    /**
+     * @Get("/v1/minecraft_account.{_format}", name="api_v1_minecraft_account_list")
+     *
+     * @QueryParam(name="verified", description="Only return accounts with authentications", default=false)
+     * @QueryParam(name="online", description="Only return accounts with an online teamspeak account", default=false)
+     * @QueryParam(name="uuids", description="Search by user UUID", array=true, nullable=true)
+     *
+     * @ApiDoc(
+     * description="Output an array of minecraft accounts",
+     * tags={"api"},
+     * requirements={
+     *      {
+     *          "name"="_format",
+     *          "dataType"="String",
+     *          "requirement"="json|xml",
+     *          "description"="Format of response, if empty will be JSON"
+     *      }
+     * },
+     * output="PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftAccount"
+     * )
+     */
+    public function api_v1_checkMinecraftAccountAction(array $uuids, $online, $verified)
+    {
+        //TODO
+    }
+
+    /**
      * @Post("/v1/authentications.{_format}", name="api_v1_authentications_new")
      *
      * @ApiDoc(
@@ -48,7 +100,8 @@ class AuthenticationController extends FOSRestController {
      * @RequestParam(name="mc_uuid", description="Minecraft UUID")
      * @RequestParam(name="mc_code", description="Minecraft Code")
      */
-    public function api_v1_authenticationsAction($ts_uuid, $ts_code, $mc_uuid, $mc_code) {
+    public function api_v1_authenticationsAction($ts_uuid, $ts_code, $mc_uuid, $mc_code)
+    {
         /** @var $entityManager EntityManager */
         $entityManager = $this->get('doctrine.orm.entity_manager');
 
@@ -142,7 +195,8 @@ class AuthenticationController extends FOSRestController {
      * @QueryParam(name="limit", description="Amount to return", requirements="\d+", default="10")
      * @QueryParam(name="offset", description="Offset to use", requirements="\d+", default="0")
      */
-    public function api_v1_allAction($limit, $offset) {
+    public function api_v1_allAction($limit, $offset)
+    {
         if($limit > 50)
             throw new BadRequestHttpException('Only 50 authentications may be fetched per request');
 
