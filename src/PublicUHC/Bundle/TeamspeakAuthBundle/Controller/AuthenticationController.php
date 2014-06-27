@@ -29,58 +29,6 @@ use TeamSpeak3_Exception;
 class AuthenticationController extends FOSRestController {
 
     /**
-     * @Get("/v1/teamspeak_account.{_format}", name="api_v1_teamspeak_account_list")
-     *
-     * @QueryParam(name="verified", description="Only return accounts with authentications", default=false)
-     * @QueryParam(name="online", description="Only return accounts with an online teamspeak account", default=false)
-     * @QueryParam(name="uuids", description="Search by user UUID", array=true, nullable=true)
-     *
-     * @ApiDoc(
-     * description="Output an array of teamspeak accounts",
-     * tags={"api"},
-     * requirements={
-     *      {
-     *          "name"="_format",
-     *          "dataType"="String",
-     *          "requirement"="json|xml",
-     *          "description"="Format of response, if empty will be JSON"
-     *      }
-     * },
-     * output="PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount"
-     * )
-     */
-    public function api_v1_checkTeamspeakAccountAction(array $uuids, $online, $verified)
-    {
-        //TODO
-    }
-
-    /**
-     * @Get("/v1/minecraft_account.{_format}", name="api_v1_minecraft_account_list")
-     *
-     * @QueryParam(name="verified", description="Only return accounts with authentications", default=false)
-     * @QueryParam(name="online", description="Only return accounts with an online teamspeak account", default=false)
-     * @QueryParam(name="uuids", description="Search by user UUID", array=true, nullable=true)
-     *
-     * @ApiDoc(
-     * description="Output an array of minecraft accounts",
-     * tags={"api"},
-     * requirements={
-     *      {
-     *          "name"="_format",
-     *          "dataType"="String",
-     *          "requirement"="json|xml",
-     *          "description"="Format of response, if empty will be JSON"
-     *      }
-     * },
-     * output="PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftAccount"
-     * )
-     */
-    public function api_v1_checkMinecraftAccountAction(array $uuids, $online, $verified)
-    {
-        //TODO
-    }
-
-    /**
      * @Post("/v1/authentications.{_format}", name="api_v1_authentications_new")
      *
      * @ApiDoc(
