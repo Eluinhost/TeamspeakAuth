@@ -11,6 +11,7 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Controller\Annotations\Route;
 use FOS\RestBundle\Controller\FOSRestController;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftAccount;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftCode;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount;
@@ -28,16 +29,26 @@ use TeamSpeak3_Exception;
 class AuthenticationController extends FOSRestController {
 
     /**
-     * @Post("/v1/authentications", name="api_v1_authentications_new")
+     * @Post("/v1/authentications.{_format}", name="api_v1_authentications_new")
      *
+     * @ApiDoc(
+     * description="Add a new authentication to the system between a Teamspeak Account and a Minecraft account",
+     * tags={"website"},
+     * requirements={
+     *      {
+     *          "name"="_format",
+     *          "dataType"="String",
+     *          "requirement"="json|xml",
+     *          "description"="Format of response, if empty will be JSON"
+     *      }
+     * }
+     * )
      * @RequestParam(name="ts_uuid", description="Teamspeak UUID")
      * @RequestParam(name="ts_code", description="Teamspeak Code")
      * @RequestParam(name="mc_uuid", description="Minecraft UUID")
-     * @RequestParam(name="mc_code", description="Minecraft sdf Code")
+     * @RequestParam(name="mc_code", description="Minecraft Code")
      */
     public function api_v1_authenticationsAction($ts_uuid, $ts_code, $mc_uuid, $mc_code) {
-        echo "TSUUID: $ts_uuid";
-
         /** @var $entityManager EntityManager */
         $entityManager = $this->get('doctrine.orm.entity_manager');
 
@@ -116,6 +127,18 @@ class AuthenticationController extends FOSRestController {
     /**
      * @Get("/v1/authentications.{_format}", name="api_v1_authentications_all")
      *
+     * @ApiDoc(
+     * description="Fetch a list of all the authentications, latest first",
+     * tags={"API"},
+     * requirements={
+     *      {
+     *          "name"="_format",
+     *          "dataType"="String",
+     *          "requirement"="json|xml",
+     *          "description"="Format of response, if empty will be JSON"
+     *      }
+     * }
+     * )
      * @QueryParam(name="limit", description="Amount to return", requirements="\d+", default="10")
      * @QueryParam(name="offset", description="Offset to use", requirements="\d+", default="0")
      */

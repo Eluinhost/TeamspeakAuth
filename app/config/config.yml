@@ -86,6 +86,9 @@ fos_rest:
     body_converter:
         enabled: true
         validate: true
+    routing_loader:
+        include_format: false
+
 jms_serializer:
     handlers:
         datetime:
@@ -96,3 +99,13 @@ sensio_framework_extra:
         annotations: false
     request:
         converters: true
+
+nelmio_api_doc:
+    name: TeamspeakAuth API
+    sandbox:
+        accept-type: application/json
+        body_format: json
+        request_format:
+            formats:
+                json: application/json
+                xml: application/xml
