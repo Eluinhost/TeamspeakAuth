@@ -25,7 +25,7 @@ class TeamspeakCodeController extends FOSRestController {
      * description="Generates a new code for the teamspeak account with the given name",
      * output="PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount"
      * )
-     * @Put("/v1/teamspeak_codes/new/{username}", defaults={"_format"="json"}, requirements={"username"=".+"})
+     * @Put("/v1/teamspeak_codes/new/{username}.{_format}", defaults={"_format"="json"}, requirements={"username"=".+"})
      */
     public function requestTeamspeakCodeAction($username) {
         if( $username == null || strlen($username) == 0 || strlen($username) > 30 ) {
