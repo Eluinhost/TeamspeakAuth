@@ -5,23 +5,29 @@ use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
+use FOS\RestBundle\Controller\Annotations\Get;
+use FOS\RestBundle\Controller\Annotations\Post;
+use FOS\RestBundle\Controller\Annotations\Route;
 use FOS\RestBundle\Controller\FOSRestController;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftAccount;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftCode;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakCode;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\TeamspeakHelper;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use FOS\RestBundle\Controller\Annotations\Post;
-use FOS\RestBundle\Controller\Annotations\Get;
 use TeamSpeak3_Exception;
 
+/**
+ * Class AuthenticationController
+ * @package PublicUHC\Bundle\TeamspeakAuthBundle\Controller
+ *
+ * @Route("/api", defaults={"_format" = "json"})
+ */
 class AuthenticationController extends FOSRestController {
 
     /**
-     * @Post("/api/v1/authentications", name="api_v1_authentications", defaults={"_format" = "json"})
+     * @Post("/v1/authentications", name="api_v1_authentications_new")
      */
     public function api_v1_authenticationsAction(Request $request) {
         $ts_uuid = $request->request->get('ts_uuid');
@@ -105,23 +111,22 @@ class AuthenticationController extends FOSRestController {
             $tsHelper = $this->get('teamspeak_helper');
 
             $tsHelper->verifyClient($tsAccount, $mcAccount);
-            return new JsonResponse();
         } catch ( TeamSpeak3_Exception $ex ) {
             error_log($ex->getMessage());
             throw new BadRequestHttpException('There was a problem contacting Teamspeak');
         }
+
+        return $this->view(null, 200);
     }
 
     /**
-     * @Get("/api/v1/authentications", name="api_v1_authentications_list", defaults={"_format" = "json", "limit"=10, "offset"=0})
-     *
-     * TODO remove parameters and add as query objects
+     * @Get("/v1/authentications.{_format}", name="api_v1_authentications_all")
      */
-    public function api_v1_authentications_listAction($limit, $offset) {
+    public function api_v1_allAction() {
         /** @var $request Request */
         $request = $this->get('request');
-        $limit = $request->query->getInt('limit', $limit);
-        $offset = $request->query->getInt('offset', $offset);
+        $limit = $request->query->getInt('limit', 10);
+        $offset = $request->query->getInt('offset', 0);
 
         if($limit > 50)
             throw new BadRequestHttpException('Only 50 authentications may be fetched per request');
@@ -139,7 +144,6 @@ class AuthenticationController extends FOSRestController {
 
         $results = $qb->getQuery()->getResult(Query::HYDRATE_OBJECT);
 
-        $view = $this->view($results, 200);
-        return $this->handleView($view);
+        return $this->view($results, 200);
     }
 } 
