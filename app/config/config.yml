@@ -68,6 +68,7 @@ fos_js_routing:
     routes_to_expose: [ .* ]
 
 fos_rest:
+    param_fetcher_listener: force
     view:
         view_response_listener: true
         failed_validation: HTTP_BAD_REQUEST
@@ -82,7 +83,9 @@ fos_rest:
                 fallback_format:      json
                 priorities:           [json, xml]
                 prefer_extension: true
-
+    body_converter:
+        enabled: true
+        validate: true
 jms_serializer:
     handlers:
         datetime:
@@ -91,3 +94,5 @@ jms_serializer:
 sensio_framework_extra:
     view:
         annotations: false
+    request:
+        converters: true
