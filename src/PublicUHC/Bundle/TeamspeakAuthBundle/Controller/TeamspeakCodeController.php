@@ -3,24 +3,29 @@ namespace PublicUHC\Bundle\TeamspeakAuthBundle\Controller;
 
 
 use Doctrine\ORM\EntityManager;
+use FOS\RestBundle\Controller\Annotations\Put;
+use FOS\RestBundle\Controller\Annotations\Route;
+use FOS\RestBundle\Controller\FOSRestController;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakCode;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\TeamspeakHelper;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\Routing\Annotation\Route;
 use TeamSpeak3_Exception;
 
-class TeamspeakCodeController extends Controller {
+/**
+ * Class TeamspeakCodeController
+ * @package PublicUHC\Bundle\TeamspeakAuthBundle\Controller
+ *
+ * @Route("/api")
+ */
+class TeamspeakCodeController extends FOSRestController {
 
     /**
-     * @Route("/api/v1/teamspeakCodes/{username}", defaults={"_format"="json"}, requirements={"username"=".+"})
-     * @Method({"GET"})
-     *
-     * @param $username
-     * @return JsonResponse
-     * @throws \Symfony\Component\HttpKernel\Exception\BadRequestHttpException
+     * @ApiDoc(
+     * description="Generates a new code for the teamspeak account with the given name",
+     * output="PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount"
+     * )
+     * @Put("/v1/teamspeak_codes/new/{username}", defaults={"_format"="json"}, requirements={"username"=".+"})
      */
     public function requestTeamspeakCodeAction($username) {
         if( $username == null || strlen($username) == 0 || strlen($username) > 30 ) {
@@ -40,8 +45,6 @@ class TeamspeakCodeController extends Controller {
                 throw new BadRequestHttpException('Teamspeak user not online');
             }
 
-            $uuid = $ts3->getUUIDForClient($client);
-
             $account = $ts3->updateLastClientUsername($client);
 
             $code = new TeamspeakCode();
@@ -59,9 +62,7 @@ class TeamspeakCodeController extends Controller {
             $codeString = $code->getCode();
             $client->message("[Verification Code] AUTH CODE: '{$codeString}'. This code work for the next {$timeToLast} minutes");
 
-            return new JsonResponse([
-                'UUID' => $uuid
-            ]);
+            return $this->view($account);
         } catch ( TeamSpeak3_Exception $ignored ) {
             throw new BadRequestHttpException('Error contacting the teamspeak server');
         }
