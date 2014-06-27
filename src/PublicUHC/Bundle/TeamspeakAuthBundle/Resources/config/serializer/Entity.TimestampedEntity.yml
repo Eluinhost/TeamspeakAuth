@@ -3,10 +3,17 @@ PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TimestampedEntity:
     read_only: true
     properties:
         id:
+            type: integer
+            read_only: true
+            since_version: 1.0
             expose: true
         createdAt:
             expose: true
+            read_only: true
+            since_version: 1.0
             type: DateTime<'c'> #ISO 8601
         updatedAt:
             expose: true
+            read_only: true
+            since_version: 1.0
             type: DateTime<'c'> #ISO 8601

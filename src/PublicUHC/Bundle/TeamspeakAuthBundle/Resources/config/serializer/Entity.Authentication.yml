@@ -3,6 +3,12 @@ PublicUHC\Bundle\TeamspeakAuthBundle\Entity\Authentication:
     read_only: true
     properties:
         minecraftAccount:
+            since_version: 1.0
+            read_only: true
+            type: PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftAccount
             expose: true
         teamspeakAccount:
+            since_version: 1.0
+            read_only: true
+            type: PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount
             expose: true
