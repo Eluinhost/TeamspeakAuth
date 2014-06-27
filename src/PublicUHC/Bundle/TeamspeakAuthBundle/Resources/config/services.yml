@@ -1,7 +1,6 @@
 parameters:
   minecraft_helper.class: PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\DefaultMinecraftHelper
   teamspeak_helper.class: PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\DefaultTeamspeakHelper
-  teamspeak.group_id: 222
   minotar_base_url: https://minotar.net
   skin_fetcher.timeout: 30
   skin_cache.timeout: 3600
@@ -10,10 +9,11 @@ parameters:
   teamspeak.host: 127.0.0.1
   teamspeak.query_port: 10011
   teamspeak.server_port: 9987
+  teamspeak.group_id: 222
   auth_server.database_keepalive: 300
   auth_server.description: '§4▁§e▂§4▃§e▄§4▅§e▆§4▇§e█ §4§l    Auth Server    §e█§4▇§e▆§4▅§e▄§4▃§e▂§4▁ §c▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔'
-  minecraft.port: 35879
-  minecraft.host: 0.0.0.0
+  auth_server.port: 35879
+  auth_server.host: 0.0.0.0
 
 services:
     minecraft_helper:
@@ -75,5 +75,5 @@ services:
         factory_method: create
     auth_server:
         class: PublicUHC\MinecraftAuth\AuthServer\AuthServer
-        arguments: ['%minecraft.port%', '%minecraft.host%', '@server_loop']
+        arguments: ['%auth_server.port%', '%auth_server.host%', '@server_loop']
         lazy: true
