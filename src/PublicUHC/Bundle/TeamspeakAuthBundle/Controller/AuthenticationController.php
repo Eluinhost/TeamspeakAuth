@@ -7,6 +7,8 @@ use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
+use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Controller\Annotations\Route;
 use FOS\RestBundle\Controller\FOSRestController;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftAccount;
@@ -14,7 +16,6 @@ use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftCode;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakCode;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\TeamspeakHelper;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use TeamSpeak3_Exception;
 
@@ -28,21 +29,14 @@ class AuthenticationController extends FOSRestController {
 
     /**
      * @Post("/v1/authentications", name="api_v1_authentications_new")
+     *
+     * @RequestParam(name="ts_uuid", description="Teamspeak UUID")
+     * @RequestParam(name="ts_code", description="Teamspeak Code")
+     * @RequestParam(name="mc_uuid", description="Minecraft UUID")
+     * @RequestParam(name="mc_code", description="Minecraft sdf Code")
      */
-    public function api_v1_authenticationsAction(Request $request) {
-        $ts_uuid = $request->request->get('ts_uuid');
-        $ts_code = $request->request->get('ts_code');
-        $mc_uuid = $request->request->get('mc_uuid');
-        $mc_code = $request->request->get('mc_code');
-
-        if($ts_uuid == null)
-            throw new BadRequestHttpException('Must provide a Teamspeak UUID');
-        if($ts_code == null)
-            throw new BadRequestHttpException('Must provide a Teamspeak code');
-        if($mc_uuid == null)
-            throw new BadRequestHttpException('Must provide a Minecraft UUID');
-        if($mc_code == null)
-            throw new BadRequestHttpException('Must provide a Minecraft code');
+    public function api_v1_authenticationsAction($ts_uuid, $ts_code, $mc_uuid, $mc_code) {
+        echo "TSUUID: $ts_uuid";
 
         /** @var $entityManager EntityManager */
         $entityManager = $this->get('doctrine.orm.entity_manager');
@@ -121,13 +115,11 @@ class AuthenticationController extends FOSRestController {
 
     /**
      * @Get("/v1/authentications.{_format}", name="api_v1_authentications_all")
+     *
+     * @QueryParam(name="limit", description="Amount to return", requirements="\d+", default="10")
+     * @QueryParam(name="offset", description="Offset to use", requirements="\d+", default="0")
      */
-    public function api_v1_allAction() {
-        /** @var $request Request */
-        $request = $this->get('request');
-        $limit = $request->query->getInt('limit', 10);
-        $offset = $request->query->getInt('offset', 0);
-
+    public function api_v1_allAction($limit, $offset) {
         if($limit > 50)
             throw new BadRequestHttpException('Only 50 authentications may be fetched per request');
 
