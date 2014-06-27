@@ -70,13 +70,13 @@ fos_js_routing:
 fos_rest:
     format_listener:
         rules:
-            - priorities: [json, xml]
+            - priorities: [json]
             - fallback_format: json
     view:
         formats:
             jsonp: false
             json: true
-            xml: true
+            xml: false
             rss: false
             html: false
 
