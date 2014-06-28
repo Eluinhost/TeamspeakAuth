@@ -7,6 +7,14 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
+use FOS\RestBundle\Controller\Annotations\Route;
+
+/**
+ * Class TeamspeakAccountController
+ * @package PublicUHC\Bundle\TeamspeakAuthBundle\Controller
+ *
+ * @Route("/api")
+ */
 class TeamspeakAccountController extends FOSRestController {
 
     /**

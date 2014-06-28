@@ -6,6 +6,13 @@ use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
+use FOS\RestBundle\Controller\Annotations\Route;
+/**
+ * Class MinecraftAccountController
+ * @package PublicUHC\Bundle\TeamspeakAuthBundle\Controller
+ *
+ * @Route("/api")
+ */
 class MinecraftAccountController {
 
     /**
