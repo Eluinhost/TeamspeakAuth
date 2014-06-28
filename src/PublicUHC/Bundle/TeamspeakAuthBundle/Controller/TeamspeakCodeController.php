@@ -10,6 +10,8 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakCode;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\TeamspeakHelper;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+
+use FOS\RestBundle\Controller\Annotations\RequestParam;
 use TeamSpeak3_Exception;
 
 /**
@@ -23,9 +25,19 @@ class TeamspeakCodeController extends FOSRestController {
     /**
      * @ApiDoc(
      * description="Generates a new code for the teamspeak account with the given name",
-     * output="PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount"
+     * output="PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount",
+     * tags={"website"},
+     * requirements={
+     *      {
+     *          "name"="_format",
+     *          "dataType"="String",
+     *          "requirement"="json|xml",
+     *          "description"="Format of response, if empty will be JSON"
+     *      }
+     * }
      * )
-     * @Put("/v1/teamspeak_codes/new/{username}.{_format}", defaults={"_format"="json"}, requirements={"username"=".+"})
+     * @Put("/v1/teamspeak_codes.{_format}", name="api_v1_teamspeak_code_request", defaults={"_format"="json"})
+     * @RequestParam(name="username", description="Teamspeak Username to send code to")
      */
     public function requestTeamspeakCodeAction($username) {
         if( $username == null || strlen($username) == 0 || strlen($username) > 30 ) {
