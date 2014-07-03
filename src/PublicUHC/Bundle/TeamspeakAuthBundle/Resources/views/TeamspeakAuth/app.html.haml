@@ -21,14 +21,6 @@
             &copy;Eluinhost 2014.
             %a{:href=>"https://github.com/Eluinhost/TeamspeakAuth"}
               %em Source Code
-    %script{:id=>"index.html", :type=>"text/ng-template"}
-      - include "PublicUHCTeamspeakAuthBundle:TeamspeakAuth:index.html.haml"
-    %script{:id=>"teamspeakrequest.html", :type=>"text/ng-template"}
-      - include "PublicUHCTeamspeakAuthBundle:TeamspeakAuth:teamspeakrequest.html.haml"
-    %script{:id=>"accountverification.html", :type=>"text/ng-template"}
-      - include "PublicUHCTeamspeakAuthBundle:TeamspeakAuth:accountverification.html.haml"
-    %script{:id=>"complete.html", :type=>"text/ng-template"}
-      - include "PublicUHCTeamspeakAuthBundle:TeamspeakAuth:complete.html.haml"
 
 - block javascripts
   %script{:src=>"#{asset('vendor/js/TeamspeakAuth.min.js')}"}
