@@ -46,17 +46,33 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource'])
  *  Configure the application directives *
  *****************************************/
 
-    .directive('tsUuidFetcher', function() {
+    .directive('tsUuidFetcher', ['RequestTeamspeakCodeService', function(RequestTeamspeakCodeService) {
         return {
-            restrict: 'AE',
+            restrict: 'AE', //allow attribute or element
+            scope: {}, //isolate the scope
             templateUrl: 'partials/teamspeakUUIDFetcher',
-            controller: ['$scope', 'RequestTeamspeakCodeService', function($scope, RequestTeamspeakCodeService) {
-                $scope.requestCode = function() {
-                    console.log($scope);
-                    $scope.user = RequestTeamspeakCodeService.update({username: $scope.request_nick});
+            link: function($scope, $element, attr) { //called after DOM ready
+                $scope.teamspeak_details = null; //setup default values
+
+                $scope.requestCode = function() {   //make new function in the scope
+                    $scope.teamspeak_details = null;    //clear existing values
+                    RequestTeamspeakCodeService.update(
+                        {},
+                        {username: $scope.request_nick},
+                        function(data) {
+                            $scope.teamspeak_details = data;  //update with new values
+                        },
+                        function(error) {
+                            var message = 'Unknown Error';
+                            if(typeof error.data != 'undefined' && error.data.length > 0 && typeof error.data[0].message != 'Unknown Error') {
+                                message = error.data[0].message
+                            }
+                            //TODO do error things
+                        }
+                    );
                 }
-            }]
+            }
         };
-    });
+    }]);
 
 
