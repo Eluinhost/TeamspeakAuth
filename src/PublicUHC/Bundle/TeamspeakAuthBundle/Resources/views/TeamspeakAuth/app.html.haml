@@ -16,7 +16,8 @@
         .row.page-wrapper.text-center
           %section.main-section
             - block content
-              Missing Content!
+              %div{"ui-view"=>true}
+                Loading...
           .copyright-footer
             &copy;Eluinhost 2014.
             %a{:href=>"https://github.com/Eluinhost/TeamspeakAuth"}
