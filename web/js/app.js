@@ -1,4 +1,4 @@
-angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router'])
+angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource'])
 
 /*************************************
  *  Configure the application routes *
@@ -10,6 +10,11 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router'])
             .state('index', {
                 url: '/',
                 templateUrl: 'partials/index'
+            })
+
+            .state('teamspeak_request', {
+                url: '/teamspeak_request',
+                templateUrl: 'partials/teamspeakrequest'
             })
 
         // catch all route
@@ -35,7 +40,23 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router'])
     .factory('RequestTeamspeakCodeService', ['$resource', function($resource) {
         var URL = NgRouting.generateResourceUrl('api_v1_teamspeak_code_request');
         return $resource( URL, {_format: 'json'}, {'update': { method:'PUT'}});
-    }]);
+    }])
 
+/*****************************************
+ *  Configure the application directives *
+ *****************************************/
+
+    .directive('tsUuidFetcher', function() {
+        return {
+            restrict: 'AE',
+            templateUrl: 'partials/teamspeakUUIDFetcher',
+            controller: ['$scope', 'RequestTeamspeakCodeService', function($scope, RequestTeamspeakCodeService) {
+                $scope.requestCode = function() {
+                    console.log($scope);
+                    $scope.user = RequestTeamspeakCodeService.update({username: $scope.request_nick});
+                }
+            }]
+        };
+    });
 
 

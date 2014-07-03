@@ -1,0 +1,6 @@
+%p Enter your current nickname inside Teamspeak below and hit 'Request Code'.
+.row.collapse
+  .small-10.columns
+    %input#ts_name.form-control{:type=>"text", :placeholder=>"Teamspeak Nickname", :autofocus=>true, "ng-model"=>"request_nick"}
+  .small-2.columns
+    %a#request_codes.button.postfix{"ng-click"=>"requestCode()"} Request Code
