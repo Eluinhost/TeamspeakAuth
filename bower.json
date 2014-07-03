@@ -13,6 +13,7 @@
         "angular": "~1.2.18",
         "angular-resource": "~1.2.18",
         "requirejs": "~2.1.14",
-        "angular-foundation": "0.2.2"
+        "angular-foundation": "0.2.2",
+        "angular-ui-router": "0.2.10"
     }
 }

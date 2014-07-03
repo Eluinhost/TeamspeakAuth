@@ -44,6 +44,7 @@ module.exports = function(grunt) {
                     //bower_dir + '/requirejs/require.js',
                     bower_dir + '/angular/angular.js',
                     bower_dir + '/angular-resource/angular-resource.js',
+                    bower_dir + '/angular-ui-router/release/angular-ui-router.js',
                     bower_dir + '/angular-foundation/mm-foundation-tpls.min.js',
                     bower_dir + '/modernizr/modernizr.js',
                     bower_dir + '/jquery/dist/jquery.js',
