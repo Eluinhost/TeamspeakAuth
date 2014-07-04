@@ -1,19 +1,20 @@
 {
-    "name": "PublicUHC/TeamspeakAuth",
-    "version": "2.0.0",
-    "authors": [
-        "Graham <graham_howden1@yahoo.co.uk>"
-    ],
-    "description": "TS3 Authenticaion using Minecraft accounts",
-    "license": "GPLv3",
-    "private": true,
-    "dependencies": {
-        "fontawesome": "4.1.0",
-        "foundation": "5.2.3",
-        "angular": "~1.2.18",
-        "angular-resource": "~1.2.18",
-        "requirejs": "~2.1.14",
-        "angular-foundation": "0.2.2",
-        "angular-ui-router": "0.2.10"
-    }
+  "name": "PublicUHC/TeamspeakAuth",
+  "version": "2.0.0",
+  "authors": [
+    "Graham <graham_howden1@yahoo.co.uk>"
+  ],
+  "description": "TS3 Authenticaion using Minecraft accounts",
+  "license": "GPLv3",
+  "private": true,
+  "dependencies": {
+    "fontawesome": "4.1.*",
+    "foundation": "5.2.*",
+    "angular": "1.2.*",
+    "angular-resource": "1.2.*",
+    "angular-foundation": "0.2.*",
+    "angular-ui-router": "0.2.*",
+    "angular-busy": "4.0.*",
+    "angular-animate": "1.2.*"
+  }
 }
