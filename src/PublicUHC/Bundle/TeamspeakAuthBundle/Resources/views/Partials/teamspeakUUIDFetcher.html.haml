@@ -8,6 +8,6 @@
         %input.form-control{:type=>"text", :placeholder=>"Teamspeak Nickname", :autofocus=>true, "ng-model"=>"request_nick", :keybind=>"requestCode()", :key=>13}
       .small-2.columns
         %a.button.postfix{"ng-click"=>"requestCode()"} Request Code
-    %div{"ng-show"=>"teamspeak_details != null"}
-      Selected teamspeak account "{{ teamspeak_details.name }}"
-      %em ({{ teamspeak_details.uuid }})
+    %div{"ng-show"=>"teamspeakDetails != null"}
+      Selected teamspeak account "{{ teamspeakDetails.name }}"
+      %em ({{ teamspeakDetails.uuid }})
