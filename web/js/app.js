@@ -30,8 +30,17 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
         $scope.latest = LatestAuthsService.query();
     }])
 
-    .controller('VerifyCtrl', ['$scope', function($scope) {
+    .controller('VerifyCtrl', ['$scope', 'DebounceService', function($scope, DebounceService) {
         $scope.teamspeakDetails = null;
+        $scope.$watch("minecraftName", function (newValue) {
+            DebounceService.Debounce(function () {
+                if(newValue === '') {
+                    newValue = 'Steve';
+                }
+                $scope.minecraftSkin = Routing.generate('skin_helm', {size: 32, username: newValue});
+            }, 1500, false);
+        });
+        $scope.minecraftName = 'Steve';
     }])
 
 /***************************************
@@ -50,6 +59,28 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
     .factory('VerifyAccountService', ['$resource', function($resource) {
         var URL = NgRouting.generateResourceUrl('api_v1_authentications_new');
         return $resource( URL, {_format: 'json'});
+    }])
+
+    .service('DebounceService', ['$timeout', function ($timeout) {
+        var timeout;
+
+        this.Debounce = function (func, wait, immediate) {
+            var context = this, args = arguments;
+            var later = function () {
+                timeout = null;
+                if (!immediate) {
+                    func.apply(context, args);
+                }
+            };
+            var callNow = immediate && !timeout;
+            if (timeout) {
+                $timeout.cancel(timeout);
+            }
+            timeout = $timeout(later, wait);
+            if (callNow) {
+                func.apply(context, args);
+            }
+        };
     }])
 
 /*****************************************
@@ -124,7 +155,8 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
         return {
             restrict: 'AE',
             scope: {
-                teamspeakDetails: '='
+                teamspeakDetails: '=',
+                minecraftName: '='
             },
             templateUrl: 'partials/accountVerification',
             link: function($scope, $element, attr) {
