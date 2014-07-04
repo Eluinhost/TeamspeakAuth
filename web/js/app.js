@@ -121,6 +121,22 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
             scope: {},
             templateUrl: 'partials/accountVerification',
             link: function($scope, $element, attr) {
+                //setup errors
+                $scope.errors = [];
+                $scope.addError = function(msg) {
+                    $scope.errors.push({msg: msg, type: 'alert round'});
+                };
+                $scope.removeError = function(index) {
+                    $scope.errors.splice(index, 1);
+                };
+                $scope.clearErrors = function() {
+                    $scope.errors = [];
+                };
+
+                $scope.resetAccount = function() {
+                    $scope.teamspeakDetails = null;
+                };
+
                 $scope.verifyCodes = function() {
                     console.log('verify');
                 }
