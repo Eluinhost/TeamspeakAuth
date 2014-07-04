@@ -1,6 +1,6 @@
 .uuid-fetcher.animate-switch-container{"ng-switch"=>true, :on=>"teamspeak_stage"}
   %div{"cg-busy"=>"{promise:promise, message:'Checking TS3 Account...'}"}
-    %p Enter your current nickname inside Teamspeak below and hit 'Request Code'.
+    %p Enter your current Teamspeak nickname (case sensitive) and hit 'Request Code'.
     .errors
       %alert{"ng-repeat"=>"alert in errors", :type=>"alert.type", :close=>"removeError($index)"} {{alert.msg}}
     .row.collapse
@@ -9,4 +9,5 @@
       .small-2.columns
         %a#request_codes.button.postfix{"ng-click"=>"requestCode()"} Request Code
     %div{"ng-show"=>"teamspeak_details != null"}
-      Using account {{ teamspeak_details.name }} ({{ teamspeak_details.uuid }})
+      Selected teamspeak account "{{ teamspeak_details.name }}"
+      %em ({{ teamspeak_details.uuid }})
