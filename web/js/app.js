@@ -1,4 +1,4 @@
-angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource'])
+angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 'cgBusy'])
 
 /*************************************
  *  Configure the application routes *
@@ -52,36 +52,40 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource'])
             scope: {}, //isolate the scope
             templateUrl: 'partials/teamspeakUUIDFetcher',
             link: function($scope, $element, attr) { //called after DOM ready
-                $scope.teamspeak_details = null; //setup default values
-                $scope.teamspeak_stage = "start";
-                $scope.errors = [];
 
+                //setup errors
+                $scope.errors = [];
                 $scope.addError = function(msg) {
                     $scope.errors.push({msg: msg, type: 'alert round'});
                 };
-
                 $scope.removeError = function(index) {
                     $scope.errors.splice(index, 1);
                 };
-
                 $scope.clearErrors = function() {
                     $scope.errors = [];
                 };
 
-                $scope.requestCode = function() {   //make new function in the scope
-                    $scope.teamspeak_details = null;    //clear existing values
-                    $scope.teamspeak_stage = "loading";
-
+                //what to do when code is requested
+                $scope.requestCode = function() {
+                    //clear errors any old data
+                    delete $scope.teamspeak_details;
                     $scope.clearErrors();
 
-                    RequestTeamspeakCodeService.update(
+                    //make sure we actually have a nickname
+                    if($scope.request_nick == null || $scope.request_nick.length == 0) {
+                        $scope.addError('Must provide a Teamspeak nickname');
+                        return;
+                    }
+
+                    //set the promise for the busy graphic
+                    $scope.promise = RequestTeamspeakCodeService.update(
                         {},
                         {username: $scope.request_nick},
                         function(data) {
                             $scope.teamspeak_details = data;  //update with new values
-                            $scope.teamspeak_stage = "complete";
                         },
                         function(error) {
+                            //check for errors
                             if(typeof error.data != 'undefined' && error.data.length > 0 ) {
                                 angular.forEach(error.data, function(element){
                                     if(typeof element.message != 'undefined') {
@@ -89,10 +93,10 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource'])
                                     }
                                 });
                             }
+                            //if none in message set a default one
                             if($scope.errors.length == 0) {
                                 $scope.addError('Unknown Error Occurred');
                             }
-                            $scope.teamspeak_stage = "start";
                         }
                     );
                 }

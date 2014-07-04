@@ -1,14 +1,12 @@
 .uuid-fetcher.animate-switch-container{"ng-switch"=>true, :on=>"teamspeak_stage"}
-  .animate-switch{"ng-switch-when"=>"loading"}
-    Loading...
-  .animate-switch{"ng-switch-when"=>"complete"}
-    Using account {{ teamspeak_details.name }} ({{ teamspeak_details.uuid }})
-  .animate-switch{"ng-switch-default"=>true}
+  %div{"cg-busy"=>"{promise:promise, message:'Checking TS3 Account...'}"}
     %p Enter your current nickname inside Teamspeak below and hit 'Request Code'.
     .errors
-      %alert{"ng-repeat"=>"alert in $parent.errors", :type=>"alert.type", :close=>"removeError($index)"} {{alert.msg}}
+      %alert{"ng-repeat"=>"alert in errors", :type=>"alert.type", :close=>"removeError($index)"} {{alert.msg}}
     .row.collapse
       .small-10.columns
-        %input#ts_name.form-control{:type=>"text", :placeholder=>"Teamspeak Nickname", :autofocus=>true, "ng-model"=>"$parent.request_nick"}
+        %input#ts_name.form-control{:type=>"text", :placeholder=>"Teamspeak Nickname", :autofocus=>true, "ng-model"=>"request_nick"}
       .small-2.columns
         %a#request_codes.button.postfix{"ng-click"=>"requestCode()"} Request Code
+    %div{"ng-show"=>"teamspeak_details != null"}
+      Using account {{ teamspeak_details.name }} ({{ teamspeak_details.uuid }})
