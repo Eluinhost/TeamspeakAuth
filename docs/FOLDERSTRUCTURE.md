@@ -3,22 +3,24 @@ Project Folder Structure
 
 The folder structure of the project with files of interest only is the following:
 
+    |-app/
+      |-config/                    # Stores conifguration options
+        |-config.yml               # The base config file for all environments
+        |-config_dev.yml           # Dev environment overrides
+        |-config_prod.yml          # Production environment overrides
+        |-parameters.yml           # User configuration options
+        |-parameters.yml.dist      # Default configuration options, copy this to parameters.yml
+        |-routing.yml              # Stores the routes the website uses for URLs
     |-bower_components/          # Created when install bower assets, third party front end libraries
     |-cache/                     # Main folder for the entire cache, clear it with `grunt clean:cache`
       |-skins/                   # Folder for storing cached skins
-      |-templates/               # Folder for storing cached templates
-      |-container/               # Holds the cached container for the site built from /config/config.yml
-      |-routing/                 # Holds the cached routes for the site built from /config/routes.yml
-    |-config/                    # Stores conifguration options
-      |-config.yml               # The config file, doesn't exist by default, is created on composer update/install
-      |-routes.yml               # Stores the routes the website uses for URLs
-    |-console/
-      |-console.php              # Used to run console commands
+      |-prod/                    # Production environment cache
+      |-dev/                     # Dev environment cache    
+    |-bin/
+      |-console                  # Used to run console commands
     |-docs/                      # All these documentation files
     |-node_modules/              # Created when npm install is ran, third party node.js libraries
     |-src/                       # Stores the project's PHP code for the website to run from
-      |-config.yml.dist          # The default config file, this file is the template compiser uses to create the config.yml
-    |-templates/                 # Stores the twig templates for the website. Any changes here need `grunt clean:cache` to take effect
     |-vendor/                    # Created when composer install is ran, third party PHP libraries for the website
     |-web/                       # The main folder to point the webserver at, stores assets/front PHP file
       |-css/

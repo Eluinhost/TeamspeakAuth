@@ -1,0 +1,31 @@
+parameters:
+    locale:            en
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    debug_toolbar:          true
+    debug_redirects:        false
+    use_assetic_controller: true
+
+    skin_cache.timeout: 3600
+    teamspeak.username: serveradmin
+    teamspeak.password: ""
+    teamspeak.host: 127.0.0.1
+    teamspeak.query_port: 10011
+    teamspeak.server_port: 9987
+    teamspeak.group_id: 222
+    auth_server.description: '§4▁§e▂§4▃§e▄§4▅§e▆§4▇§e█ §4§l    Auth Server    §e█§4▇§e▆§4▅§e▄§4▃§e▂§4▁ §c▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔▔'
+    auth_server.port: 35879
+    auth_server.host: 0.0.0.0
+
+    database_driver: pdo_mysql
+    database_host: localhost
+    database_port: 3306
+    database_name: authentications
+    database_user: root
+    database_password: ""
+
+    minutesToLast: 15
+    site_name: 'Teamspeak Auth'
+    server_addresses:
+     - 'auth.example.com'
+     - 'example.com:35879'

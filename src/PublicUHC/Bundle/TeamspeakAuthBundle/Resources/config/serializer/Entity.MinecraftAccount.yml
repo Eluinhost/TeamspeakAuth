@@ -1,0 +1,14 @@
+PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftAccount:
+    exclusion_policy: ALL
+    read_only: true
+    properties:
+        uuid:
+            since_version: 1.0
+            read_only: true
+            type: string
+            expose: true
+        name:
+            since_version: 1.0
+            read_only: true
+            type: string
+            expose: true

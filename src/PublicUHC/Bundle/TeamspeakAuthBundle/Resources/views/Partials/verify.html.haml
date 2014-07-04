@@ -1,0 +1,12 @@
+.small-10.small-offset-1.columns{"cg-busy"=>"{promise: workingPromise}"}
+  .verify-account{"ng-hide"=>"authenticated"}
+    %h2 Verify your Account
+    %ts-uuid-fetcher{"teamspeak-details"=>"teamspeakDetails", "working-promise"=>"workingPromise"}
+    %account-verification{"teamspeak-details"=>"teamspeakDetails", "ng-show"=>"teamspeakDetails != null", "authenticated"=>"authenticated", "minecraft-name"=>"minecraftName", "working-promise"=>"workingPromise"}
+  .complete-message{"ng-show"=>"authenticated"}
+    %h2 All done!
+    %p Your teamspeak identity is now verified for the following account:
+    %p
+      %img{"ng-src"=>"{{ minecraftSkin }}"}
+      %em {{ minecraftName }}
+    %a.button.postfix{"ui-sref"=>"index"} Homepage

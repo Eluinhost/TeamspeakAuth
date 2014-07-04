@@ -1,0 +1,25 @@
+%p
+  Using Minecraft 1.7.6+ connect to
+  - if server_addresses|length > 1
+    one of the following servers:
+  - else
+    the server:
+  .panel
+    - for address in server_addresses
+      %p
+        %i.fa.fa-cubes
+        #{address}
+%p Enter the provided Minecraft and Teamspeak codes as well as your Minecraft username into the boxes below: (case sensitive)
+%hr/
+.errors
+  %alert{"ng-repeat"=>"alert in errors", :type=>"alert.type", :close=>"removeError($index)"} {{alert.msg}}
+.row.collapse
+  .small-12
+    %input.form-control{:type=>"text", :placeholder=>"Minecraft Nickname", :autofocus=>true, "ng-model"=>"minecraftName"}
+.row.collapse
+  .small-5.columns
+    %input.form-control{:type=>"text", :placeholder=>"Minecraft Code", "ng-model"=>"minecraftCode"}
+  .small-5.columns
+    %input.form-control{:type=>"text", :placeholder=>"Teamspeak Code", "ng-model"=>"teamspeakCode"}
+  .small-2.columns
+    %a.button.postfix{"ng-click"=>"verifyCodes()"} Verify!

@@ -3,7 +3,6 @@
 body {
     background-image: url('../images/graphy.png');
     padding-top: 50px;
-    padding-bottom: 150px;
     font-family: 'Tahoma', sans-serif;
 }
 
@@ -17,14 +16,11 @@ h1 {
     -moz-box-shadow: 5px 5px rgba(0,0,0,0.2);
     -webkit-box-shadow: 5px 5px rgba(0,0,0,0.2);
     box-shadow: 5px 5px rgba(0,0,0,0.2);
+    padding: 15px 15px 5px 15px;
 }
 
 .outer-wrapper {
     padding-bottom: 100px;
-}
-
-.inner-wrap {
-    padding: 15px 15px 5px 15px;
 }
 
 .form-control {
@@ -33,31 +29,8 @@ h1 {
 
 .copyright-footer {
     color: #BBBBBB;
-    float: right;
     padding-top: 15px;
-}
-
-.minecraft-image {
-    width: 1em;
-    height: 1em;
-}
-
-ul.off-canvas-list li.minecraft-name {
-    display: block;
-    padding: 0.66667rem;
-    color: rgba(255, 255, 255, 0.7);
-    border-bottom: 1px solid #262626;
-    transition: background 300ms ease;
-}
-
-.move-right .exit-off-canvas {
-    background: rgba(255,255,255,.5);
-}
-
-.latest-footer {
-    color: #BBBBBB;
-    float: left;
-    padding-top: 15px;
+    padding-bottom: 3px;
 }
 
 .copyright-footer a {
@@ -70,6 +43,7 @@ ul.off-canvas-list li.minecraft-name {
     text-align: justify;
     width: 30em;
 }
+
 .text-warning {
     color: #8a6d3b;
 }

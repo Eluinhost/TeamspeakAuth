@@ -1,0 +1,9 @@
+- extends "app.html.haml"
+
+- block page_title
+  #{errorCode} - #{errorType}
+
+- block content
+  %h1
+    %b #{errorCodeHtml|raw}
+  %h2 #{errorMessage}

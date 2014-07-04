@@ -19,7 +19,7 @@ There are a few command you can use with grunt to make using the project easier.
 
 Runs the following tasks in order 
 
-`grunt bower-install`, `grunt dist`, `grunt clean:cache`
+`grunt bower-install`, `grunt dist`
 
 Essentially it downloads front-end dependencies and then builds the front end into /web/vendor
 

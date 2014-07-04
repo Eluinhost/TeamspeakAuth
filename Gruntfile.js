@@ -41,12 +41,12 @@ module.exports = function(grunt) {
         concat: {
             js: {
                 src: [
-                    bower_dir + '/modernizr/modernizr.js',
-                    bower_dir + '/jquery/dist/jquery.js',
-                    bower_dir + '/fastclick/lib/fastclick.js',
-                    bower_dir + '/foundation/js/foundation/foundation.js',
-                    bower_dir + '/foundation/js/foundation/foundation.offcanvas.js',
-                    bower_dir + '/foundation/js/foundation/foundation.alert.js'
+                    bower_dir + '/angular/angular.js',
+                    bower_dir + '/angular-resource/angular-resource.js',
+                    bower_dir + '/angular-ui-router/release/angular-ui-router.js',
+                    bower_dir + '/angular-animate/angular-animate.js',
+                    bower_dir + '/angular-busy/dist/angular-busy.js',
+                    bower_dir + '/angular-foundation/mm-foundation-tpls.min.js'
                 ],
                 dest: build_dir + '/js/<%= pkg.name %>.js',
                 options: {
@@ -56,7 +56,8 @@ module.exports = function(grunt) {
             css: {
                 src: [
                     bower_dir + '/fontawesome/css/font-awesome.css',
-                    bower_dir + '/foundation/css/foundation.css'
+                    bower_dir + '/foundation/css/foundation.css',
+                    bower_dir + '/angular-busy/dist/angular-busy.css'
                 ],
                 dest: build_dir + '/css/<%= pkg.name %>.css'
             }

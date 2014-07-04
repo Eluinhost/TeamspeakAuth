@@ -1,0 +1,33 @@
+!!!
+%html
+  %head
+    %title
+      - block page_title
+        #{site_name}
+    - block stylesheets
+      %link{:rel=>"stylesheet", :type=>"text/css", :href=>"#{asset('vendor/css/TeamspeakAuth.min.css')}"}
+      %link{:rel=>"stylesheet", :type=>"text/css", :href=>"#{asset('css/style.css')}"}
+  %body{"ng-app"=>"teamspeakAuthApp"}
+    .site-header.text-center
+      %a{"ui-sref"=>"index"}
+        %img{:src=>"#{asset('images/servericon.png')}", :alt=>"Server Icon"}
+        %h1 #{site_name}
+    .row.outer-wrapper
+      .small-10.small-offset-1.columns
+        .row.page-wrapper.text-center
+          %section.main-section
+            - block content
+              %div{"ui-view"=>true}
+                Loading...
+          .small-12.columns.copyright-footer.text-right
+            &copy;Eluinhost 2014.
+            %a{:href=>"https://github.com/Eluinhost/TeamspeakAuth"}
+              %em Source Code
+
+- block javascripts
+  %script{:src=>"#{asset('vendor/js/TeamspeakAuth.min.js')}"}
+  %script{:src=>"#{asset('bundles/fosjsrouting/js/router.js')}"}
+  %script{:src=>"#{path('fos_js_routing_js', {'callback': 'fos.Router.setData'})}"}
+  %script{:src=>"#{asset('bundles/cypressangularngrouting/ng-router.js')}"}
+  %script{:src=>"#{path('fos_js_routing_js', {'callback': 'cypress.NgRouter.setData'})}"}
+  %script{:src=>"#{asset('js/app.js')}"}
