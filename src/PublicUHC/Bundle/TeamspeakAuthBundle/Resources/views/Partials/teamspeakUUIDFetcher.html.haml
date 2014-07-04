@@ -8,6 +8,7 @@
     .small-2.columns
       %a.button.postfix{"ng-click"=>"requestCode()"} Request Code
 .selected-ts-account{"ng-show"=>"teamspeakDetails != null"}
-  Selected teamspeak account "{{ teamspeakDetails.name }}"
-  %em ({{ teamspeakDetails.uuid }})
+  %p
+    Selected teamspeak account "{{ teamspeakDetails.name }}"
+    %em ({{ teamspeakDetails.uuid }})
   %button.tiny.round{"ng-click"=>"resetAccount()"} Chose a different account
