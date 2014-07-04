@@ -115,6 +115,19 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
         };
     }])
 
+    .directive('accountVerification', function() {
+        return {
+            restrict: 'AE',
+            scope: {},
+            templateUrl: 'partials/accountVerification',
+            link: function($scope, $element, attr) {
+                $scope.verifyCodes = function() {
+                    console.log('verify');
+                }
+            }
+        }
+    })
+
     //directive with keybind="expression()" key=13
     .directive('keybind', function() {
         return function(scope, element, attrs) {
