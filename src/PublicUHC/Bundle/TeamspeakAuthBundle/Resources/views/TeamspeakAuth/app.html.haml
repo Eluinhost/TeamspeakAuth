@@ -9,8 +9,9 @@
       %link{:rel=>"stylesheet", :type=>"text/css", :href=>"#{asset('css/style.css')}"}
   %body{"ng-app"=>"teamspeakAuthApp"}
     .site-header.text-center
-      %img{:src=>"#{asset('images/servericon.png')}", :alt=>"Server Icon"}
-      %h1 #{site_name}
+      %a{"ui-sref"=>"index"}
+        %img{:src=>"#{asset('images/servericon.png')}", :alt=>"Server Icon"}
+        %h1 #{site_name}
     .row.outer-wrapper
       .small-10.small-offset-1.columns
         .row.page-wrapper.text-center
