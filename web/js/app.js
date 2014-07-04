@@ -53,21 +53,46 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource'])
             templateUrl: 'partials/teamspeakUUIDFetcher',
             link: function($scope, $element, attr) { //called after DOM ready
                 $scope.teamspeak_details = null; //setup default values
+                $scope.teamspeak_stage = "start";
+                $scope.errors = [];
+
+                $scope.addError = function(msg) {
+                    $scope.errors.push({msg: msg, type: 'alert round'});
+                };
+
+                $scope.removeError = function(index) {
+                    $scope.errors.splice(index, 1);
+                };
+
+                $scope.clearErrors = function() {
+                    $scope.errors = [];
+                };
 
                 $scope.requestCode = function() {   //make new function in the scope
                     $scope.teamspeak_details = null;    //clear existing values
+                    $scope.teamspeak_stage = "loading";
+
+                    $scope.clearErrors();
+
                     RequestTeamspeakCodeService.update(
                         {},
                         {username: $scope.request_nick},
                         function(data) {
                             $scope.teamspeak_details = data;  //update with new values
+                            $scope.teamspeak_stage = "complete";
                         },
                         function(error) {
-                            var message = 'Unknown Error';
-                            if(typeof error.data != 'undefined' && error.data.length > 0 && typeof error.data[0].message != 'Unknown Error') {
-                                message = error.data[0].message
+                            if(typeof error.data != 'undefined' && error.data.length > 0 ) {
+                                angular.forEach(error.data, function(element){
+                                    if(typeof element.message != 'undefined') {
+                                        $scope.addError(element.message);
+                                    }
+                                });
                             }
-                            //TODO do error things
+                            if($scope.errors.length == 0) {
+                                $scope.addError('Unknown Error Occurred');
+                            }
+                            $scope.teamspeak_stage = "start";
                         }
                     );
                 }
