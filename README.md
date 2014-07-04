@@ -5,6 +5,8 @@ This provides a way to verify a Minecraft account belongs to a user within Teams
 user will be provided a server group of choice, will have their description set to their Minecraft username and will
 have an icon assigned to them that is the same as their ingame skin.
 
+![Example Image](/web/images/fairy.png?raw=true "Example Image")
+
 How it works
 ------------
 
