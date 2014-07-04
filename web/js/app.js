@@ -72,10 +72,14 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
                     $scope.errors = [];
                 };
 
+                $scope.resetAccount = function() {
+                    $scope.teamspeakDetails = null;
+                };
+
                 //what to do when code is requested
                 $scope.requestCode = function() {
                     //clear errors any old data
-                    $scope.teamspeakDetails = null;
+                    $scope.resetAccount();
                     $scope.clearErrors();
 
                     //make sure we actually have a nickname
