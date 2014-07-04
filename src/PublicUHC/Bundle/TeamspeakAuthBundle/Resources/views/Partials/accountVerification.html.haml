@@ -15,11 +15,11 @@
   %alert{"ng-repeat"=>"alert in errors", :type=>"alert.type", :close=>"removeError($index)"} {{alert.msg}}
 .row.collapse
   .small-12
-    %input.form-control{:type=>"text", :placeholder=>"Minecraft Nickname", :autofocus=>true, "ng-model"=>"minecraftName"}
+    %input.form-control{:type=>"text", :placeholder=>"Minecraft Nickname", "ng-model"=>"minecraftName", :keybind=>"verifyCode()", :key=>13}
 .row.collapse
   .small-5.columns
-    %input.form-control{:type=>"text", :placeholder=>"Minecraft Code", "ng-model"=>"minecraftCode"}
+    %input.form-control{:type=>"text", :placeholder=>"Minecraft Code", "ng-model"=>"minecraftCode", :keybind=>"verifyCode()", :key=>13}
   .small-5.columns
-    %input.form-control{:type=>"text", :placeholder=>"Teamspeak Code", "ng-model"=>"teamspeakCode"}
+    %input.form-control{:type=>"text", :placeholder=>"Teamspeak Code", "ng-model"=>"teamspeakCode", :keybind=>"verifyCode()", :key=>13}
   .small-2.columns
     %a.button.postfix{"ng-click"=>"verifyCodes()"} Verify!
