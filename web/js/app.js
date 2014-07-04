@@ -41,6 +41,7 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
             }, 1500, false);
         });
         $scope.minecraftName = 'Steve';
+        $scope.authenticated = false;
     }])
 
 /***************************************
@@ -156,7 +157,8 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
             restrict: 'AE',
             scope: {
                 teamspeakDetails: '=',
-                minecraftName: '='
+                minecraftName: '=',
+                authenticated: '='
             },
             templateUrl: 'partials/accountVerification',
             link: function($scope, $element, attr) {
@@ -192,6 +194,8 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
                         return;
                     }
 
+                    $scope.clearErrors();
+
                     $scope.promise = VerifyAccountService.save(
                         {},
                         {
@@ -200,8 +204,8 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
                             mc_uuid: $scope.minecraftName,
                             mc_code: $scope.minecraftCode
                         },
-                        function(data) {
-                            //empty response on success
+                        function() {
+                            $scope.authenticated = true;
                         },
                         function(error) {
                             //check for errors
