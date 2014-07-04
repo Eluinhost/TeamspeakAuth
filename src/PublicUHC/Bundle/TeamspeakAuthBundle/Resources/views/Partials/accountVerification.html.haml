@@ -9,14 +9,17 @@
       %p
         %i.fa.fa-cubes
         #{address}
-%p Enter both your Minecraft username and received Minecraft code below: (case sensitive)
+%p Enter the provided Minecraft and Teamspeak codes as well as your Minecraft username into the boxes below: (case sensitive)
 %hr/
 .errors
   %alert{"ng-repeat"=>"alert in errors", :type=>"alert.type", :close=>"removeError($index)"} {{alert.msg}}
 .row.collapse
-  .small-5.columns
-    %input.form-control{:type=>"text", :placeholder=>"Minecraft Nickname", :autofocus=>true, "ng-model"=>"minecraftUsername"}
+  .small-12
+    %input.form-control{:type=>"text", :placeholder=>"Minecraft Nickname", :autofocus=>true, "ng-model"=>"minecraftName"}
+.row.collapse
   .small-5.columns
     %input.form-control{:type=>"text", :placeholder=>"Minecraft Code", "ng-model"=>"minecraftCode"}
+  .small-5.columns
+    %input.form-control{:type=>"text", :placeholder=>"Teamspeak Code", "ng-model"=>"teamspeakCode"}
   .small-2.columns
     %a.button.postfix{"ng-click"=>"verifyCodes()"} Verify!
