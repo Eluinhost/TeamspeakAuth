@@ -92,7 +92,8 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
         return {
             restrict: 'AE', //allow attribute or element
             scope: {
-                teamspeakDetails: '='
+                teamspeakDetails: '=',
+                workingPromise: '='
             },
             templateUrl: 'partials/teamspeakUUIDFetcher',
             link: function($scope, $element, attr) { //called after DOM ready
@@ -126,7 +127,7 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
                     }
 
                     //set the promise for the busy graphic
-                    $scope.promise = RequestTeamspeakCodeService.update(
+                    $scope.workingPromise = RequestTeamspeakCodeService.update(
                         {},
                         {username: $scope.request_nick},
                         function(data) {
@@ -158,7 +159,8 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
             scope: {
                 teamspeakDetails: '=',
                 minecraftName: '=',
-                authenticated: '='
+                authenticated: '=',
+                workingPromise: '='
             },
             templateUrl: 'partials/accountVerification',
             link: function($scope, $element, attr) {
@@ -196,7 +198,7 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
 
                     $scope.clearErrors();
 
-                    $scope.promise = VerifyAccountService.save(
+                    $scope.workingPromise = VerifyAccountService.save(
                         {},
                         {
                             ts_uuid: $scope.teamspeakDetails.uuid,
