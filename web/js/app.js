@@ -12,10 +12,10 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
                 templateUrl: 'partials/index'
             })
 
-            .state('teamspeak_request', {
-                url: '/teamspeak_request',
-                templateUrl: 'partials/teamspeakrequest'
-            })
+            .state('verify', {
+                url: '/verify',
+                templateUrl: 'partials/verify'
+            });
 
         // catch all route
         // send users to the form page
