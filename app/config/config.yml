@@ -29,7 +29,7 @@ twig:
     strict_variables: "%kernel.debug%"
     globals:
         site_name: "%site_name%"
-        server_address: "%server_address%"
+        server_addresses: "%server_addresses%"
 
 # Assetic Configuration
 assetic:

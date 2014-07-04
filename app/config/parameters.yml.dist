@@ -26,4 +26,6 @@ parameters:
 
     minutesToLast: 15
     site_name: 'Teamspeak Auth'
-    server_address: 'auth.example.com or example.com:35879'
+    server_addresses:
+     - 'auth.example.com'
+     - 'example.com:35879'
