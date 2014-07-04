@@ -14,7 +14,8 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
 
             .state('verify', {
                 url: '/verify',
-                templateUrl: 'partials/verify'
+                templateUrl: 'partials/verify',
+                controller: 'VerifyCtrl'
             });
 
         // catch all route
@@ -27,6 +28,10 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
  ************************/
     .controller('LatestAuthsCtrl', ['$scope', 'LatestAuthsService', function ($scope, LatestAuthsService) {
         $scope.latest = LatestAuthsService.query();
+    }])
+
+    .controller('VerifyCtrl', ['$scope', function($scope) {
+        $scope.teamspeakDetails = null;
     }])
 
 /***************************************
@@ -49,7 +54,9 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
     .directive('tsUuidFetcher', ['RequestTeamspeakCodeService', function(RequestTeamspeakCodeService) {
         return {
             restrict: 'AE', //allow attribute or element
-            scope: {}, //isolate the scope
+            scope: {
+                teamspeakDetails: '='
+            },
             templateUrl: 'partials/teamspeakUUIDFetcher',
             link: function($scope, $element, attr) { //called after DOM ready
 
@@ -68,7 +75,7 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
                 //what to do when code is requested
                 $scope.requestCode = function() {
                     //clear errors any old data
-                    delete $scope.teamspeak_details;
+                    $scope.teamspeakDetails = null;
                     $scope.clearErrors();
 
                     //make sure we actually have a nickname
@@ -82,7 +89,7 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
                         {},
                         {username: $scope.request_nick},
                         function(data) {
-                            $scope.teamspeak_details = data;  //update with new values
+                            $scope.teamspeakDetails = data;  //update with new values
                         },
                         function(error) {
                             //check for errors
