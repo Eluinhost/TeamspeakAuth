@@ -47,6 +47,11 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
         return $resource( URL, {_format: 'json'}, {'update': { method:'PUT'}});
     }])
 
+    .factory('VerifyAccountService', ['$resource', function($resource) {
+        var URL = NgRouting.generateResourceUrl('api_v1_authentications_new');
+        return $resource( URL, {_format: 'json'});
+    }])
+
 /*****************************************
  *  Configure the application directives *
  *****************************************/
@@ -115,10 +120,12 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
         };
     }])
 
-    .directive('accountVerification', function() {
+    .directive('accountVerification', ['VerifyAccountService', function(VerifyAccountService) {
         return {
             restrict: 'AE',
-            scope: {},
+            scope: {
+                teamspeakDetails: '='
+            },
             templateUrl: 'partials/accountVerification',
             link: function($scope, $element, attr) {
                 //setup errors
@@ -138,11 +145,51 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
                 };
 
                 $scope.verifyCodes = function() {
-                    console.log('verify');
+                    if($scope.teamspeakCode == null || $scope.teamspeakCode.length == 0) {
+                        $scope.addError('Must supply the provided Teamspeak code');
+                        return;
+                    }
+
+                    if($scope.minecraftCode == null || $scope.minecraftCode.length == 0) {
+                        $scope.addError('Must supply the provided Minecraft code');
+                        return;
+                    }
+
+                    if($scope.minecraftName == null || $scope.minecraftName.length == 0) {
+                        $scope.addError('Must supply your Minecraft username');
+                        return;
+                    }
+
+                    $scope.promise = VerifyAccountService.save(
+                        {},
+                        {
+                            ts_uuid: $scope.teamspeakDetails.uuid,
+                            ts_code: $scope.teamspeakCode,
+                            mc_uuid: $scope.minecraftName,
+                            mc_code: $scope.minecraftCode
+                        },
+                        function(data) {
+                            //empty response on success
+                        },
+                        function(error) {
+                            //check for errors
+                            if(typeof error.data != 'undefined' && error.data.length > 0 ) {
+                                angular.forEach(error.data, function(element){
+                                    if(typeof element.message != 'undefined') {
+                                        $scope.addError(element.message);
+                                    }
+                                });
+                            }
+                            //if none in message set a default one
+                            if($scope.errors.length == 0) {
+                                $scope.addError('Unknown Error Occurred');
+                            }
+                        }
+                    );
                 }
             }
         }
-    })
+    }])
 
     //directive with keybind="expression()" key=13
     .directive('keybind', function() {
