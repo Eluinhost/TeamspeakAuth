@@ -20,9 +20,13 @@
               %div{"ui-view"=>true}
                 Loading...
           .small-12.columns.copyright-footer.text-right
-            &copy;Eluinhost 2014.
-            %a{:href=>"https://github.com/Eluinhost/TeamspeakAuth"}
-              %em Source Code
+            %i.fa.fa-github
+            %a{:href=>"https://github.com/Eluinhost/TeamspeakAuth"} Source
+            %i.fa.fa-bug
+            %a{:href=>"#{path('nelmio_api_doc_index')}"} API
+            %i.fa.fa-twitter
+            %a{:href=>"https://twitter.com/Eluinhost"} Twitter
+            %small &copy;Eluinhost 2014
 
 - block javascripts
   %script{:src=>"#{asset('vendor/js/TeamspeakAuth.min.js')}"}
