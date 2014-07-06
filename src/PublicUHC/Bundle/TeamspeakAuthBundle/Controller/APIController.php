@@ -14,6 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class APIController
  * @package PublicUHC\Bundle\TeamspeakAuthBundle\Controller
+ *
+ * TODO REMOVE
  */
 class APIController extends Controller {
 
