@@ -4,6 +4,7 @@ namespace PublicUHC\Bundle\TeamspeakAuthBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
+use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 use FOS\RestBundle\Controller\Annotations\Route;
@@ -13,7 +14,7 @@ use FOS\RestBundle\Controller\Annotations\Route;
  *
  * @Route("/api")
  */
-class MinecraftAccountController {
+class MinecraftAccountController extends FOSRestController {
 
     /**
      * @Get("/v1/minecraft_account.{_format}", name="api_v1_minecraft_account_list")
