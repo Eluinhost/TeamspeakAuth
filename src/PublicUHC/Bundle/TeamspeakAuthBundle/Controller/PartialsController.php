@@ -8,6 +8,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class PartialsController extends Controller {
 
     /**
+     * Render the app page
+     *
+     * @Route("/")
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function indexAction()
+    {
+        return $this->render('PublicUHCTeamspeakAuthBundle:TeamspeakAuth:app.html.haml');
+    }
+
+    /**
      * Render a partial for angular
      *
      * @Route("/partials/{name}")
