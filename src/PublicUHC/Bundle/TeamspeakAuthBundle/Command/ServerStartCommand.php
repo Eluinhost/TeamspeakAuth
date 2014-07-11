@@ -54,7 +54,7 @@ class ServerStartCommand extends Command {
         $this->server->on('login_success', function($username, $uuid, DisconnectPacket $packet) use ($output) {
             $qb = $this->em->createQueryBuilder();
             $qb->select('account')
-                ->from('PublicUHC\TeamspeakAuth\Entities\MinecraftAccount', 'account')
+                ->from('PublicUHCTeamspeakAuthBundle:MinecraftAccount', 'account')
                 ->where('account.uuid = :uuid')
                 ->setParameter('uuid', $uuid);
 
