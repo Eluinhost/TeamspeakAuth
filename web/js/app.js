@@ -47,19 +47,17 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
 /***************************************
  *  Configure the application services *
  ***************************************/
-    .factory('LatestAuthsService', ['$resource', function($resource){
-        var URL = NgRouting.generateResourceUrl('api_v1_authentications_all');
-        return $resource( URL, {_format: 'json'});
+    .factory('LatestAuthsService', ['$resource', function($resource) {
+        return $resource(NgRouting.generateResourceUrl('api_v1_authentications_all'));
     }])
 
     .factory('RequestTeamspeakCodeService', ['$resource', function($resource) {
         var URL = NgRouting.generateResourceUrl('api_v1_teamspeak_code_request');
-        return $resource( URL, {_format: 'json'}, {'update': { method:'PUT'}});
+        return $resource(URL, {'update': { method:'PUT'}});
     }])
 
     .factory('VerifyAccountService', ['$resource', function($resource) {
-        var URL = NgRouting.generateResourceUrl('api_v1_authentications_new');
-        return $resource( URL, {_format: 'json'});
+        return $resource(NgRouting.generateResourceUrl('api_v1_authentications_new'));
     }])
 
     .service('DebounceService', ['$timeout', function ($timeout) {
