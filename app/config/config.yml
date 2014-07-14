@@ -75,14 +75,13 @@ fos_rest:
         default_engine: php
         formats:
             json: true
-            xml: true
     format_listener:
         rules:
             -
-                path: "^/api"
+                path: '^/api'
                 prefer_extension:     true
                 fallback_format:      json
-                priorities:           [json, xml]
+                priorities:           [json]
                 prefer_extension: true
             -
                 path: '^/'
@@ -114,4 +113,3 @@ nelmio_api_doc:
         request_format:
             formats:
                 json: application/json
-                xml: application/xml
