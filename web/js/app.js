@@ -53,7 +53,7 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
 
     .factory('RequestTeamspeakCodeService', ['$resource', function($resource) {
         var URL = NgRouting.generateResourceUrl('api_v1_teamspeak_code_request');
-        return $resource(URL, {'update': { method:'PUT'}});
+        return $resource(URL, {}, {'update': { method:'PUT'}});
     }])
 
     .factory('VerifyAccountService', ['$resource', function($resource) {
