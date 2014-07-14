@@ -47,19 +47,17 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
 /***************************************
  *  Configure the application services *
  ***************************************/
-    .factory('LatestAuthsService', ['$resource', function($resource){
-        var URL = NgRouting.generateResourceUrl('api_v1_authentications_all');
-        return $resource( URL, {_format: 'json'});
+    .factory('LatestAuthsService', ['$resource', function($resource) {
+        return $resource(NgRouting.generateResourceUrl('api_v1_authentications_all'));
     }])
 
     .factory('RequestTeamspeakCodeService', ['$resource', function($resource) {
         var URL = NgRouting.generateResourceUrl('api_v1_teamspeak_code_request');
-        return $resource( URL, {_format: 'json'}, {'update': { method:'PUT'}});
+        return $resource(URL, {}, {'update': { method:'PUT'}});
     }])
 
     .factory('VerifyAccountService', ['$resource', function($resource) {
-        var URL = NgRouting.generateResourceUrl('api_v1_authentications_new');
-        return $resource( URL, {_format: 'json'});
+        return $resource(NgRouting.generateResourceUrl('api_v1_authentications_new'));
     }])
 
     .service('DebounceService', ['$timeout', function ($timeout) {
@@ -135,15 +133,9 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
                         },
                         function(error) {
                             //check for errors
-                            if(typeof error.data != 'undefined' && error.data.length > 0 ) {
-                                angular.forEach(error.data, function(element){
-                                    if(typeof element.message != 'undefined') {
-                                        $scope.addError(element.message);
-                                    }
-                                });
-                            }
-                            //if none in message set a default one
-                            if($scope.errors.length == 0) {
+                            if(typeof error.data.message != 'undefined' && error.data.message.length > 0 ) {
+                                $scope.addError(error.data.message);
+                            } else {
                                 $scope.addError('Unknown Error Occurred');
                             }
                         }
@@ -211,15 +203,9 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
                         },
                         function(error) {
                             //check for errors
-                            if(typeof error.data != 'undefined' && error.data.length > 0 ) {
-                                angular.forEach(error.data, function(element){
-                                    if(typeof element.message != 'undefined') {
-                                        $scope.addError(element.message);
-                                    }
-                                });
-                            }
-                            //if none in message set a default one
-                            if($scope.errors.length == 0) {
+                            if(typeof error.data.message != 'undefined' && error.data.message.length > 0 ) {
+                                $scope.addError(error.data.message);
+                            } else {
                                 $scope.addError('Unknown Error Occurred');
                             }
                         }

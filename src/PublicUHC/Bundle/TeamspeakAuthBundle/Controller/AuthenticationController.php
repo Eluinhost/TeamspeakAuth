@@ -24,28 +24,20 @@ use TeamSpeak3_Exception;
  * Class AuthenticationController
  * @package PublicUHC\Bundle\TeamspeakAuthBundle\Controller
  *
- * @Route("/api", defaults={"_format" = "json"})
+ * @Route("/api")
  */
 class AuthenticationController extends FOSRestController {
 
     /**
-     * @Post("/v1/authentications.{_format}", name="api_v1_authentications_new")
+     * @Post("/v1/authentications", name="api_v1_authentications_new")
      *
      * @ApiDoc(
-     * description="Add a new authentication to the system between a Teamspeak Account and a Minecraft account",
-     * tags={"website"},
-     * requirements={
-     *      {
-     *          "name"="_format",
-     *          "dataType"="String",
-     *          "requirement"="json|xml",
-     *          "description"="Format of response, if empty will be JSON"
-     *      }
-     * }
+     * description="Add a new authentication to the system between a Teamspeak account and a Minecraft account",
+     * tags={"website"}
      * )
      * @RequestParam(name="ts_uuid", description="Teamspeak UUID")
      * @RequestParam(name="ts_code", description="Teamspeak Code")
-     * @RequestParam(name="mc_uuid", description="Minecraft UUID")
+     * @RequestParam(name="mc_uuid", description="Minecraft Username")
      * @RequestParam(name="mc_code", description="Minecraft Code")
      */
     public function api_v1_authenticationsAction($ts_uuid, $ts_code, $mc_uuid, $mc_code)
@@ -126,19 +118,11 @@ class AuthenticationController extends FOSRestController {
     }
 
     /**
-     * @Get("/v1/authentications.{_format}", name="api_v1_authentications_all")
+     * @Get("/v1/authentications", name="api_v1_authentications_all")
      *
      * @ApiDoc(
      * description="Fetch a list of all the authentications, latest first",
      * tags={"API"},
-     * requirements={
-     *      {
-     *          "name"="_format",
-     *          "dataType"="String",
-     *          "requirement"="json|xml",
-     *          "description"="Format of response, if empty will be JSON"
-     *      }
-     * },
      * output="PublicUHC\Bundle\TeamspeakAuthBundle\Entity\Authentication"
      * )
      * @QueryParam(name="limit", description="Amount to return", requirements="\d+", default="10")
