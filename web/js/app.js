@@ -133,15 +133,9 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
                         },
                         function(error) {
                             //check for errors
-                            if(typeof error.data != 'undefined' && error.data.length > 0 ) {
-                                angular.forEach(error.data, function(element){
-                                    if(typeof element.message != 'undefined') {
-                                        $scope.addError(element.message);
-                                    }
-                                });
-                            }
-                            //if none in message set a default one
-                            if($scope.errors.length == 0) {
+                            if(typeof error.data.message != 'undefined' && error.data.message.length > 0 ) {
+                                $scope.addError(error.data.message);
+                            } else {
                                 $scope.addError('Unknown Error Occurred');
                             }
                         }
@@ -209,15 +203,9 @@ angular.module('teamspeakAuthApp', ['mm.foundation', 'ui.router', 'ngResource', 
                         },
                         function(error) {
                             //check for errors
-                            if(typeof error.data != 'undefined' && error.data.length > 0 ) {
-                                angular.forEach(error.data, function(element){
-                                    if(typeof element.message != 'undefined') {
-                                        $scope.addError(element.message);
-                                    }
-                                });
-                            }
-                            //if none in message set a default one
-                            if($scope.errors.length == 0) {
+                            if(typeof error.data.message != 'undefined' && error.data.message.length > 0 ) {
+                                $scope.addError(error.data.message);
+                            } else {
                                 $scope.addError('Unknown Error Occurred');
                             }
                         }
