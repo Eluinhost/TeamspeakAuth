@@ -30,6 +30,7 @@ twig:
     globals:
         site_name: "%site_name%"
         server_addresses: "%server_addresses%"
+    exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
 
 # Assetic Configuration
 assetic:
