@@ -65,8 +65,10 @@ services:
         - '%auth_server.database_keepalive%'
         - '%auth_server.description%'
         - '%kernel.root_dir%/../web/images/servericon.png'
+        - '@logger'
         tags:
         -  { name: console.command }
+        - { name: monolog.logger, channel: authserver }
 
     ## server
     server_loop:
