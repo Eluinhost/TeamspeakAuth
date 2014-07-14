@@ -18,7 +18,7 @@ use FOS\RestBundle\Controller\Annotations\Route;
 class TeamspeakAccountController extends FOSRestController {
 
     /**
-     * @Get("/v1/teamspeak_account.{_format}", name="api_v1_teamspeak_account_list")
+     * @Get("/v1/teamspeak_account", name="api_v1_teamspeak_account_list")
      *
      * @QueryParam(name="verified", description="Only return accounts with authentications", default=false)
      * @QueryParam(name="online", description="Only return accounts with an online teamspeak account", default=false)

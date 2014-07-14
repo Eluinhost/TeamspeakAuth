@@ -36,7 +36,7 @@ class TeamspeakCodeController extends FOSRestController {
      *      }
      * }
      * )
-     * @Put("/v1/teamspeak_codes.{_format}", name="api_v1_teamspeak_code_request", defaults={"_format"="json"})
+     * @Put("/v1/teamspeak_codes", name="api_v1_teamspeak_code_request")
      * @RequestParam(name="username", description="Teamspeak Username to send code to")
      */
     public function requestTeamspeakCodeAction($username) {

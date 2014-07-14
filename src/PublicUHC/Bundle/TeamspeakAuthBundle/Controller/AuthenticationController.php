@@ -24,12 +24,12 @@ use TeamSpeak3_Exception;
  * Class AuthenticationController
  * @package PublicUHC\Bundle\TeamspeakAuthBundle\Controller
  *
- * @Route("/api", defaults={"_format" = "json"})
+ * @Route("/api")
  */
 class AuthenticationController extends FOSRestController {
 
     /**
-     * @Post("/v1/authentications.{_format}", name="api_v1_authentications_new")
+     * @Post("/v1/authentications", name="api_v1_authentications_new")
      *
      * @ApiDoc(
      * description="Add a new authentication to the system between a Teamspeak Account and a Minecraft account",
@@ -126,7 +126,7 @@ class AuthenticationController extends FOSRestController {
     }
 
     /**
-     * @Get("/v1/authentications.{_format}", name="api_v1_authentications_all")
+     * @Get("/v1/authentications", name="api_v1_authentications_all")
      *
      * @ApiDoc(
      * description="Fetch a list of all the authentications, latest first",

@@ -17,7 +17,7 @@ use FOS\RestBundle\Controller\Annotations\Route;
 class MinecraftAccountController extends FOSRestController {
 
     /**
-     * @Get("/v1/minecraft_account.{_format}", name="api_v1_minecraft_account_list")
+     * @Get("/v1/minecraft_account", name="api_v1_minecraft_account_list")
      *
      * @QueryParam(name="verified", description="Only return accounts with authentications", default=false)
      * @QueryParam(name="online", description="Only return accounts with an online teamspeak account", default=false)
