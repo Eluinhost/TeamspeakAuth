@@ -20,14 +20,21 @@ class TeamspeakAccountController extends FOSRestController {
     /**
      * @Get("/v1/teamspeak_account", name="api_v1_teamspeak_account_list")
      *
-     * @QueryParam(name="verified", description="Only return accounts with authentications", default=false)
-     * @QueryParam(name="online", description="Only return accounts with an online teamspeak account", default=false)
+     * @QueryParam(name="type", description="Search type", requirements="online|verified|any", default="any")
      * @QueryParam(name="uuids", description="Search by user UUID", array=true, nullable=true)
+     * @QueryParam(name="limit", description="Limit amount returned, ignored if searching by UUIDs, max 50", default="10")
+     * @QueryParam(name="offset", description="Offset, ignored if searching by UUIDs", default="0")
      *
      * @ApiDoc(
+     * section="Teamspeak Accounts",
      * description="View teamspeak accounts",
      * tags={"API"},
-     * output="PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount"
+     * output="PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount",
+     * statusCodes={
+     *      200="On success",
+     *      400="On invalid parameters",
+     *      503="On unable to reach Teamspeak server (online checks only)"
+     * }
      * )
      */
     public function api_v1_checkTeamspeakAccountAction(array $uuids, $online, $verified)
