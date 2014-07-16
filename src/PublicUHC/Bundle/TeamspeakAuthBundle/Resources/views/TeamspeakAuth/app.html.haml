@@ -6,11 +6,13 @@
         #{site_name}
     - block stylesheets
       %link{:rel=>"stylesheet", :type=>"text/css", :href=>"#{asset('vendor/css/TeamspeakAuth.min.css')}"}
-      %link{:rel=>"stylesheet", :type=>"text/css", :href=>"#{asset('css/style.css')}"}
+      - stylesheets 'bundles/publicuhcteamspeakauth/css/*' filter='cssrewrite'
+        %link{:rel=>"stylesheet", :type=>"text/css", :href=>"#{asset_url}"}
   %body{"ng-app"=>"teamspeakAuthApp"}
     .site-header.text-center
       %a{"ui-sref"=>"index"}
-        %img{:src=>"#{asset('images/servericon.png')}", :alt=>"Server Icon"}
+        -image '@PublicUHCTeamspeakAuthBundle/Resources/public/images/servericon.png'
+          %img{:src=>"#{asset_url}", :alt=>"Server Icon"}
         %h1 #{site_name}
     .row.outer-wrapper
       .small-10.small-offset-1.columns
@@ -34,4 +36,5 @@
   %script{:src=>"#{path('fos_js_routing_js', {'callback': 'fos.Router.setData'})}"}
   %script{:src=>"#{asset('bundles/cypressangularngrouting/ng-router.js')}"}
   %script{:src=>"#{path('fos_js_routing_js', {'callback': 'cypress.NgRouter.setData'})}"}
-  %script{:src=>"#{asset('js/app.js')}"}
+  - javascripts '@PublicUHCTeamspeakAuthBundle/Resources/public/js/*'
+    %script{:type=>"text/javascript", :src=>"#{asset_url}"}

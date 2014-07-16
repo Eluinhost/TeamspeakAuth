@@ -13,7 +13,8 @@
   %hr /
   %p
     Example:
-    %img{:src=>"#{asset('images/fairy.png')}"}
+    -image '@PublicUHCTeamspeakAuthBundle/Resources/public/images/fairy.png'
+      %img{:src=>"#{asset_url}", :alt=>"Example Image"}
   %p.text-warning
     %em
       %i.fa.fa-exclamation-triangle /
