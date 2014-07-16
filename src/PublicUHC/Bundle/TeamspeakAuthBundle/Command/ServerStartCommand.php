@@ -5,6 +5,7 @@ namespace PublicUHC\Bundle\TeamspeakAuthBundle\Command;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
+use Psr\Log\LoggerInterface;
 use PublicUHC\MinecraftAuth\AuthServer\AuthServer;
 use PublicUHC\MinecraftAuth\Protocol\Packets\DisconnectPacket;
 use PublicUHC\MinecraftAuth\Protocol\Packets\StatusResponsePacket;
@@ -23,8 +24,15 @@ class ServerStartCommand extends Command {
     private $keepAlive;
     private $description;
     private $faviconLocation;
+    private $logger;
 
-    public function __construct(AuthServer $server, EntityManager $em, LoopInterface $loop, $keepAlive, $description, $faviconLocation)
+    public function __construct(AuthServer $server,
+                                EntityManager $em,
+                                LoopInterface $loop,
+                                $keepAlive,
+                                $description,
+                                $faviconLocation,
+                                LoggerInterface $logger)
     {
         parent::__construct(null);
         $this->server = $server;
@@ -33,6 +41,7 @@ class ServerStartCommand extends Command {
         $this->keepAlive = $keepAlive;
         $this->description = $description;
         $this->faviconLocation = $faviconLocation;
+        $this->logger = $logger;
     }
 
     protected function configure()
@@ -43,7 +52,8 @@ class ServerStartCommand extends Command {
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln("<info>Starting server... You can stop the server with Ctrl+C.</info>");
+        $output->writeln("<info>Starting server on port {$this->server->getPort()}... You can stop the server with Ctrl+C.</info>");
+        $this->logger->info('Starting auth server on port '.$this->server->getPort());
 
         //setup a loop to keep the connection alive
         $this->loop->addPeriodicTimer($this->keepAlive, function() {
@@ -62,7 +72,8 @@ class ServerStartCommand extends Command {
                 /** @var $account MinecraftAccount */
                 $account = $qb->getQuery()->getSingleResult();
             } catch (NoResultException $ex) {
-                echo "New account created for $username\n";
+                $output->writeln("<info>New account created for $username ($uuid)</info>");
+                $this->logger->info("New minecraft account created for $username ($uuid)");
                 $account = new MinecraftAccount();
             }
 
@@ -84,6 +95,7 @@ class ServerStartCommand extends Command {
             $this->em->detach($account);
             $this->em->detach($code);
             $output->writeln("<comment>USERNAME: $username UUID: $uuid CODE: {$code->getCode()}</comment>");
+            $this->logger->info("USERNAME: $username UUID: $uuid CODE: {$code->getCode()}");
             $packet->setReason('Your code is '.$code->getCode());
         });
 
