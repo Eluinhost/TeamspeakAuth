@@ -12,6 +12,8 @@ use PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\TeamspeakHelper;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 use FOS\RestBundle\Controller\Annotations\RequestParam;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use TeamSpeak3_Exception;
 
 /**
@@ -24,16 +26,23 @@ class TeamspeakCodeController extends FOSRestController {
 
     /**
      * @ApiDoc(
+     * section="Teamspeak Accounts",
      * description="Generates a new code for the teamspeak account with the given name",
      * output="PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount",
-     * tags={"website"}
+     * tags={"website"},
+     * statusCodes={
+     *      200="On success",
+     *      400="On invalid parameters",
+     *      404="On username not found or not online",
+     *      503="On failure to reach Teamspeak server"
+     * }
      * )
      * @Put("/v1/teamspeak_codes", name="api_v1_teamspeak_code_request")
      * @RequestParam(name="username", description="Teamspeak username to send a code to")
      */
     public function requestTeamspeakCodeAction($username) {
         if( $username == null || strlen($username) == 0 || strlen($username) > 30 ) {
-            throw new BadRequestHttpException('Invalid teamspeak name provided');
+            throw new NotFoundHttpException('Invalid teamspeak name provided');
         }
 
         /**
@@ -46,7 +55,7 @@ class TeamspeakCodeController extends FOSRestController {
             $client = $ts3->getClientForName($username);
 
             if (null == $client) {
-                throw new BadRequestHttpException('Teamspeak user not online');
+                throw new NotFoundHttpException('Teamspeak user not online');
             }
 
             $account = $ts3->updateLastClientUsername($client);
@@ -68,7 +77,7 @@ class TeamspeakCodeController extends FOSRestController {
 
             return $this->view($account);
         } catch ( TeamSpeak3_Exception $ignored ) {
-            throw new BadRequestHttpException('Error contacting the teamspeak server');
+            throw new ServiceUnavailableHttpException('Error contacting the teamspeak server');
         }
     }
 } 
