@@ -53,7 +53,7 @@ class AuthenticationController extends FOSRestController {
     public function api_v1_authenticationsAction($ts_uuid, $ts_code, $mc_uuid, $mc_code)
     {
         /** @var $entityManager EntityManager */
-        $entityManager = $this->get('doctrine.orm.entity_manager');
+        $entityManager = $this->getDoctrine()->getManager();
 
         $tsqb = $entityManager->createQueryBuilder();
 
@@ -149,7 +149,7 @@ class AuthenticationController extends FOSRestController {
             throw new BadRequestHttpException('Only 50 authentications may be fetched per request');
 
         /** @var $entityManager EntityManager */
-        $entityManager = $this->get('doctrine.orm.entity_manager');
+        $entityManager = $this->getDoctrine()->getManager();
 
         $qb = $entityManager->createQueryBuilder();
 

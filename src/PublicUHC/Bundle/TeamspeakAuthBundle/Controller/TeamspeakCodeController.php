@@ -66,7 +66,8 @@ class TeamspeakCodeController extends FOSRestController {
             $code->setAccount($account);
 
             /** @var $entityManager EntityManager */
-            $entityManager = $this->get('doctrine.orm.entity_manager');
+            $entityManager = $this->getDoctrine()->getManager();
+            
             $entityManager->persist($code);
             $entityManager->persist($account);
             $entityManager->flush();
