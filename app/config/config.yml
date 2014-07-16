@@ -86,7 +86,7 @@ fos_rest:
                 prefer_extension: true
             -
                 path: '^/'
-                priorities: [ 'html', '*/*']
+                priorities: [ 'html', 'application/javascript', 'text/css', '*/*']
                 fallback_format: html
                 prefer_extension: true
     body_converter:
