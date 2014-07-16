@@ -9,7 +9,6 @@ use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakCode;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\TeamspeakHelper;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 use FOS\RestBundle\Controller\Annotations\RequestParam;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -20,7 +19,7 @@ use TeamSpeak3_Exception;
  * Class TeamspeakCodeController
  * @package PublicUHC\Bundle\TeamspeakAuthBundle\Controller
  *
- * @Route("/api")
+ * @Route("/api", defaults={"_format"="json"})
  */
 class TeamspeakCodeController extends FOSRestController {
 
@@ -67,7 +66,7 @@ class TeamspeakCodeController extends FOSRestController {
 
             /** @var $entityManager EntityManager */
             $entityManager = $this->getDoctrine()->getManager();
-            
+
             $entityManager->persist($code);
             $entityManager->persist($account);
             $entityManager->flush();

@@ -27,7 +27,7 @@ use TeamSpeak3_Exception;
  * Class AuthenticationController
  * @package PublicUHC\Bundle\TeamspeakAuthBundle\Controller
  *
- * @Route("/api")
+ * @Route("/api", defaults={"_format"="json"})
  */
 class AuthenticationController extends FOSRestController {
 

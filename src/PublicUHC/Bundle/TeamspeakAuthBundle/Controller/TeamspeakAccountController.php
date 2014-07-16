@@ -13,7 +13,7 @@ use FOS\RestBundle\Controller\Annotations\Route;
  * Class TeamspeakAccountController
  * @package PublicUHC\Bundle\TeamspeakAuthBundle\Controller
  *
- * @Route("/api")
+ * @Route("/api", defaults={"_format"="json"})
  */
 class TeamspeakAccountController extends FOSRestController {
 

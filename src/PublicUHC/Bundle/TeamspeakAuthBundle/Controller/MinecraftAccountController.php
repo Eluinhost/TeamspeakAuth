@@ -12,7 +12,7 @@ use FOS\RestBundle\Controller\Annotations\Route;
  * Class MinecraftAccountController
  * @package PublicUHC\Bundle\TeamspeakAuthBundle\Controller
  *
- * @Route("/api")
+ * @Route("/api", defaults={"_format"="json"})
  */
 class MinecraftAccountController extends FOSRestController {
 
