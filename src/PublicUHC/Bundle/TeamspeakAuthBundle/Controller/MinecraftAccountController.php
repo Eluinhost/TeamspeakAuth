@@ -31,7 +31,7 @@ class MinecraftAccountController extends FOSRestController {
      *  requirements="(online|verified|any)",
      *  default="any"
      * )
-     * @QueryParam(name="uuids", description="Comma separated list of user UUIDs (without dashes)", requirements="\d+", nullable=true)
+     * @QueryParam(name="uuids", description="Comma separated list of user UUIDs (without dashes)", nullable=true)
      * @QueryParam(name="limit", description="Limit amount returned, ignored if searching by UUIDs, max 200", requirements="\d+", default="10")
      * @QueryParam(name="offset", description="Offset, ignored if searching by UUIDs", requirements="\d+", default="0")
      *
