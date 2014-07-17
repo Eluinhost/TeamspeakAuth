@@ -51,10 +51,6 @@ class TeamspeakAccountController extends FOSRestController {
         if($limit > 200)
             throw new BadRequestHttpException('Only 200 accounts may be fetched per request');
 
-        if(null != $uuids) {
-            $uuids = explode(',', $uuids);
-        }
-
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $qb = $em->createQueryBuilder();
@@ -66,15 +62,15 @@ class TeamspeakAccountController extends FOSRestController {
             ->leftJoin('authentication.minecraftAccount', 'mcAccount');
 
         if(null != $uuids) {
-            $qb->where($ex->in('tsAccount.uuid', $uuids));
+            $qb->where($ex->in('tsAccount.uuid', explode(',', $uuids)));
+        } else {
+            $qb->setMaxResults($limit);
+            $qb->setFirstResult($offset);
         }
 
         if($type != 'any') {
             $qb->groupBy('tsAccount')->having($ex->gt($ex->count('authentication'), 0));
         }
-
-        $qb->setMaxResults($limit);
-        $qb->setFirstResult($offset);
 
         $results = $qb->getQuery()->getResult();
 
