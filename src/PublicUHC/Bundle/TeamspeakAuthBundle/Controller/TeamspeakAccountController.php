@@ -31,7 +31,7 @@ class TeamspeakAccountController extends FOSRestController {
      *  default="any"
      * )
      * @QueryParam(name="uuids", description="Comma separated list of user UUIDs", nullable=true)
-     * @QueryParam(name="limit", description="Limit amount returned, ignored if searching by UUIDs, max 200", requirements="\d+", default="10")
+     * @QueryParam(name="limit", description="Limit amount returned, ignored if searching by UUIDs, max 50", requirements="\d+", default="10")
      * @QueryParam(name="offset", description="Offset, ignored if searching by UUIDs", requirements="\d+", default="0")
      *
      * @ApiDoc(
@@ -48,8 +48,8 @@ class TeamspeakAccountController extends FOSRestController {
      */
     public function api_v1_checkTeamspeakAccountAction($uuids, $type, $limit, $offset)
     {
-        if($limit > 200)
-            throw new BadRequestHttpException('Only 200 accounts may be fetched per request');
+        if($limit > 50)
+            throw new BadRequestHttpException('Only 50 accounts may be fetched per request');
 
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
