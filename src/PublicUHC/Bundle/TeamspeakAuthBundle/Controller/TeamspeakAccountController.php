@@ -20,10 +20,10 @@ class TeamspeakAccountController extends FOSRestController {
     /**
      * @Get("/v1/teamspeak_account", name="api_v1_teamspeak_account_list")
      *
-     * @QueryParam(name="type", description="Search type", requirements="online|verified|any", default="any")
+     * @QueryParam(name="type", description="Search type", requirements="(online|verified|any)", default="any")
      * @QueryParam(name="uuids", description="Search by user UUID", array=true, nullable=true)
-     * @QueryParam(name="limit", description="Limit amount returned, ignored if searching by UUIDs, max 50", default="10")
-     * @QueryParam(name="offset", description="Offset, ignored if searching by UUIDs", default="0")
+     * @QueryParam(name="limit", description="Limit amount returned, ignored if searching by UUIDs, max 50", requirements="\d+", default="10")
+     * @QueryParam(name="offset", description="Offset, ignored if searching by UUIDs", requirements="\d+", default="0")
      *
      * @ApiDoc(
      * section="Teamspeak Accounts",
