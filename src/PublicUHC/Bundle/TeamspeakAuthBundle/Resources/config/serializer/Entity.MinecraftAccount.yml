@@ -12,3 +12,8 @@ PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftAccount:
             read_only: true
             type: string
             expose: true
+        authentications:
+            since_version: 1.0
+            read_only: true
+            type: array<PublicUHC\Bundle\TeamspeakAuthBundle\Entity\Authentication>
+            expose: true

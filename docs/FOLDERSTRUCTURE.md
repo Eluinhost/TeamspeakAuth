@@ -23,13 +23,6 @@ The folder structure of the project with files of interest only is the following
     |-src/                       # Stores the project's PHP code for the website to run from
     |-vendor/                    # Created when composer install is ran, third party PHP libraries for the website
     |-web/                       # The main folder to point the webserver at, stores assets/front PHP file
-      |-css/
-        |-style.css              # Simple styles used in the website
-      |-images/
-        |-fairy.png              # The example image on the homepage
-        |-graphy.png             # The background image on the website
-        |-main.png               # The background image on the centre part of the website
-        |-servericon.png         # The server icon to display on the server list screen
       |-vendor/                  # Stores third party front end libraries built from bower_components by grunt on install
       |-.htaccess                # Web server config file to rewrite requests through app.php
       |-app.php                  # The main file used for every request on the website
