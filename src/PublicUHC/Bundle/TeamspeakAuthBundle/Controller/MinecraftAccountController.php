@@ -47,7 +47,7 @@ class MinecraftAccountController extends FOSRestController {
      * }
      * )
      */
-    public function api_v1_checkMinecraftAccountAction($uuids, $type, $limit, $offset)
+    public function apiV1CheckMinecraftAccountAction($uuids, $type, $limit, $offset)
     {
         if($limit > 50)
             throw new BadRequestHttpException('Only 50 accounts may be fetched per request');

@@ -49,7 +49,7 @@ class AuthenticationController extends FOSRestController {
      * @RequestParam(name="mc_uuid", description="Minecraft Username")
      * @RequestParam(name="mc_code", description="Minecraft Code")
      */
-    public function api_v1_authenticationsAction($ts_uuid, $ts_code, $mc_uuid, $mc_code)
+    public function apiV1AuthenticationsAction($ts_uuid, $ts_code, $mc_uuid, $mc_code)
     {
         /** @var $entityManager EntityManager */
         $entityManager = $this->getDoctrine()->getManager();
@@ -142,7 +142,7 @@ class AuthenticationController extends FOSRestController {
      * @QueryParam(name="limit", description="Amount to return, max 50", requirements="\d+", default="10")
      * @QueryParam(name="offset", description="Offset to use", requirements="\d+", default="0")
      */
-    public function api_v1_allAction($limit, $offset)
+    public function apiV1AllAction($limit, $offset)
     {
         if($limit > 50)
             throw new BadRequestHttpException('Only 50 authentications may be fetched per request');

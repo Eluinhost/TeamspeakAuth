@@ -39,7 +39,7 @@ class TeamspeakCodeController extends FOSRestController {
      * @Put("/v1/teamspeak_codes", name="api_v1_teamspeak_code_request")
      * @RequestParam(name="username", description="Teamspeak username to send a code to")
      */
-    public function requestTeamspeakCodeAction($username) {
+    public function apiV1RequestTeamspeakCodeAction($username) {
         if( $username == null || strlen($username) == 0 || strlen($username) > 30 ) {
             throw new NotFoundHttpException('Invalid teamspeak name provided');
         }

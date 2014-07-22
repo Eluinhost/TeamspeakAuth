@@ -46,7 +46,7 @@ class TeamspeakAccountController extends FOSRestController {
      * }
      * )
      */
-    public function api_v1_checkTeamspeakAccountAction($uuids, $type, $limit, $offset)
+    public function apiV1CheckTeamspeakAccountAction($uuids, $type, $limit, $offset)
     {
         if($limit > 50)
             throw new BadRequestHttpException('Only 50 accounts may be fetched per request');
