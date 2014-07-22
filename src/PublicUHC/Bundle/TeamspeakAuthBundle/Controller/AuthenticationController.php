@@ -17,7 +17,6 @@ use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftCode;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakCode;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\TeamspeakHelper;
-use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
