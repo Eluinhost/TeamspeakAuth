@@ -15,7 +15,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.5.*",
+        "symfony/symfony": "~2.5",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2",
         "twig/extensions": "~1.0",
@@ -24,14 +24,14 @@
         "sensio/distribution-bundle": "~3.0",
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
-        "publicuhc/minecraft-auth": "1.0.*",
-        "planetteamspeak/ts3-php-framework": "1.1.23",
+        "publicuhc/minecraft-auth": "~1.0",
+        "planetteamspeak/ts3-php-framework": "~1.1.23",
         "publicuhc/skin-cache": "dev-master",
-        "mthaml/mthaml-bundle": "1.2.*",
-        "cypresslab/angular-ng-routing-bundle": "0.1.5",
-        "friendsofsymfony/rest-bundle": "1.4",
-        "jms/serializer-bundle": "0.13.*",
-        "nelmio/api-doc-bundle": "2.6.*"
+        "mthaml/mthaml-bundle": "~1.2",
+        "cypresslab/angular-ng-routing-bundle": "~0.1.5",
+        "friendsofsymfony/rest-bundle": "~1.4",
+        "jms/serializer-bundle": "~0.13",
+        "nelmio/api-doc-bundle": "~2.6"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

@@ -1,6 +1,7 @@
 # Project Files #
 #################
 /web/bundles/
+composer.lock
 /vendor
 /app/config/parameters.yml
 npm-debug.log
