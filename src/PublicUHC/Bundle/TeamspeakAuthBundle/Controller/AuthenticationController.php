@@ -1,7 +1,6 @@
 <?php
 namespace PublicUHC\Bundle\TeamspeakAuthBundle\Controller;
 
-use Doctrine\ORM\Query;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Controller\FOSRestController;
