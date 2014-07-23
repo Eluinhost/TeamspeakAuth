@@ -3,14 +3,14 @@ namespace PublicUHC\Bundle\TeamspeakAuthBundle\Controller;
 
 
 use Doctrine\ORM\EntityManager;
-use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-use FOS\RestBundle\Controller\Annotations\Route;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\TeamspeakHelper;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -22,7 +22,8 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 class TeamspeakAccountController extends FOSRestController {
 
     /**
-     * @Get("/v1/teamspeak_account", name="api_v1_teamspeak_account_list")
+     * @Route("/v1/teamspeak_account", name="api_v1_teamspeak_account_list")
+     * @Method({"GET"})
      *
      * @QueryParam(
      *  name="type",

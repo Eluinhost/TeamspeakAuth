@@ -5,11 +5,8 @@ use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
-use FOS\RestBundle\Controller\Annotations\Get;
-use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
-use FOS\RestBundle\Controller\Annotations\Route;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftAccount;
@@ -17,6 +14,8 @@ use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftCode;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakCode;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\TeamspeakHelper;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
@@ -31,7 +30,8 @@ use TeamSpeak3_Exception;
 class AuthenticationController extends FOSRestController {
 
     /**
-     * @Post("/v1/authentications", name="api_v1_authentications_new")
+     * @Route("/v1/authentications", name="api_v1_authentications_new")
+     * @Method({"POST"})
      *
      * @ApiDoc(
      * section="Authentication",
@@ -127,7 +127,8 @@ class AuthenticationController extends FOSRestController {
     }
 
     /**
-     * @Get("/v1/authentications", name="api_v1_authentications_all")
+     * @Route("/v1/authentications", name="api_v1_authentications_all")
+     * @Method({"GET"})
      *
      * @ApiDoc(
      * section="Authentication",

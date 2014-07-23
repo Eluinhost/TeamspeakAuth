@@ -4,13 +4,14 @@ namespace PublicUHC\Bundle\TeamspeakAuthBundle\Controller;
 
 use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\Annotations\Put;
-use FOS\RestBundle\Controller\Annotations\Route;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakCode;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\TeamspeakHelper;
 
 use FOS\RestBundle\Controller\Annotations\RequestParam;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 use TeamSpeak3_Exception;
@@ -36,7 +37,8 @@ class TeamspeakCodeController extends FOSRestController {
      *      503="On failure to reach Teamspeak server"
      * }
      * )
-     * @Put("/v1/teamspeak_codes", name="api_v1_teamspeak_code_request")
+     * @Route("/v1/teamspeak_codes", name="api_v1_teamspeak_code_request")
+     * @Method({"PUT"})
      * @RequestParam(name="username", description="Teamspeak username to send a code to")
      */
     public function apiV1RequestTeamspeakCodeAction($username) {

@@ -8,10 +8,11 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-use FOS\RestBundle\Controller\Annotations\Route;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\Authentication;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftAccount;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\TeamspeakHelper;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 /**
@@ -24,6 +25,7 @@ class MinecraftAccountController extends FOSRestController {
 
     /**
      * @Get("/v1/minecraft_account", name="api_v1_minecraft_account_list")
+     * @Method({"GET"})
      *
      * @QueryParam(
      *  name="type",
