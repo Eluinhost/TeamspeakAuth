@@ -4,7 +4,6 @@ namespace PublicUHC\Bundle\TeamspeakAuthBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\OneToMany;
 
 /**
@@ -13,18 +12,8 @@ use Doctrine\ORM\Mapping\OneToMany;
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftAccountRepository")
  */
-class MinecraftAccount extends TimestampedEntity
+class MinecraftAccount extends Account
 {
-    /**
-     * @Column(type="string", length=32)
-     */
-    private $uuid;
-
-    /**
-     * @Column(type="string", length=16)
-     */
-    private $name;
-
     /**
      * @OneToMany(targetEntity="PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftCode", mappedBy="account", orphanRemoval=true)
      * @var $codes ArrayCollection
@@ -48,42 +37,6 @@ class MinecraftAccount extends TimestampedEntity
     public function getAuthentications()
     {
         return $this->authentications;
-    }
-
-    /**
-     * @return String the UUID of the Minecraft account without the -
-     */
-    public function getUUID()
-    {
-        return $this->uuid;
-    }
-
-    /**
-     * @param $uuid String the UUID of the Minecraft account without the -
-     * @return MinecraftAccount
-     */
-    public function setUUID($uuid)
-    {
-        $this->uuid = $uuid;
-        return $this;
-    }
-
-    /**
-     * @return String the username of the account when it was verified
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param $name String the username of the account when it was verified
-     * @return MinecraftAccount
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-        return $this;
     }
 
     /**
