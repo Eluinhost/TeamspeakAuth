@@ -17,3 +17,4 @@ npm-debug.log
 !bin/console
 !bin/symfony_requirements
 /var/bootstrap.php.cache
+/var/SymfonyRequirements.php
