@@ -1,6 +1,8 @@
 TS3 Authentication for Minecraft Accounts
 =========================================
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/d129b0f8-f833-4676-a0f4-85cd6c75c220/small.png)](https://insight.sensiolabs.com/projects/d129b0f8-f833-4676-a0f4-85cd6c75c220)
+
 This provides a way to verify a Minecraft account belongs to a user within Teamspeak. On successful verification the
 user will be provided a server group of choice, will have their description set to their Minecraft username and will
 have an icon assigned to them that is the same as their ingame skin.
