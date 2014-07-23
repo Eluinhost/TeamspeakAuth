@@ -1,7 +1,6 @@
 <?php
 namespace PublicUHC\Bundle\TeamspeakAuthBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
@@ -94,7 +93,7 @@ class AuthenticationController extends FOSRestController
             throw new BadRequestHttpException('Only 50 authentications may be fetched per request');
 
         /** @var AuthenticationRepository $repo */
-        $repo = $this->getDoctrine()->getManager()->getRepository('AuthenticationRepository');
+        $repo = $this->getDoctrine()->getManager()->getRepository('PublicUHCTeamspeakAuthBundle:Authentication');
 
         $results = $repo->findAllWithLimit($limit, $offset);
 

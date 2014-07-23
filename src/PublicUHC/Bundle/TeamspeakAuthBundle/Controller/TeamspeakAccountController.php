@@ -64,7 +64,7 @@ class TeamspeakAccountController extends FOSRestController
         $params->setOffset($offset);
 
         /** @var TeamspeakAccountRepository $repo */
-        $repo = $this->getDoctrine()->getManager()->getRepository('PublicUHCTeamspeakAuthBundle:MinecraftAccount');
+        $repo = $this->getDoctrine()->getManager()->getRepository('PublicUHCTeamspeakAuthBundle:TeamspeakAccount');
 
         $results = $repo->findAllByParameters($params);
 
