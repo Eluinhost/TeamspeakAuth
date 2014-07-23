@@ -1,16 +1,15 @@
 <?php
 namespace PublicUHC\Bundle\TeamspeakAuthBundle\Controller;
 
-
-use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\Authentication;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftAccount;
+use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftAccountRepository;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\TeamspeakHelper;
+use PublicUHC\Bundle\TeamspeakAuthBundle\Model\AccountSearchParameters;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -21,7 +20,8 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  *
  * @Route("/api", defaults={"_format"="json"})
  */
-class MinecraftAccountController extends FOSRestController {
+class MinecraftAccountController extends FOSRestController
+{
 
     /**
      * @Get("/v1/minecraft_account", name="api_v1_minecraft_account_list")
@@ -51,53 +51,51 @@ class MinecraftAccountController extends FOSRestController {
      */
     public function apiV1CheckMinecraftAccountAction($uuids, $type, $limit, $offset)
     {
-        if($limit > 50)
+        if ($limit > 50)
             throw new BadRequestHttpException('Only 50 accounts may be fetched per request');
 
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-        $qb = $em->createQueryBuilder();
-        $ex = $qb->expr();
+        $params = new AccountSearchParameters();
 
-        $qb->select('mcAccount')
-            ->from('PublicUHCTeamspeakAuthBundle:MinecraftAccount', 'mcAccount')
-            ->leftJoin('mcAccount.authentications', 'authentication')
-            ->leftJoin('authentication.teamspeakAccount', 'tsAccount');
+        if (null != $uuids)
+            $params->setUuids($uuids);
 
-        if(null != $uuids) {
-            $qb->where($ex->in('mcAccount.uuid', explode(',', $uuids)));
-        } else {
-            $qb->setMaxResults($limit);
-            $qb->setFirstResult($offset);
-        }
+        if ($type != 'any')
+            $params->setVerified(true);
 
-        if($type != 'any') {
-            $qb->groupBy('mcAccount')->having($ex->gt($ex->count('authentication'), 0));
-        }
+        $params->setLimit($limit);
+        $params->setOffset($offset);
 
-        $results = $qb->getQuery()->getResult();
+        /** @var MinecraftAccountRepository $repo */
+        $repo = $this->getDoctrine()->getManager()->getRepository('PublicUHCTeamspeakAuthBundle:MinecraftAccount');
 
-        if($type == 'online') {
-            /** @var TeamspeakHelper $teamspeak_helper */
-            $teamspeak_helper = $this->get('teamspeak_helper');
+        $results = $repo->findAllByParameters($params);
 
-            $filteredResults = [];
-
-            /** @var MinecraftAccount $result */
-            foreach($results as $result) {
-                $auths = $result->getAuthentications();
-                /** @var Authentication $auth */
-                foreach($auths as $auth) {
-                    if($teamspeak_helper->isUUIDOnline($auth->getTeamspeakAccount()->getUUID())) {
-                        array_push($filteredResults, $result);
-                        break;
-                    }
-                }
-            }
-
-            $results = $filteredResults;
+        if ($type == 'online') {
+            $results = $this->filterOnlineOnly($results);
         }
 
         return $this->view($results);
+    }
+
+    private function filterOnlineOnly($accountArray)
+    {
+        /** @var TeamspeakHelper $teamspeak_helper */
+        $teamspeak_helper = $this->get('teamspeak_helper');
+
+        $filteredResults = [];
+
+        /** @var MinecraftAccount $result */
+        foreach ($accountArray as $result) {
+            $auths = $result->getAuthentications();
+            /** @var Authentication $auth */
+            foreach ($auths as $auth) {
+                if ($teamspeak_helper->isUUIDOnline($auth->getTeamspeakAccount()->getUUID())) {
+                    array_push($filteredResults, $result);
+                    break;
+                }
+            }
+        }
+
+        return $filteredResults;
     }
 }

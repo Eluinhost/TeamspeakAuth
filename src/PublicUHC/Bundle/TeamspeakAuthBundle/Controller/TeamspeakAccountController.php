@@ -1,14 +1,13 @@
 <?php
 namespace PublicUHC\Bundle\TeamspeakAuthBundle\Controller;
 
-
-use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
-
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount;
+use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccountRepository;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\TeamspeakHelper;
+use PublicUHC\Bundle\TeamspeakAuthBundle\Model\AccountSearchParameters;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -19,7 +18,8 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  *
  * @Route("/api", defaults={"_format"="json"})
  */
-class TeamspeakAccountController extends FOSRestController {
+class TeamspeakAccountController extends FOSRestController
+{
 
     /**
      * @Route("/v1/teamspeak_account", name="api_v1_teamspeak_account_list")
@@ -49,48 +49,46 @@ class TeamspeakAccountController extends FOSRestController {
      */
     public function apiV1CheckTeamspeakAccountAction($uuids, $type, $limit, $offset)
     {
-        if($limit > 50)
+        if ($limit > 50)
             throw new BadRequestHttpException('Only 50 accounts may be fetched per request');
 
-        /** @var EntityManager $em */
-        $em = $this->getDoctrine()->getManager();
-        $qb = $em->createQueryBuilder();
-        $ex = $qb->expr();
+        $params = new AccountSearchParameters();
 
-        $qb->select('tsAccount')
-            ->from('PublicUHCTeamspeakAuthBundle:TeamspeakAccount', 'tsAccount')
-            ->leftJoin('tsAccount.authentications', 'authentication')
-            ->leftJoin('authentication.minecraftAccount', 'mcAccount');
+        if (null != $uuids)
+            $params->setUuids($uuids);
 
-        if(null != $uuids) {
-            $qb->where($ex->in('tsAccount.uuid', explode(',', $uuids)));
-        } else {
-            $qb->setMaxResults($limit);
-            $qb->setFirstResult($offset);
-        }
+        if ($type != 'any')
+            $params->setVerified(true);
 
-        if($type != 'any') {
-            $qb->groupBy('tsAccount')->having($ex->gt($ex->count('authentication'), 0));
-        }
+        $params->setLimit($limit);
+        $params->setOffset($offset);
 
-        $results = $qb->getQuery()->getResult();
+        /** @var TeamspeakAccountRepository $repo */
+        $repo = $this->getDoctrine()->getManager()->getRepository('PublicUHCTeamspeakAuthBundle:MinecraftAccount');
 
-        if($type == 'online') {
-            /** @var TeamspeakHelper $teamspeak_helper */
-            $teamspeak_helper = $this->get('teamspeak_helper');
+        $results = $repo->findAllByParameters($params);
 
-            $filteredResults = [];
-
-            /** @var TeamspeakAccount $result */
-            foreach($results as $result) {
-                if($teamspeak_helper->isUUIDOnline($result->getUUID())) {
-                    array_push($filteredResults, $result);
-                }
-            }
-
-            $results = $filteredResults;
+        if ($type == 'online') {
+            $results = $this->filterOnlineOnly($results);
         }
 
         return $this->view($results);
+    }
+
+    private function filterOnlineOnly($results)
+    {
+        /** @var TeamspeakHelper $teamspeak_helper */
+        $teamspeak_helper = $this->get('teamspeak_helper');
+
+        $filteredResults = [];
+
+        /** @var TeamspeakAccount $result */
+        foreach ($results as $result) {
+            if ($teamspeak_helper->isUUIDOnline($result->getUUID())) {
+                array_push($filteredResults, $result);
+            }
+        }
+
+        return $filteredResults;
     }
 } 

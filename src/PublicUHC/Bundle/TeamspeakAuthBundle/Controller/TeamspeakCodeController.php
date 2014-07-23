@@ -3,7 +3,6 @@ namespace PublicUHC\Bundle\TeamspeakAuthBundle\Controller;
 
 
 use Doctrine\ORM\EntityManager;
-use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakCode;
@@ -42,29 +41,25 @@ class TeamspeakCodeController extends FOSRestController {
      * @RequestParam(name="username", description="Teamspeak username to send a code to")
      */
     public function apiV1RequestTeamspeakCodeAction($username) {
-        if( $username == null || strlen($username) == 0 || strlen($username) > 30 ) {
+        if( $username == null || strlen($username) == 0 || strlen($username) > 30 )
             throw new NotFoundHttpException('Invalid teamspeak name provided');
-        }
 
-        /**
-         * @var $ts3 TeamspeakHelper
-         */
+        /** @var $ts3 TeamspeakHelper */
         $ts3 = $this->get('teamspeak_helper');
 
         try {
-
             $client = $ts3->getClientForName($username);
 
-            if (null == $client) {
+            if (null == $client)
                 throw new NotFoundHttpException('Teamspeak user not online');
-            }
 
             $account = $ts3->updateLastClientUsername($client);
+            $account->getCodes()->clear();
 
             $code = new TeamspeakCode();
-            $account->getCodes()->clear();
-            $account->getCodes()->add($code);
             $code->setAccount($account);
+
+            $account->getCodes()->add($code);
 
             /** @var $entityManager EntityManager */
             $entityManager = $this->getDoctrine()->getManager();
@@ -73,9 +68,7 @@ class TeamspeakCodeController extends FOSRestController {
             $entityManager->persist($account);
             $entityManager->flush();
 
-            $timeToLast = $this->container->getParameter('minutesToLast');
-            $codeString = $code->getCode();
-            $client->message("[Verification Code] AUTH CODE: '{$codeString}'. This code work for the next {$timeToLast} minutes");
+            $client->message("[Verification Code] AUTH CODE: '{$code->getCode()}'. This code work for the next {$this->container->getParameter('minutesToLast')} minutes");
 
             return $this->view($account);
         } catch ( TeamSpeak3_Exception $ignored ) {

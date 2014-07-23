@@ -1,18 +1,17 @@
 <?php
 namespace PublicUHC\Bundle\TeamspeakAuthBundle\Controller;
 
-use DateTime;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
 use FOS\RestBundle\Controller\Annotations\QueryParam;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
 use FOS\RestBundle\Controller\FOSRestController;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\AuthenticationRepository;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftAccount;
-use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftCode;
+use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\MinecraftCodeRepository;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakAccount;
-use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakCode;
+use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakCodeRepository;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\TeamspeakHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -27,7 +26,8 @@ use TeamSpeak3_Exception;
  *
  * @Route("/api", defaults={"_format"="json"})
  */
-class AuthenticationController extends FOSRestController {
+class AuthenticationController extends FOSRestController
+{
 
     /**
      * @Route("/v1/authentications", name="api_v1_authentications_new")
@@ -51,79 +51,24 @@ class AuthenticationController extends FOSRestController {
      */
     public function apiV1AuthenticationsAction($ts_uuid, $ts_code, $mc_uuid, $mc_code)
     {
-        /** @var $entityManager EntityManager */
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $tsqb = $entityManager->createQueryBuilder();
-
-        $tsqb->select('code')
-            ->from('PublicUHCTeamspeakAuthBundle:TeamspeakCode', 'code')
-            ->where(
-                $tsqb->expr()->andX(
-                    $tsqb->expr()->gt('code.updatedAt', ':timeago'),
-                    $tsqb->expr()->eq('code.code', ':code')
-                )
-            )
-            ->setMaxResults(1)
-            ->orderBy('code.updatedAt', 'DESC')
-            ->setParameter('timeago', new DateTime('-' . $this->container->getParameter('minutesToLast') . 'min'))
-            ->setParameter('code', $ts_code);
-
-        try {
-            /** @var $tsCode TeamspeakCode */
-            $tsCode = $tsqb->getQuery()->getSingleResult();
-        } catch (NoResultException $ex) {
+        $tsAccount = $this->checkTeamspeakCodeValid($ts_uuid, $ts_code);
+        if(null == $tsAccount)
             throw new UnauthorizedHttpException('Invalid Teamspeak code supplied');
-        }
 
-        /** @var $tsAccount TeamspeakAccount */
-        $tsAccount = $tsCode->getAccount();
-
-        if($tsAccount->getUUID() != $ts_uuid) {
-            throw new UnauthorizedHttpException('Invalid Teamspeak code supplied');
-        }
-
-        $mcqb = $entityManager->createQueryBuilder();
-
-        $mcqb->select('code')
-            ->from('PublicUHCTeamspeakAuthBundle:MinecraftCode', 'code')
-            ->where(
-                $tsqb->expr()->andX(
-                    $tsqb->expr()->gt('code.updatedAt', ':timeago'),
-                    $tsqb->expr()->eq('code.code', ':code')
-                )
-            )
-            ->setMaxResults(1)
-            ->orderBy('code.updatedAt', 'DESC')
-            ->setParameter('timeago', new DateTime('-' . $this->container->getParameter('minutesToLast') . 'min'))
-            ->setParameter('code', $mc_code);
-
-        try {
-            /** @var $mcCode MinecraftCode */
-            $mcCode = $mcqb->getQuery()->getSingleResult();
-        } catch(NoResultException $ex) {
+        $mcAccount = $this->checkMinecraftCodeValid($mc_uuid, $mc_code);
+        if(null == $mcAccount)
             throw new UnauthorizedHttpException('Invalid Minecraft code supplied');
-        }
-
-        /** @var $mcAccount MinecraftAccount */
-        $mcAccount = $mcCode->getAccount();
-
-        if($mcAccount->getName() != $mc_uuid) {
-            throw new UnauthorizedHttpException('Invalid Minecraft code supplied');
-        }
 
         //ALL CODES MATCHED, RUN THE PROCESS
         try {
             /** @var $tsHelper TeamspeakHelper */
             $tsHelper = $this->get('teamspeak_helper');
-
             $tsHelper->verifyClient($tsAccount, $mcAccount);
-        } catch ( TeamSpeak3_Exception $ex ) {
+        } catch (TeamSpeak3_Exception $ex) {
             error_log($ex->getMessage());
             throw new ServiceUnavailableHttpException('There was a problem contacting the Teamspeak server');
         }
-
-        return $this->view(null, 200);
+        return $this->view(null);
     }
 
     /**
@@ -145,22 +90,62 @@ class AuthenticationController extends FOSRestController {
      */
     public function apiV1AllAction($limit, $offset)
     {
-        if($limit > 50)
+        if ($limit > 50)
             throw new BadRequestHttpException('Only 50 authentications may be fetched per request');
 
-        /** @var $entityManager EntityManager */
-        $entityManager = $this->getDoctrine()->getManager();
+        /** @var AuthenticationRepository $repo */
+        $repo = $this->getDoctrine()->getManager()->getRepository('AuthenticationRepository');
 
-        $qb = $entityManager->createQueryBuilder();
+        $results = $repo->findAllWithLimit($limit, $offset);
 
-        $qb->select('authentication')
-            ->from('PublicUHCTeamspeakAuthBundle:Authentication', 'authentication')
-            ->orderBy('authentication.updatedAt', 'DESC')
-            ->setMaxResults($limit)
-            ->setFirstResult($offset);
+        return $this->view($results);
+    }
 
-        $results = $qb->getQuery()->getResult(Query::HYDRATE_OBJECT);
+    /**
+     * @param $mc_uuid
+     * @param $mc_code
+     * @return null|MinecraftAccount account if valid, null otherwise
+     */
+    private function checkMinecraftCodeValid($mc_uuid, $mc_code)
+    {
+        /** @var MinecraftCodeRepository $mcCodeRepo */
+        $mcCodeRepo = $this->getDoctrine()->getManager()->getRepository('PublicUHCTeamspeakAuthBundle:MinecraftCode');
 
-        return $this->view($results, 200);
+        $mcCode = $mcCodeRepo->findOneByCodeWithinTime($mc_code, $this->container->getParameter('minutesToLast'));
+
+        if(null == $mcCode)
+            return null;
+
+        /** @var $mcAccount MinecraftAccount */
+        $mcAccount = $mcCode->getAccount();
+
+        if($mcAccount->getName() != $mc_uuid)
+            return null;
+
+        return $mcAccount;
+    }
+
+    /**
+     * @param $ts_uuid
+     * @param $ts_code
+     * @return null|TeamspeakAccount account if valid, null otherwise
+     */
+    private function checkTeamspeakCodeValid($ts_uuid, $ts_code)
+    {
+        /** @var TeamspeakCodeRepository $tsCodeRepo */
+        $tsCodeRepo = $this->getDoctrine()->getManager()->getRepository('PublicUHCTeamspeakAuthBundle:TeamspeakCode');
+
+        $tsCode = $tsCodeRepo->findOneByCodeWithinTime($ts_code, $this->container->getParameter('minutesToLast'));
+
+        if(null == $tsCode)
+            return null;
+
+        /** @var $tsAccount TeamspeakAccount */
+        $tsAccount = $tsCode->getAccount();
+
+        if($tsAccount->getName() != $ts_uuid)
+            return null;
+
+        return $tsAccount;
     }
 } 
