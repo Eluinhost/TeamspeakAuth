@@ -1,6 +1,7 @@
 .select-ts-account{"ng-show"=>"teamspeakDetails == null"}
   %p Enter your current Teamspeak nickname (case sensitive) and hit 'Request Code'.
-  %em You must be online for the process to work, you will receive a PM
+  %p
+    %em You must be online for the process to work, you will receive a PM
   .errors
     %alert{"ng-repeat"=>"alert in errors", :type=>"alert.type", :close=>"removeError($index)"} {{alert.msg}}
   .row.collapse
