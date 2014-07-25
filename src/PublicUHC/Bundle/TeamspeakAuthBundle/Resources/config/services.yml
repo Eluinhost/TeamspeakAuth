@@ -64,7 +64,7 @@ services:
         - '@server_loop'
         - '%auth_server.database_keepalive%'
         - '%auth_server.description%'
-        - '%kernel.root_dir%/../web/images/servericon.png'
+        - '%kernel.root_dir%/../src/PublicUHC/Bundle/TeamspeakAuthBundle/Resources/public/images/servericon.png'
         - '@logger'
         tags:
         -  { name: console.command }
