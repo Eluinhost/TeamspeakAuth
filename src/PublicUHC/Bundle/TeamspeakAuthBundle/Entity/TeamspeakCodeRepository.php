@@ -24,6 +24,7 @@ class TeamspeakCodeRepository extends EntityRepository
 
         $qb->select('code')
             ->from('PublicUHCTeamspeakAuthBundle:TeamspeakCode', 'code')
+            ->join('code.account', 'account')
             ->where(
                 $ex->andX(
                     $ex->gt('code.updatedAt', ':timeago'),

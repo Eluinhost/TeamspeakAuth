@@ -141,7 +141,7 @@ class AuthenticationController extends FOSRestController
         /** @var $tsAccount TeamspeakAccount */
         $tsAccount = $tsCode->getAccount();
 
-        if($tsAccount->getName() != $ts_uuid)
+        if($tsAccount->getUUID() != $ts_uuid)
             return null;
 
         return $tsAccount;

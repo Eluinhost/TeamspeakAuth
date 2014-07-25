@@ -22,8 +22,9 @@ class MinecraftCodeRepository extends EntityRepository
         $qb = $this->getEntityManager()->createQueryBuilder();
         $ex = $qb->expr();
 
-        $qb->select('code')
+        $qb->select('code', 'account')
             ->from('PublicUHCTeamspeakAuthBundle:MinecraftCode', 'code')
+            ->join('code.account', 'account')
             ->where(
                 $ex->andX(
                     $ex->gt('code.updatedAt', ':timeago'),
