@@ -13,9 +13,9 @@ use PublicUHC\Bundle\TeamspeakAuthBundle\Entity\TeamspeakCodeRepository;
 use PublicUHC\Bundle\TeamspeakAuthBundle\Helpers\TeamspeakHelper;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use TeamSpeak3_Exception;
 
 /**
@@ -51,11 +51,11 @@ class AuthenticationController extends FOSRestController
     {
         $tsAccount = $this->checkTeamspeakCodeValid($ts_uuid, $ts_code);
         if(null == $tsAccount)
-            throw new AccessDeniedHttpException('Invalid Teamspeak code supplied');
+            throw new AccessDeniedException('Invalid Teamspeak code supplied');
 
         $mcAccount = $this->checkMinecraftCodeValid($mc_uuid, $mc_code);
         if(null == $mcAccount)
-            throw new AccessDeniedHttpException('Invalid Minecraft code supplied');
+            throw new AccessDeniedException('Invalid Minecraft code supplied');
 
         //ALL CODES MATCHED, RUN THE PROCESS
         try {

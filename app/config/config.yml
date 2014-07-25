@@ -86,12 +86,12 @@ fos_rest:
         codes:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
             'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
-            'Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException': 403
+            'Symfony\Component\Security\Core\Exception\AccessDeniedException': 403
             'Symfony\Component\HttpKernel\Exception\BadRequestHttpException': 400
             'Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException': 503
             'Symfony\Component\HttpKernel\Exception\NotFoundHttpException': 404
         messages:
-            'Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException': true
+            'Symfony\Component\Security\Core\Exception\AccessDeniedException': true
             'Symfony\Component\HttpKernel\Exception\BadRequestHttpException': true
             'Symfony\Component\HttpKernel\Exception\NotFoundHttpException': true
 
