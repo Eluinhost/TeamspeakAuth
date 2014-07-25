@@ -82,6 +82,19 @@ fos_rest:
         validate: true
     routing_loader:
         include_format: false
+    exception:
+        codes:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+            'Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException': 403
+            'Symfony\Component\HttpKernel\Exception\BadRequestHttpException': 400
+            'Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException': 503
+            'Symfony\Component\HttpKernel\Exception\NotFoundHttpException': 404
+        messages:
+            'Acme\HelloBundle\Exception\MyExceptionWithASafeMessage': true
+            'Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException': true
+            'Symfony\Component\HttpKernel\Exception\BadRequestHttpException': true
+            'Symfony\Component\HttpKernel\Exception\NotFoundHttpException': true
 
 jms_serializer:
     handlers:
