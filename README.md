@@ -53,6 +53,10 @@ Initial release
 - Added console commands for CLI
 - New database structure shared by the auth server and website
 
+### 2.1.0
+
+- Moved to requiring 1.8+ Minecaft for authentication
+
 Documentation
 -------------
 
