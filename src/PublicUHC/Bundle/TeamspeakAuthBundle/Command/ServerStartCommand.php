@@ -108,7 +108,7 @@ class ServerStartCommand extends Command {
             $packet->setDescription($description)
                 ->setMaxPlayers(-1)
                 ->setOnlineCount(-1)
-                ->setVersion('1.7.6+')
+                ->setVersion('1.8+')
                 ->setFavicon($favicon);
         });
 
