@@ -24,7 +24,7 @@
         "sensio/distribution-bundle": "~3.0",
         "sensio/framework-extra-bundle": "~3.0",
         "incenteev/composer-parameter-handler": "~2.0",
-        "publicuhc/minecraft-auth": "~1.0",
+        "publicuhc/minecraft-auth": "~1.1",
         "planetteamspeak/ts3-php-framework": "~1.1.23",
         "publicuhc/skin-cache": "~1.0.0",
         "mthaml/mthaml-bundle": "~1.2",
