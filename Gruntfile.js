@@ -29,6 +29,13 @@ module.exports = function(grunt) {
                 }
             }
         },
+        "bower-install-simple": {
+            prod: {
+                options: {
+                    production: true
+                }
+            }
+        },
         copy: {
             fonts: {
                 src: [ bower_dir + '/fontawesome/fonts/*'],
@@ -108,7 +115,7 @@ module.exports = function(grunt) {
     grunt.registerTask(
         'bower-install',
         'Cleans the bower dependencies and then re-installs them',
-        ['clean:bower', 'bower-install-simple']
+        ['clean:bower', 'bower-install-simple:prod']
     );
 
     grunt.registerTask(
